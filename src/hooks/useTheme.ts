@@ -1,39 +1,46 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Check if there's a saved theme in localStorage
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    setMounted(true)
+    // Get saved theme or system preference
+    const savedTheme = localStorage.getItem('portfolio-theme') as 'light' | 'dark' | null
     
     if (savedTheme) {
-      setTheme(savedTheme);
+      setTheme(savedTheme)
     } else {
-      // Check system preference
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      setTheme(systemTheme);
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      setTheme(systemTheme)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    // Apply theme to document
-    const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-
+    if (!mounted) return
+    
+    const root = document.documentElement
+    
+    // Remove both classes first
+    root.classList.remove('light', 'dark')
+    
+    // Add the current theme class
+    root.classList.add(theme)
+    
     // Save to localStorage
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    localStorage.setItem('portfolio-theme', theme)
+  }, [theme, mounted])
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  };
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light')
+  }
 
-  return { theme, toggleTheme };
-};
+  return { 
+    theme, 
+    toggleTheme, 
+    mounted 
+  }
+}
