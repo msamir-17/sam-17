@@ -25,7 +25,7 @@ const Hero = () => {
 
   const downloadResume = () => {
     const link = document.createElement('a')
-    link.href = '/resume.pdf'
+    link.href = '/samir-r.pdf'
     link.download = 'Samir_Resume.pdf'
     link.click()
   }
@@ -236,7 +236,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden lg:block"
+          className="absolute left-1/2 transform translate-y-10 -translate-x-1/2 hidden lg:block"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
