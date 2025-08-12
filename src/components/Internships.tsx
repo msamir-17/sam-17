@@ -821,7 +821,7 @@ const Internships = () => {
           </div>
 
           {/* Achievement Stats */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
           >
@@ -853,8 +853,8 @@ const Internships = () => {
                 </p>
               </motion.div>
             ))}
-          </motion.div>
-        </motion.div>
+          </motion.div>*/}
+        </motion.div> 
       </div>
     </section>
   )

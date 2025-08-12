@@ -287,7 +287,7 @@ const Contact = () => {
 
   const downloadResume = () => {
     const link = document.createElement('a')
-    link.href = '/resume.pdf'
+    link.href = '/samir-r.pdf'
     link.download = 'Samir_Resume.pdf'
     link.click()
   }
