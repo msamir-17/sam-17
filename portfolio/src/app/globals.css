@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+/* @tailwind base;
+@tailwind components; */
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border box-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+   @apply bg-white text-gray-900;
+
+  }
+
+  .dark body {
+    @apply bg-gray-950 text-gray-50;
+
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-spacing {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border border-white/20 dark:border-gray-700/50;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .notion-bg {
+    @apply bg-gray-50 dark:bg-gray-900;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
