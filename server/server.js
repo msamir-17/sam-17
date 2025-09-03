@@ -1,16 +1,28 @@
+
 const express = require('express');
 const cors = require('cors');
+const connectDB = require('./config/db');
+const dotenv = require('dotenv');
 
-require('dotenv').config();
+
+dotenv.config();
+
+connectDB();
+
 
 const app = express();
-const PORT = process.env.port || 3000;
 
 app.use(cors());
 app.use(express.json());
 
+const PORT = process.env.PORT || 5000;
+
+app.get('/', (req,res) => {
+    res.send("API is running...");
+})
+
 app.listen(
-    port, () => {
+    PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     }
 )
