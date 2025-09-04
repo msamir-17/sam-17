@@ -5,7 +5,7 @@ const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 
 const internshipRoutes = require('./routes/internshipRoutes.js');
-
+const certificateRoutes = require('./routes/certificateRoutes.js');
 
 dotenv.config();
 
@@ -24,7 +24,7 @@ app.get('/', (req,res) => {
 })
 
 app.use('/api/internships', internshipRoutes);
-
+app.use('/api/certificates', certificateRoutes);
 
 app.listen( PORT, () => {   
         console.log(`Server is running on port ${PORT}`);
