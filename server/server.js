@@ -4,6 +4,8 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 
+const internshipRoutes = require('./routes/internshipRoutes.js');
+
 
 dotenv.config();
 
@@ -21,8 +23,10 @@ app.get('/', (req,res) => {
     res.send("API is running...");
 })
 
-app.listen(
-    PORT, () => {
+app.use('/api/internships', internshipRoutes);
+
+
+app.listen( PORT, () => {   
         console.log(`Server is running on port ${PORT}`);
     }
 )
