@@ -9,13 +9,20 @@ const {
 } = require('../controllers/internController.js');
 
 
+
+const { protect } = require('../middleware/authMiddleware.js');
+
+
 //
 router.get('/', GetInternships);
+
+
+// Request pehle 'protect' middleware se guzregi, phir controller ke paas jaayegi.
 //
-router.post('/', AddInternships);
+router.post('/', protect, AddInternships);
 //
-router.put('/:id', UpdateInternships);
+router.put('/:id', protect, UpdateInternships);
 //
-router.delete('/:id', DeleteInternships);   
+router.delete('/:id', protect, DeleteInternships);   
 
 module.exports = router; 
