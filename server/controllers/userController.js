@@ -46,7 +46,7 @@ const registerUser = async (req, res) => {
 
 // ===  Admin User ko Login karna ===
 
-const loginUser = async (req, res) => {
+const   loginUser = async (req, res) => {
     try{
         const { username, password } = req.body;
 

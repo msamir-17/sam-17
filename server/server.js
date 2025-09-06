@@ -4,13 +4,29 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 
+
+const cloudinary = require('cloudinary').v2;
+
+
+
+
+
 const internshipRoutes = require('./routes/internshipRoutes.js');
 const certificateRoutes = require('./routes/certificateRoutes.js');
 const userRoutes = require('./routes/userRoutes.js');
+const projectRoutes = require('./routes/projectRoutes.js');
 
 dotenv.config();
 
 connectDB();
+
+
+// Cloudinary configuration
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 
 const app = express();
@@ -27,6 +43,11 @@ app.get('/', (req,res) => {
 app.use('/api/internships', internshipRoutes);
 app.use('/api/certificates', certificateRoutes);
 app.use('/api/users', userRoutes)
+
+app.use('/api/projects', projectRoutes);
+
+
+
 app.listen( PORT, () => {   
         console.log(`Server is running on port ${PORT}`);
     }
