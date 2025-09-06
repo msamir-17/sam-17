@@ -562,7 +562,7 @@ const Contact = () => {
               </div>
 
               {/* Resume Download */}
-              <motion.div
+              {/* <motion.div
                 whileHover={{ scale: 1.02, y: -5 }}
                 className="glass-effect p-8 rounded-3xl bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-2xl border border-blue-400/50"
               >
@@ -588,7 +588,7 @@ const Contact = () => {
                     Download Resume
                   </motion.button>
                 </div>
-              </motion.div>
+              </motion.div> */}
             </motion.div>
           </div>
         </motion.div>

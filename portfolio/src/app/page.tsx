@@ -5,7 +5,7 @@ import Skills from '@/components/Skills'
 import Projects from '@/components/Projects'
 import Internships from '@/components/Internships'
 import Interests from '@/components/Interests'
-import Testimonials from '@/components/Testimonials'
+// import Testimonials from '@/components/Testimonials'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 
