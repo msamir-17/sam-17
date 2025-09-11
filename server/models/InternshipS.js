@@ -17,9 +17,13 @@ const InternshipSchema = new mongoose.Schema(
         description:{
             type: String,
             required: true
+        },
+        certificateUrl: {
+            type: String,
+            required: false // Optional
         }
-    }
-);
+}, { timestamps: true });
+
 
 // Is blueprint se hum ek Model banayenge
 const Internship = mongoose.model('Internship', InternshipSchema);
