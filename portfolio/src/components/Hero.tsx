@@ -261,7 +261,7 @@
 // export default Hero
 
 'use client'
-
+// import ClientOnly from './ClientOnly';
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { HiDownload, HiMail, HiSparkles, HiMenu, HiX, HiHome, HiUser, HiCode, HiBriefcase, HiPhone, HiSun, HiMoon } from 'react-icons/hi'
