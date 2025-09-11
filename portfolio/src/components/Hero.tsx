@@ -499,8 +499,9 @@ const Hero = () => {
   const [currentTitle, setCurrentTitle] = useState(0)
   const titles = [
     'AI Enthusiast',
-    'Prompt Engineer', 
+    'ML Engineer', 
     'Next.js Developer',
+    'Web Developer',
     'Hackathon Builder'
   ]
 

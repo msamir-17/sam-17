@@ -394,7 +394,7 @@ const Footer = () => {
             </motion.div>
 
             {/* Fun Stats */}
-            <motion.div
+            {/* <motion.div
               variants={itemVariants}
               className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8"
             >
@@ -430,7 +430,7 @@ const Footer = () => {
                   </p>
                 </motion.div>
               ))}
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
 
