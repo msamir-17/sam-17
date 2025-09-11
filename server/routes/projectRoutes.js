@@ -5,7 +5,8 @@ const {
     GetProject,
     AddProject,
     UpdateProject,
-    DeleteProject
+    DeleteProject,
+    GetProjectById
 } = require('../controllers/projectController.js');
 
 const { protect } = require('../middleware/authMiddleware.js');
@@ -20,7 +21,7 @@ const upload = multer({ dest: 'uploads/' }); //  Files temporarily 'uploads' fol
 
 
 router.get('/', GetProject);
-
+router.get('/:id', GetProjectById); 
 // router.post('/', protect, upload.single('image'), AddProject);
 router.post(
     '/',
@@ -41,7 +42,8 @@ router.post(
     AddProject
 );
 //
-router.put('/:id', protect, UpdateProject);
+router.put('/:id', protect, upload.single('image'), UpdateProject);
+// router.put('/:id', protect, UpdateProject);
 //
 router.delete('/:id', protect, DeleteProject);   
 
