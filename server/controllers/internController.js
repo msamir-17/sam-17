@@ -18,18 +18,15 @@ const GetInternships = async (req, res) => {
 const AddInternships = async (req, res) => {
     // Client (admin panel) se aane waale data ko nikalo (company, role, etc.)
     const { company, role, duration, description } = req.body;
+    let certificateUrl = '';
 
-    if (!req.file) {
-        return res.status(400).json({ message: 'Project Image file is required' });
-    }
+     if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'Internship_Certificates'
+            });
+            certificateUrl = result.secure_url;
+        }
 
-    console.log(req.file.path);
-
-    const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'Projects_Photos',
-        resource_type: 'image'
-    });
-    console.log(result);
 
     try {
         const newIntern = new Internship({
@@ -37,7 +34,7 @@ const AddInternships = async (req, res) => {
             role,
             duration,
             description,
-            certificateUrl // Cloudinary ka secure URL
+            certificateUrl// Cloudinary ka secure URL
         });
 
 
@@ -49,6 +46,7 @@ const AddInternships = async (req, res) => {
 
     }
     catch (err) {
+        console.error("ADD INTERNSHIP FAILED:", err);
         res.status(500).json({ message: 'Server Error: Unable to add Internship' });
     };
 
@@ -58,10 +56,10 @@ const AddInternships = async (req, res) => {
 const UpdateInternships = async (req, res) => {
     try {
         // Step 1: URL se us internship ki ID nikalo jise update karna hai
-        const { id } = req.params;
 
         // Step 2: Client (admin panel) se aane waale naye data ko nikalo
         const { company, role, duration, description } = req.body;
+        const updatedData = { company, role, duration, description };
 
         // Step 3: Database mein us ID ko dhoondho aur naye data se update kar do
 
@@ -74,21 +72,36 @@ const UpdateInternships = async (req, res) => {
             updatedData.certificateUrl = result.secure_url;
         }
 
-        const updatedIntern = await Internship.findByIdAndUpdate(
-            id,
-            { company, role, duration, description },
-            { new: true } // Yeh option ensure karta hai ki updated document return ho
-        );
+        const updatedIntern = await Internship.findByIdAndUpdate(req.params.id, updatedData, { new: true });
 
         res.status(200).json(updatedIntern);
 
 
     }
     catch (err) {
+        
+        console.error("UPDATE INTERNSHIP FAILED:", err);
         res.status(500).json({ message: 'Server Error: Unable to update Internship' });
     }
 }
 
+const GetIntershipById = async (req, res) => {
+    try {
+        // URL se internship ki ID nikalo
+        const internship = await Internship.findById(req.params.id);
+
+        // Agar project mil gaya, toh use client ko bhej do
+        if (internship) {
+            res.status(200).json(internship);
+        } else {
+            // Agar us ID se koi internship nahi mila
+            res.status(404).json({ message: 'internship not found' });
+        }
+    } catch (error) {
+        console.error("--- GET internship BY ID FAILED ---", error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
 
 const DeleteInternships = async (req, res) => {
     try {
@@ -106,5 +119,6 @@ module.exports = {
     GetInternships,
     AddInternships,
     UpdateInternships,
-    DeleteInternships
+    DeleteInternships,
+    GetIntershipById
 };
