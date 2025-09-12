@@ -12,6 +12,7 @@ interface Internship {
     role: string;
     duration: string;
     description: string;
+    certificateUrl?: string;
 }
 
 const InternshipPage = () => {
@@ -50,7 +51,7 @@ const InternshipPage = () => {
             }
 
             // Step 3: Backend ke DELETE endpoint par request bhejein
-            await axios.delete(`http://localhost:5000/api/Internship/${internshipId}`, {
+            await axios.delete(`http://localhost:5000/api/internships/${internshipId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -58,7 +59,7 @@ const InternshipPage = () => {
 
             // Step 4: Frontend ki state se us internship ko hata dein
             setInternship(Internship.filter(p => p._id !== internshipId));
-            
+
         } catch (err) {
             alert('Failed to delete internship.');
             console.error(err);
@@ -98,29 +99,41 @@ const InternshipPage = () => {
                                 <tr key={internship._id} className="hover:bg-gray-700/50">
                                     {/* ... baaki ke table cells (td) waise hi rahenge ... */}
                                     <td className="px-6 py-4">
-                                        {internship.company}  
+                                        {internship.company}
                                     </td>
                                     <td className="px-6 py-4 max-w-sm">
                                         <p className="text-sm text-gray-400 truncate">{internship.description}</p>
                                     </td>
-                                     <td className="px-6 py-4 max-w-sm">
+                                    <td className="px-6 py-4 max-w-sm">
                                         <p className="text-sm text-gray-400 truncate">{internship.role}</p>
                                     </td>
-                                     <td className="px-6 py-4 max-w-sm">
+                                    <td className="px-6 py-4 max-w-sm">
                                         <p className="text-sm text-gray-400 truncate">{internship.duration}</p>
                                     </td>
-                                   
+
+
+                                    <td className="px-6 py-4">
+                                        {internship.certificateUrl ? (
+                                            <a href={internship.certificateUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">
+                                                View
+                                            </a>
+                                        ) : (
+                                            <span className="text-gray-500">None</span>
+                                        )}
+                                    </td>
+
+
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex justify-end items-center gap-4">
                                             <button className="p-2 rounded-full hover:bg-gray-700" title="Edit">
-                                                <Link href={`/admin/Internship/edit/${internship._id}`} >
+                                                <Link href={`/admin/internship/edit/${internship._id}`} >
                                                     <HiOutlinePencil className="w-5 h-5 text-blue-400" />
                                                 </Link>
                                             </button>
                                             {/* --- NAYA BADLAAV: Delete button mein onClick add kiya --- */}
-                                            <button 
+                                            <button
                                                 onClick={() => handleDelete(internship._id)}
-                                                className="p-2 rounded-full hover:bg-gray-700" 
+                                                className="p-2 rounded-full hover:bg-gray-700"
                                                 title="Delete"
                                             >
                                                 <HiOutlineTrash className="w-5 h-5 text-red-400" />

@@ -510,7 +510,7 @@ import axios from 'axios'
 interface DynamicInternship {
   _id: string;
   role: string;
-  organization: string;
+  company: string;
   duration: string;
   description: string;
   certificateUrl?: string; // Optional
@@ -522,7 +522,7 @@ interface DynamicCertificate {
   title: string;       // Aapke hardcoded data mein 'name' tha
   issuedBy: string;    // Aapke hardcoded data mein 'issuer' tha
   dateEarned: string;  // Aapke hardcoded data mein 'date' tha
-  certificateLink: string; // Aapke hardcoded data mein 'certificateUrl' tha
+  certificateUrl: string; // Aapke hardcoded data mein 'certificateUrl' tha
 }
 const Internships = () => {
   const [internshipsRef, internshipsInView] = useInView({
@@ -777,7 +777,7 @@ const Internships = () => {
                               {internship.role}
                             </h3>
                             <p className="text-blue-600 dark:text-blue-400 font-semibold text-lg">
-                              {internship.organization}
+                              {internship.company}
                             </p>
                           </div>
 
@@ -811,17 +811,24 @@ const Internships = () => {
                   <div className="lg:w-1/2 flex items-center justify-center">
                     <motion.div
                       className="w-120 h-64 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center"
-                      
-                      
+
+
                     >
-                     
+
                       <div className="w-108 h-50 bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center shadow-2xl">
                         <span className="text-4xl font-bold text-white">#{index + 1}
-                             {/* <img
-                        src={internship.imageUrl}
-                        alt={internship.title}
-                        className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-                      /> */}
+                          {internship.certificateUrl && (
+                            <motion.a
+                              href={internship.certificateUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              whileHover={{ scale: 1.05 }}
+                              className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold"
+                            >
+                              <HiExternalLink />
+                              View Certificate
+                            </motion.a>
+                          )}
                         </span>
                       </div>
 
@@ -935,9 +942,9 @@ const Internships = () => {
                       </p>
                     </div>
 
-                    {cert.certificateLink && (
+                    {cert.certificateUrl && (
                       <motion.a
-                        href={cert.certificateLink}
+                        href={cert.certificateUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.1 }}
