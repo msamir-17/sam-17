@@ -816,7 +816,7 @@ const Internships = () => {
                     >
 
                       <div className="w-108 h-50 bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center shadow-2xl">
-                        <span className="text-4xl font-bold text-white">#{index + 1}
+                        <span className="text-4xl font-bold text-white"> 
                           {internship.certificateUrl && (
                             <motion.a
                               href={internship.certificateUrl}
@@ -833,7 +833,7 @@ const Internships = () => {
                       </div>
 
 
-                      {/* add certificate here  */}
+                      
 
 
                     </motion.div>

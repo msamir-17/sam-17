@@ -9,6 +9,7 @@ const navLinks = [
     { name: "Project", href: "/admin/projects" },
     { name: "Internship", href: "/admin/internship" },
     { name: "Certificates", href: "/admin/certificates" },
+    { name: 'Hero Section', href: '/admin/hero' }
 ];
 
 export default function layout({ children }: { children: React.ReactNode }) {

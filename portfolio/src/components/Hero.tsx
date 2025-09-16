@@ -267,6 +267,7 @@ import { useState, useEffect } from 'react'
 import { HiDownload, HiMail, HiSparkles, HiMenu, HiX, HiHome, HiUser, HiCode, HiBriefcase, HiPhone, HiSun, HiMoon } from 'react-icons/hi'
 import { GrProjects } from "react-icons/gr";
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
+import axios from 'axios';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -496,14 +497,49 @@ const Header = () => {
 }
 
 const Hero = () => {
+  const [heroData, setHeroData] = useState({
+    greeting: "Hi, I'm",
+    name: 'Samir',
+    jobtitles: ['Loading titles...'],
+    bio: "Passionate about creating intelligent solutions...",
+    resumeurl: ''
+  });
   const [currentTitle, setCurrentTitle] = useState(0)
-  const titles = [
-    'AI Enthusiast',
-    'ML Engineer', 
-    'Next.js Developer',
-    'Web Developer',
-    'Hackathon Builder'
-  ]
+  const titles = heroData.jobtitles;
+  
+  // [
+  //   'AI Enthusiast',
+  //   'ML Engineer', 
+  //   'Next.js Developer',
+  //   'Web Developer',
+  //   'Hackathon Builder'
+  // ]         
+
+  useEffect(() => {
+    const fetchHeroData = async () => {
+      try{
+        setLoading(true);
+        const response = await axios.get('http://localhost:5000/api/hero');
+            // Agar data milta hai, toh use state mein set kar do
+
+        if(response.data){
+          setHeroData(response.data)
+        }
+
+      }
+      catch(error){
+        console.error("Failled to fetch data :", error)
+      }finally{
+        setLoading(false)
+      }
+    };
+    fetchHeroData();
+  }, []);
+// [] ka matlab hai ki yeh sirf ek baar chalega
+
+  
+
+  const [loading , setLoading] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -516,12 +552,48 @@ const Hero = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const downloadResume = () => {
-    const link = document.createElement('a')
-    link.href = '/samir-r.pdf'
-    link.download = 'Samir_Resume.pdf'
-    link.click()
+  // const downloadResume = () => {
+  //   const link = document.createElement('a')
+  //   link.href = '/samir-r.pdf'
+  //   link.download = 'Samir_Resume.pdf'
+  //   link.click()
+  // }
+
+//   const downloadResume = () => {
+//   // Agar resumeUrl hai, tabhi download start karo
+//   if (heroData.resumeurl) {
+//     const link = document.createElement('a');
+//     link.href = heroData.resumeurl;
+//     // Hum yahan 'download' attribute add kar sakte hain, lekin Cloudinary se direct link bhi kaam karega
+//     link.target = '_blank'; // Naye tab mein kholein
+//     link.rel = 'noopener noreferrer';
+//     link.click();
+//   }
+// }
+
+// Puraane 'downloadResume' function ko is naye waale se replace karein
+
+const downloadResume = () => {
+  // Check Point #1: Kya humare paas URL hai?
+  console.log("Download button clicked. Resume URL is:", heroData.resumeurl);
+
+  if (heroData.resumeurl) {
+    const link = document.createElement('a');
+    link.href = heroData.resumeurl;
+    link.download = 'Samir_Resume.pdf';
+
+    // Check Point #2: Link kaisa dikh raha hai?
+    console.log("Created link element:", link);
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } else {
+    console.error("Resume URL is empty or not available.");
+    alert("Sorry, the resume is not available at the moment.");
   }
+}
+
 
   return (
     <>
@@ -593,9 +665,9 @@ const Hero = () => {
                 transition={{ delay: 0.5 }}
                 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white"
               >
-                Hi, I'm{' '}
+                {heroData.greeting}{' '}
                 <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent animate-pulse-glow">
-                  Samir
+                  {heroData.name}
                 </span>
               </motion.h1>
 
@@ -605,7 +677,8 @@ const Hero = () => {
                 transition={{ delay: 0.6 }}
                 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-700 dark:text-gray-300"
               >
-                AI/ML Engineer & Full Stack Developer
+                {heroData.bio}
+                {/* AI/ML Engineer & Full Stack Developer */}
               </motion.h2>
 
               <motion.div
