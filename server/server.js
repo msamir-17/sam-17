@@ -9,12 +9,11 @@ const cloudinary = require('cloudinary').v2;
 
 
 
-
-
 const internshipRoutes = require('./routes/internshipRoutes.js');
 const certificateRoutes = require('./routes/certificateRoutes.js');
 const userRoutes = require('./routes/userRoutes.js');
 const projectRoutes = require('./routes/projectRoutes.js');
+const heroRoutes = require('./routes/heroRoutes.js')
 
 dotenv.config();
 
@@ -43,8 +42,8 @@ app.get('/', (req,res) => {
 app.use('/api/internships', internshipRoutes);
 app.use('/api/certificates', certificateRoutes);
 app.use('/api/users', userRoutes)
-
 app.use('/api/projects', projectRoutes);
+app.use('/api/hero', heroRoutes)
 
 
 
@@ -52,3 +51,4 @@ app.listen( PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     }
 )
+
