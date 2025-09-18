@@ -11,32 +11,50 @@ const getHero = async (req , res ) => {
     }
 };
 
-const updateHero = async (req , res) => {
-    try {
-        const {name , greeting , bio , jobtitles } = req.body;
-        let updateData = {
-            name,
-            greeting,
-            bio,
-            jobtitles: jobtitles.split(',').map(title => title.trim())
-        };
-        if(req.file){
-            const result =await cloudinary.uploader.upload(req.file.path,{
-                folder: 'Portfolio_Resume',
-                resource_type: 'raw' // PDF ke liye 'raw' use karna accha hai
+// Sirf is function ko replace karein
+// Replace the entire updateHeroData function with this one
 
-            });
-            updateData.resumeurl = result.secure_url
+const updateHero = async (req, res) => {
+    try {
+        const { greeting, name, jobtitles, bio } = req.body;
+        
+        // Start with an empty object to hold only the fields we receive
+        const updatedData = {};
+
+        // Add fields to the object ONLY if they exist in the request
+        if (greeting) updatedData.greeting = greeting;
+        if (name) updatedData.name = name;
+        if (bio) updatedData.bio = bio;
+
+        // --- THE ROBUST FIX for jobtitles ---
+        // Only if jobtitles is a non-empty string, process it
+        if (typeof jobtitles === 'string' && jobtitles.trim() !== '') {
+            updatedData.jobtitles = jobtitles.split(',').map(title => title.trim());
         }
 
-        const heroData = await hero.findOneAndUpdate({}, updateData, {new: true, upsert: true});
+        // --- THE ROBUST FIX for the resume file ---
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'Portfolio_Resume',
+                resource_type: 'raw'
+            });
+            updatedData.resumeurl = result.secure_url;
+        }
+
+        // Find the single hero document and update it with the new data
+        // upsert: true will create it if it doesn't exist
+        const heroData = await hero.findOneAndUpdate(
+            {}, // An empty filter targets the first/only document
+            { $set: updatedData }, // $set ensures only provided fields are updated
+            { new: true, upsert: true, runValidators: true }
+        );
+
         res.status(200).json(heroData);
 
-
+    } catch (error) {
+        console.error("UPDATE HERO FAILED:", error);
+        res.status(500).json({ message: "Server Error: Unable to update Hero data" });
     }
-    catch(err){
-        res.status(500).json({message: err.message});
-    }
-}
+};
 
 module.exports = { getHero , updateHero}

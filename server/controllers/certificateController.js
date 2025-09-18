@@ -1,11 +1,10 @@
 
-const Certificate = require('../models/certificationS.js'); // Importing the Certificate model
-
+const Certificate = require('../models/certificationS.js'); // Sahi model ka naam
+const cloudinary = require('cloudinary').v2;
 const GetCertificate = async (req, res) => {
     try{
-        const Certificates = await Certificate.find({});           // Certificate model se kaho ki database mein jitni bhi internships hain, sab dhoondh kar le aaye
-
-
+        const Certificates = await Certificate.find({});  
+         // Certificate model se kaho ki database mein jitni bhi internships hain, sab dhoondh kar le aaye
         res.status(200).json(Certificates)
     }
     catch(err){
@@ -13,31 +12,54 @@ const GetCertificate = async (req, res) => {
     }
 };
 
-const AddCertificate = async (req, res) =>{
 
-    // Client (admin panel) se aane waale data ko nikalo (title, issuedBy, etc.)
-    const { title, issuedBy, dateEarned, link } = req.body;
+// === GET SINGLE CERTIFICATE BY ID ===
+const GetCertificateById = async (req, res) => {
+    try {
+        const certificate = await Certificate.findById(req.params.id);
 
-    try{
+        if (certificate) {
+            res.status(200).json(certificate);
+        } else {
+            res.status(404).json({ message: 'Certificate not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+// ... Get, Update, Delete functions ...
+
+const AddCertificate = async (req, res) => {
+    try {
+        const { title, issuedBy, dateEarned, category } = req.body;
+        let certificateLink = ''; // Shuru mein khaali
+
+        // Check karo ki file upload hui hai ya nahi
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'General_Certificates'
+            });
+            certificateLink = result.secure_url;
+        } else {
+            // Agar file nahi hai, toh error bhejo
+            return res.status(400).json({ message: 'Certificate file is required.' });
+        }
+
         const newCertificate = new Certificate({
             title,
             issuedBy,
             dateEarned,
-            link
+            category,
+            certificateLink
         });
 
+        const savedCertificate = await newCertificate.save();
+        res.status(201).json(savedCertificate);
 
-// Is nayi internship ko database mein save kar do
-        const saveCertificate = await newCertificate.save();
-
-// Client ko confirmation bhej ne k liye ki internship save ho gayi hai
-        res.status(201).json({message:'New Certificate Added', certificate: saveCertificate});
-
+    } catch (err) {
+        console.error("ADD CERTIFICATE FAILED:", err);
+        res.status(500).json({ message: 'Server Error: Unable to add Certificate' });
     }
-    catch(err){
-        res.status(500).json({message:'Server Error: Unable to add Certificate'});
-    };
-
 };
 
 
@@ -50,24 +72,21 @@ const UpdateCertificate = async (req, res) => {
         // console.log(req.body);
 
         // Step 2: Client (admin panel) se aane waale naye data ko nikalo
-        const {title , issuedBy, dateEarned, link} = req.body;
+        const { title, issuedBy, dateEarned, category } = req.body;
 
         // Step 3: Database mein us ID ko dhoondho aur naye data se update kar do
         const updatedcertificate = await Certificate.findByIdAndUpdate(
             id,
-            { title, issuedBy, dateEarned, link },
-            {new: true} // Yeh option ensure karta hai ki updated document return ho
+            { title, issuedBy, dateEarned, category },
+            {new: true} 
+            // Yeh option ensure karta hai ki updated document return ho
         );
-
         res.status(200).json(updatedcertificate);
-
-
     }
     catch(err){
         res.status(500).json({message:'Server Error: Unable to update Certificate'});
     }
 }
-
 
 const DeleteCertificate = async (req, res) => {
     try{
@@ -85,5 +104,6 @@ module.exports = {
     GetCertificate,
     AddCertificate,
     UpdateCertificate,
-    DeleteCertificate
+    DeleteCertificate,
+    GetCertificateById
 };
