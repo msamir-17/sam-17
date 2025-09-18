@@ -319,7 +319,7 @@ const Header = () => {
     { name: 'About ', href: '#hero', icon: HiUser },
     { name: 'Projects ', href: '#projects', icon: GrProjects },
     { name: 'Skills ', href: '#skills', icon: HiCode },
-    { name: 'Experience ', href: '#experience', icon: HiBriefcase },
+    { name: 'Experience ', href: '#internships', icon: HiBriefcase },
     { name: 'Contact ', href: '#contact', icon: HiPhone }
   ]
  
@@ -498,9 +498,9 @@ const Header = () => {
 
 const Hero = () => {
   const [heroData, setHeroData] = useState({
-    greeting: "Hi, I'm",
+    greeting:"",
     name: 'Samir',
-    jobtitles: ['Loading titles...'],
+    jobtitles: ['Loading...'],
     bio: "Passionate about creating intelligent solutions...",
     resumeurl: ''
   });
@@ -508,11 +508,7 @@ const Hero = () => {
   const titles = heroData.jobtitles;
   
   // [
-  //   'AI Enthusiast',
-  //   'ML Engineer', 
-  //   'Next.js Developer',
-  //   'Web Developer',
-  //   'Hackathon Builder'
+
   // ]         
 
   useEffect(() => {
@@ -573,27 +569,38 @@ const Hero = () => {
 
 // Puraane 'downloadResume' function ko is naye waale se replace karein
 
-const downloadResume = () => {
-  // Check Point #1: Kya humare paas URL hai?
-  console.log("Download button clicked. Resume URL is:", heroData.resumeurl);
+// Yeh sabse reliable tareeka hai
 
-  if (heroData.resumeurl) {
+const downloadResume = async () => {
+  if (!heroData.resumeurl) {
+    alert("Sorry, the resume is not available.");
+    return;
+  }
+
+  try {
+    // Step 1: Backend se file ko download karo
+    const response = await fetch(heroData.resumeurl);
+    // Step 2: File ko ek 'data packet' (blob) mein badlo
+    const blob = await response.blob();
+    // Step 3: Is data packet ke liye ek temporary local URL banao
+    const url = window.URL.createObjectURL(blob);
+    
     const link = document.createElement('a');
-    link.href = heroData.resumeurl;
-    link.download = 'Samir_Resume.pdf';
-
-    // Check Point #2: Link kaisa dikh raha hai?
-    console.log("Created link element:", link);
-
+    link.href = url;
+    link.download = 'Samir_Resume.pdf'; // File ka naam set karo
+    
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-  } else {
-    console.error("Resume URL is empty or not available.");
-    alert("Sorry, the resume is not available at the moment.");
-  }
-}
+    
+    // Cleanup: Temporary URL ko memory se hata do
+    link.remove();
+    window.URL.revokeObjectURL(url);
 
+  } catch (error) {
+    console.error("Error downloading the resume:", error);
+    alert("Could not download the resume.");
+  }
+};
 
   return (
     <>

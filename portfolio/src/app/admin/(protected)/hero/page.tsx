@@ -29,9 +29,9 @@ const EditHeroPage = () => {
                 if (data) {
                     setGreeting(data.greeting);
                     setName(data.name);
-                    setJobTitles(data.jobTitles.join(', '));
+                    setJobTitles(data.jobtitles.join(', '));
                     setBio(data.bio);
-                    setResumeUrl(data.resumeUrl);
+                    setResumeUrl(data.resumeurl);
                 }
             } catch (err) {
                 setError('Failed to fetch hero data.');

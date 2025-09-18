@@ -1,499 +1,3 @@
-// 'use client'
-
-// import { motion } from 'framer-motion'
-// import { useInView } from 'react-intersection-observer'
-// import { HiAcademicCap, HiExternalLink, HiCalendar, HiBriefcase } from 'react-icons/hi'
-// import { Internship } from '@/types'
-
-// const Internships = () => {
-//   const [ref, inView] = useInView({
-//     triggerOnce: true,
-//     threshold: 0.1
-//   })
-
-//   const internships: Internship[] = [
-//     {
-//       id: '1',
-//       role: 'AI/ML Engineer Intern',
-//       organization: 'TechCorp Solutions',
-//       duration: 'Jun 2024 - Aug 2024',
-//       description: 'Developed machine learning models for predictive analytics and worked on natural language processing projects. Implemented automated data pipelines and improved model accuracy by 15%.',
-//       certificateUrl: 'https://certificate.example.com/ml-intern'
-//     },
-//     {
-//       id: '2',
-//       role: 'Full Stack Developer Intern',
-//       organization: 'StartupXYZ',
-//       duration: 'Jan 2024 - May 2024',
-//       description: 'Built responsive web applications using React and Node.js. Collaborated with cross-functional teams to deliver high-quality software solutions and improved application performance by 30%.',
-//       certificateUrl: 'https://certificate.example.com/fullstack-intern'
-//     },
-//     {
-//       id: '3',
-//       role: 'Python Developer Intern',
-//       organization: 'DataTech Labs',
-//       duration: 'Sep 2023 - Dec 2023',
-//       description: 'Developed data analysis tools and automated reporting systems. Created RESTful APIs using FastAPI and worked with large datasets for business intelligence solutions.',
-//       certificateUrl: 'https://certificate.example.com/python-intern'
-//     }
-//   ]
-
-//   const certifications = [
-//     {
-//       id: '1',
-//       name: 'AWS Cloud Practitioner',
-//       issuer: 'Amazon Web Services',
-//       date: '2024',
-//       certificateUrl: 'https://aws.amazon.com/certification/'
-//     },
-//     {
-//       id: '2',
-//       name: 'Machine Learning Specialization',
-//       issuer: 'Stanford University',
-//       date: '2023',
-//       certificateUrl: 'https://coursera.org/ml-specialization'
-//     },
-//     {
-//       id: '3',
-//       name: 'React Developer Certification',
-//       issuer: 'Meta',
-//       date: '2023',
-//       certificateUrl: 'https://meta.com/react-certification'
-//     }
-//   ]
-
-//   const containerVariants = {
-//     hidden: { opacity: 0 },
-//     visible: {
-//       opacity: 1,
-//       transition: {
-//         staggerChildren: 0.2
-//       }
-//     }
-//   }
-
-//   const itemVariants = {
-//     hidden: { opacity: 0, x: -50 },
-//     visible: { 
-//       opacity: 1, 
-//       x: 0,
-//       transition: { duration: 0.6 }
-//     }
-//   }
-
-//   return (
-//     <section id="experience" className="section-padding bg-gray-50 dark:bg-gray-800">
-//       <div className="container-custom">
-//         <motion.div
-//           ref={ref}
-//           initial="hidden"
-//           animate={inView ? "visible" : "hidden"}
-//           variants={containerVariants}
-//         >
-//           <motion.div variants={itemVariants} className="text-center mb-12">
-//             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-//               Experience & <span className="gradient-text">Certifications</span>
-//             </h2>
-//             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-//               My professional journey and continuous learning achievements
-//             </p>
-//           </motion.div>
-
-//           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-//             {/* Internships Section */}
-//             <motion.div variants={itemVariants}>
-//               <div className="flex items-center gap-3 mb-8">
-//                 <HiBriefcase className="w-8 h-8 text-primary-600" />
-//                 <h3 className="text-2xl font-bold">Internships</h3>
-//               </div>
-
-//               <div className="space-y-6">
-//                 {internships.map((internship, index) => (
-//                   <motion.div
-//                     key={internship.id}
-//                     variants={itemVariants}
-//                     className="card p-6 relative"
-//                   >
-//                     {index !== internships.length - 1 && (
-//                       <div className="absolute left-6 top-16 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 to-transparent" />
-//                     )}
-
-//                     <div className="flex items-start gap-4">
-//                       <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center flex-shrink-0">
-//                         <HiBriefcase className="w-6 h-6 text-primary-600" />
-//                       </div>
-
-//                       <div className="flex-1">
-//                         <h4 className="text-xl font-semibold mb-1">{internship.role}</h4>
-//                         <p className="text-primary-600 font-medium mb-2">{internship.organization}</p>
-
-//                         <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-3">
-//                           <HiCalendar className="w-4 h-4" />
-//                           <span className="text-sm">{internship.duration}</span>
-//                         </div>
-
-//                         <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
-//                           {internship.description}
-//                         </p>
-
-//                         {internship.certificateUrl && (
-//                           <motion.a
-//                             href={internship.certificateUrl}
-//                             target="_blank"
-//                             rel="noopener noreferrer"
-//                             whileHover={{ scale: 1.05 }}
-//                             className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-medium"
-//                           >
-//                             <HiExternalLink className="w-4 h-4" />
-//                             View Certificate
-//                           </motion.a>
-//                         )}
-//                       </div>
-//                     </div>
-//                   </motion.div>
-//                 ))}
-//               </div>
-//             </motion.div>
-
-//             {/* Certifications Section */}
-//             <motion.div variants={itemVariants}>
-//               <div className="flex items-center gap-3 mb-8">
-//                 <HiAcademicCap className="w-8 h-8 text-primary-600" />
-//                 <h3 className="text-2xl font-bold">Certifications</h3>
-//               </div>
-
-//               <div className="space-y-4">
-//                 {certifications.map((cert) => (
-//                   <motion.div
-//                     key={cert.id}
-//                     variants={itemVariants}
-//                     whileHover={{ scale: 1.02 }}
-//                     className="card p-6 hover:shadow-lg transition-all duration-300"
-//                   >
-//                     <div className="flex items-center gap-4">
-//                       <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
-//                         <HiAcademicCap className="w-6 h-6 text-white" />
-//                       </div>
-
-//                       <div className="flex-1">
-//                         <h4 className="font-semibold text-lg mb-1">{cert.name}</h4>
-//                         <p className="text-gray-600 dark:text-gray-400 mb-1">{cert.issuer}</p>
-//                         <p className="text-sm text-gray-500">{cert.date}</p>
-//                       </div>
-
-//                       {cert.certificateUrl && (
-//                         <motion.a
-//                           href={cert.certificateUrl}
-//                           target="_blank"
-//                           rel="noopener noreferrer"
-//                           whileHover={{ scale: 1.1 }}
-//                           whileTap={{ scale: 0.95 }}
-//                           className="text-primary-600 hover:text-primary-700"
-//                         >
-//                           <HiExternalLink className="w-5 h-5" />
-//                         </motion.a>
-//                       )}
-//                     </div>
-//                   </motion.div>
-//                 ))}
-//               </div>
-//             </motion.div>
-//           </div>
-//         </motion.div>
-//       </div>
-//     </section>
-//   )
-// }
-
-// export default Internships
-
-// 'use client'
-
-// import { motion } from 'framer-motion'
-// import { useInView } from 'react-intersection-observer'
-// import { HiAcademicCap, HiExternalLink, HiCalendar, HiBriefcase } from 'react-icons/hi'
-// import { HiCheckBadge } from "react-icons/hi2";
-// import { Internship } from '@/types'
-
-// const Internships = () => {
-//   const [ref, inView] = useInView({
-//     triggerOnce: true,
-//     threshold: 0.1
-//   })
-
-//   const internships: Internship[] = [
-//     {
-//       id: '1',
-//       role: 'AI/ML Engineer Intern',
-//       organization: 'TechCorp Solutions',
-//       duration: 'Jun 2024 - Aug 2024',
-//       description: 'Developed machine learning models for predictive analytics and worked on natural language processing projects. Implemented automated data pipelines and improved model accuracy by 15%.',
-//       certificateUrl: 'https://certificate.example.com/ml-intern'
-//     },
-//     {
-//       id: '2',
-//       role: 'Full Stack Developer Intern',
-//       organization: 'StartupXYZ',
-//       duration: 'Jan 2024 - May 2024',
-//       description: 'Built responsive web applications using React and Node.js. Collaborated with cross-functional teams to deliver high-quality software solutions and improved application performance by 30%.',
-//       certificateUrl: 'https://certificate.example.com/fullstack-intern'
-//     },
-//     {
-//       id: '3',
-//       role: 'Python Developer Intern',
-//       organization: 'DataTech Labs',
-//       duration: 'Sep 2023 - Dec 2023',
-//       description: 'Developed data analysis tools and automated reporting systems. Created RESTful APIs using FastAPI and worked with large datasets for business intelligence solutions.',
-//       certificateUrl: 'https://certificate.example.com/python-intern'
-//     }
-//   ]
-
-//   const certifications = [
-//     {
-//       id: '1',
-//       name: 'AWS Cloud Practitioner',
-//       issuer: 'Amazon Web Services',
-//       date: '2024',
-//       certificateUrl: 'https://aws.amazon.com/certification/',
-//       logo: 'https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?w=60&h=60&fit=crop&crop=center'
-//     },
-//     {
-//       id: '2',
-//       name: 'Machine Learning Specialization',
-//       issuer: 'Stanford University',
-//       date: '2023',
-//       certificateUrl: 'https://coursera.org/ml-specialization',
-//       logo: 'https://images.unsplash.com/photo-1607706189992-eae578626c86?w=60&h=60&fit=crop&crop=center'
-//     },
-//     {
-//       id: '3',
-//       name: 'React Developer Certification',
-//       issuer: 'Meta',
-//       date: '2023',
-//       certificateUrl: 'https://meta.com/react-certification',
-//       logo: 'https://images.unsplash.com/photo-1555421689-491a97ff2040?w=60&h=60&fit=crop&crop=center'
-//     }
-//   ]
-
-//   const containerVariants = {
-//     hidden: { opacity: 0 },
-//     visible: {
-//       opacity: 1,
-//       transition: {
-//         staggerChildren: 0.2
-//       }
-//     }
-//   }
-
-//   const itemVariants = {
-//     hidden: { opacity: 0, y: 30 },
-//     visible: { 
-//       opacity: 1, 
-//       y: 0,
-//       transition: { duration: 0.6 }
-//     }
-//   }
-
-//   return (
-//     <section id="experience" className="section-spacing notion-bg">
-//       <div className="section-container">
-//         <motion.div
-//           ref={ref}
-//           initial="hidden"
-//           animate={inView ? "visible" : "hidden"}
-//           variants={containerVariants}
-//         >
-//           <motion.div variants={itemVariants} className="text-center mb-16">
-//             <motion.div className="inline-block mb-4" whileHover={{ scale: 1.1 }}>
-//               <span className="px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white text-sm font-semibold rounded-full">
-//                 🎓 Professional Journey
-//               </span>
-//             </motion.div>
-//             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
-//               Experience &{' '}
-//               <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-//                 Certifications
-//               </span>
-//             </h2>
-//             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-//               My professional journey and continuous learning achievements that shape my expertise in AI, ML, and full-stack development
-//             </p>
-//           </motion.div>
-
-//           <div className="grid grid-cols-1 xl:grid-cols-2 gap-16">
-//             {/* Internships Section */}
-//             <motion.div variants={itemVariants} className="space-y-8">
-//               <div className="flex items-center gap-4 mb-12">
-//                 <div className="p-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl shadow-lg">
-//                   <HiBriefcase className="w-8 h-8 text-white" />
-//                 </div>
-//                 <div>
-//                   <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Internships</h3>
-//                   <p className="text-gray-600 dark:text-gray-400">Building experience through hands-on work</p>
-//                 </div>
-//               </div>
-
-//               <div className="space-y-8">
-//                 {internships.map((internship, index) => (
-//                   <motion.div
-//                     key={internship.id}
-//                     variants={itemVariants}
-//                     whileHover={{ scale: 1.02, y: -5 }}
-//                     className="relative"
-//                   >
-//                     {index !== internships.length - 1 && (
-//                       <div className="absolute left-8 top-20 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500" />
-//                     )}
-
-//                     <div className="glass-effect p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50">
-//                       <div className="flex items-start gap-6">
-//                         <motion.div 
-//                           className="flex-shrink-0 w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg"
-//                           whileHover={{ rotate: 360, scale: 1.1 }}
-//                           transition={{ duration: 0.6 }}
-//                         >
-//                           <HiBriefcase className="w-8 h-8 text-white" />
-//                         </motion.div>
-
-//                         <div className="flex-1 space-y-4">
-//                           <div>
-//                             <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{internship.role}</h4>
-//                             <p className="text-blue-600 dark:text-blue-400 font-semibold text-lg">{internship.organization}</p>
-//                           </div>
-//                           <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-//                             <HiCalendar className="w-5 h-5" />
-//                             <span className="font-medium">{internship.duration}</span>
-//                           </div>
-//                           <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{internship.description}</p>
-
-//                           {internship.certificateUrl && (
-//                             <motion.a
-//                               href={internship.certificateUrl}
-//                               target="_blank"
-//                               rel="noopener noreferrer"
-//                               whileHover={{ scale: 1.05 }}
-//                               className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors group"
-//                             >
-//                               <HiExternalLink className="w-5 h-5 group-hover:scale-110 transition-transform" />
-//                               View Certificate
-//                             </motion.a>
-//                           )}
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </motion.div>
-//                 ))}
-//               </div>
-//             </motion.div>
-
-//             {/* Certifications Section */}
-//             <motion.div variants={itemVariants} className="space-y-8">
-//               <div className="flex items-center gap-4 mb-12">
-//                 <div className="p-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl shadow-lg">
-//                   <HiAcademicCap className="w-8 h-8 text-white" />
-//                 </div>
-//                 <div>
-//                   <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Certifications</h3>
-//                   <p className="text-gray-600 dark:text-gray-400">Validated skills and expertise</p>
-//                 </div>
-//               </div>
-
-//               <div className="space-y-6">
-//                 {certifications.map((cert, index) => (
-//                   <motion.div
-//                     key={cert.id}
-//                     variants={itemVariants}
-//                     whileHover={{ scale: 1.03, y: -3 }}
-//                     className="glass-effect p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 group"
-//                   >
-//                     <div className="flex items-center gap-6">
-//                       <div className="flex-shrink-0 relative">
-//                         <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-//                           <HiCheckBadge className="w-8 h-8 text-white" />
-//                         </div>
-//                         <motion.div
-//                           className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center"
-//                           animate={{ rotate: [0, 10, -10, 0] }}
-//                           transition={{ duration: 2, repeat: Infinity }}
-//                         >
-//                           <span className="text-xs">✓</span>
-//                         </motion.div>
-//                       </div>
-
-//                       <div className="flex-1 space-y-2">
-//                         <h4 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-//                           {cert.name}
-//                         </h4>
-//                         <p className="text-gray-600 dark:text-gray-400 font-medium">{cert.issuer}</p>
-//                         <p className="text-sm text-gray-500 dark:text-gray-500">Earned in {cert.date}</p>
-//                       </div>
-
-//                       {cert.certificateUrl && (
-//                         <motion.a
-//                           href={cert.certificateUrl}
-//                           target="_blank"
-//                           rel="noopener noreferrer"
-//                           whileHover={{ scale: 1.2, rotate: 15 }}
-//                           whileTap={{ scale: 0.9 }}
-//                           className="p-3 text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition-colors"
-//                         >
-//                           <HiExternalLink className="w-6 h-6" />
-//                         </motion.a>
-//                       )}
-//                     </div>
-//                   </motion.div>
-//                 ))}
-//               </div>
-//             </motion.div>
-//           </div>
-
-//           {/* Achievement Stats */}
-//           <motion.div
-//             variants={itemVariants}
-//             className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
-//           >
-//             {[
-//               { label: 'Internships Completed', value: '3+', icon: '💼', color: 'from-blue-500 to-purple-500' },
-//               { label: 'Certifications Earned', value: '10+', icon: '🏆', color: 'from-green-500 to-emerald-500' },
-//               { label: 'Skills Mastered', value: '15+', icon: '⚡', color: 'from-orange-500 to-red-500' },
-//               { label: 'Projects Built', value: '20+', icon: '🚀', color: 'from-pink-500 to-purple-500' }
-//             ].map((stat, index) => (
-//               <motion.div
-//                 key={stat.label}
-//                 variants={itemVariants}
-//                 whileHover={{ scale: 1.05, y: -5 }}
-//                 className="text-center"
-//               >
-//                 <div className={`p-6 bg-gradient-to-r ${stat.color} rounded-2xl shadow-lg mb-4 mx-auto w-fit`}>
-//                   <div className="text-3xl">{stat.icon}</div>
-//                 </div>
-//                 <motion.div
-//                   className="text-3xl font-bold text-gray-900 dark:text-white mb-2"
-//                   initial={{ scale: 0 }}
-//                   animate={inView ? { scale: 1 } : { scale: 0 }}
-//                   transition={{ delay: 0.5 + index * 0.1, type: "spring", stiffness: 300 }}
-//                 >
-//                   {stat.value}
-//                 </motion.div>
-//                 <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">
-//                   {stat.label}
-//                 </p>
-//               </motion.div>
-//             ))}
-//           </motion.div>
-//         </motion.div>
-//       </div>
-//     </section>
-//   )
-// }
-
-// export default Internships
-
-
-
-
-
-
 
 'use client'
 
@@ -501,10 +5,13 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { HiAcademicCap, HiExternalLink, HiCalendar, HiBriefcase } from 'react-icons/hi'
 import { HiCheckBadge } from 'react-icons/hi2'
-import { Internship } from '@/types'
 
 import { useState, useEffect } from 'react';
 import axios from 'axios'
+
+
+// hey cloude nice kaam kya  ab is ss me dekho view certificate ka btn mujhe us div me apne certificate ka thumpnail dikhana h  agar uspe user click krega toh ek modal open hoga usme full certificate dikhayi dega or  modal cancel ka X btn rahega  View Certificate yaha pe  update only internship section certificate fully responsive dont touch backend ohk
+
 
 // Backend se match karne ke liye naya Internship type
 interface DynamicInternship {
@@ -597,6 +104,8 @@ const Internships = () => {
   const [internships, setInternships] = useState<DynamicInternship[]>([]);
   const [certifications, setCertifications] = useState<DynamicCertificate[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [selectedCertificate, setSelectedCertificate] = useState<string | null>(null);
 
   // useState ke neeche yeh code add karein
 
@@ -752,7 +261,7 @@ const Internships = () => {
             </motion.div>
 
             {/* Internships Grid */}
-            <div className="space-y-12">
+            <div className="space-y-12 max-h-[90vh] overflow-y-auto pr-4 custom-scrollbar ">
               {internships.map((internship, index) => (
                 <motion.div
                   key={internship._id}
@@ -810,32 +319,22 @@ const Internships = () => {
                   {/* Visual Element */}
                   <div className="lg:w-1/2 flex items-center justify-center">
                     <motion.div
-                      className="w-120 h-64 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center"
+                      onClick={() => internship.certificateUrl && setSelectedCertificate(internship.certificateUrl)}
 
-
+                      className={`w-120 h-64 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center ${internship.certificateUrl ? 'cursor-pointer' : ''}`}
+                    // className="w-120 h-64 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center"
                     >
-
                       <div className="w-108 h-50 bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center shadow-2xl">
-                        <span className="text-4xl font-bold text-white"> 
+                        <span className="text-4xl font-bold text-white">
                           {internship.certificateUrl && (
-                            <motion.a
-                              href={internship.certificateUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              whileHover={{ scale: 1.05 }}
-                              className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold"
-                            >
-                              <HiExternalLink />
-                              View Certificate
-                            </motion.a>
+                            <img
+                              src={internship.certificateUrl}
+                              alt={`${internship.company} certificate`}
+                              className="w-108 h-50  object-cover"
+                            />
                           )}
                         </span>
                       </div>
-
-
-                      
-
-
                     </motion.div>
                   </div>
                 </motion.div>
@@ -996,6 +495,37 @@ const Internships = () => {
           </motion.div>
         </div>
       </section>
+      {selectedCertificate && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedCertificate(null)} // Bahar click karne par modal band ho
+        >
+          <div
+            className="relative bg-white dark:bg-gray-900 rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()} // Image par click karne se modal band na ho
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedCertificate(null)}
+              className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Certificate Image */}
+            <img
+              src={selectedCertificate}
+              alt="Certificate Preview"
+              className="w-full h-full object-contain"
+            />
+          </div>
+        </motion.div>
+      )}
     </>
   )
 }
