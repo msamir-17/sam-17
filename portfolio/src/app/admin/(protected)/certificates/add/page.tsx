@@ -19,7 +19,7 @@ const AddCertificatePage = () => {
     const [error, setError] = useState('');
     const router = useRouter();
 
-    const [ dateEarned, setDateEarned ] = useState<Date | null>(null);
+    const [dateEarned, setDateEarned] = useState<Date | null>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -28,12 +28,12 @@ const AddCertificatePage = () => {
     };
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
-    // Pehle check karein ki date select hui hai ya nahi
+
+        // Pehle check karein ki date select hui hai ya nahi
         if (!dateEarned) {
-        setError('Please select the date earned.');
-        return;
-    }
+            setError('Please select the date earned.');
+            return;
+        }
         // File ko required banayein
         if (!certificateFile) {
             setError('Please select a certificate file.');
@@ -93,18 +93,18 @@ const AddCertificatePage = () => {
                     <input type="text" id="issuedBy" value={issuedBy} onChange={(e) => setIssuedBy(e.target.value)} required className="input-field" />
                 </div>
                 <div>
-    <label htmlFor="dateEarned" className="block text-sm font-medium text-gray-400">
-        Date Earned
-    </label>
-    <DatePicker
-        selected={dateEarned}
-        onChange={(date) => setDateEarned(date)}
-        dateFormat="dd/MM/yyyy"
-        className="input-field" // Hum wahi class use kar rahe hain
-        placeholderText="Select the date"
-        required // Ise required banayein
-    />
-</div>
+                    <label htmlFor="dateEarned" className="block text-sm font-medium text-gray-400">
+                        Date Earned
+                    </label>
+                    <DatePicker
+                        selected={dateEarned}
+                        onChange={(date) => setDateEarned(date)}
+                        dateFormat="dd/MM/yyyy"
+                        className="input-field" // Hum wahi class use kar rahe hain
+                        placeholderText="Select the date"
+                        required // Ise required banayein
+                    />
+                </div>
                 <div>
                     <label htmlFor="category" className="block text-sm font-medium text-gray-400">Category</label>
                     <select

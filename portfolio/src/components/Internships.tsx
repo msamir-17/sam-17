@@ -29,7 +29,7 @@ interface DynamicCertificate {
   title: string;       // Aapke hardcoded data mein 'name' tha
   issuedBy: string;    // Aapke hardcoded data mein 'issuer' tha
   dateEarned: string;  // Aapke hardcoded data mein 'date' tha
-  certificateUrl: string; // Aapke hardcoded data mein 'certificateUrl' tha
+  certificateLink: string; // Aapke hardcoded data mein 'certificateUrl' tha
 }
 const Internships = () => {
   const [internshipsRef, internshipsInView] = useInView({
@@ -409,6 +409,7 @@ const Internships = () => {
                   key={cert._id}
                   variants={leftToRightVariants}
                   whileHover={{ scale: 1.05, y: -10 }}
+                  onClick={() => cert.certificateLink && setSelectedCertificate(cert.certificateLink)}
                   className="glass-effect p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 group bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm"
                 >
                   <div className="text-center space-y-4">
@@ -417,8 +418,22 @@ const Internships = () => {
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto">
-                        <HiCheckBadge className="w-10 h-10 text-white" />
+
+                      <div className="w-80 h-40 bg-gradient-to-br from-emerald-500 to-green-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto overflow-hidden">
+                        {cert.certificateLink ? (
+                          // Agar certificate ka link hai, toh thumbnail dikhao
+                          <img
+                            src={cert.certificateLink}
+                            alt={`${cert.title} Certificate`}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                          />
+                        ) : (
+                          // Agar link nahi hai, toh ek placeholder dikhao
+                          <div className="flex flex-col items-center text-white">
+                            <HiCheckBadge className="w-12 h-12" />
+                            <span className="mt-2 font-semibold">Certificate</span>
+                          </div>
+                        )}
                       </div>
                       <motion.div
                         className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center"
@@ -440,21 +455,6 @@ const Internships = () => {
                         Earned in {cert.dateEarned}
                       </p>
                     </div>
-
-                    {cert.certificateUrl && (
-                      <motion.a
-                        href={cert.certificateUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-lg font-medium hover:from-emerald-600 hover:to-green-600 transition-colors"
-                      >
-                        <HiExternalLink className="w-4 h-4" />
-                        View Certificate
-                      </motion.a>
-                    )}
-
                     {/* Progress Indicator */}
                     <motion.div
                       className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"

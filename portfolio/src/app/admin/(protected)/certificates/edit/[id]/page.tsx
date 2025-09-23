@@ -4,6 +4,8 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const EditCertificatePage = () => {
 
@@ -19,8 +21,9 @@ const EditCertificatePage = () => {
     const [ dateEarned, setDateEarned ] = useState<Date | null>(null);
 
     const [certificatePreview, setCertificatePreview] = useState('');
-    const [certificateFile, newCertificateFile] = useState<File | null>(null); // Nayi certificate ke liye state
-
+    // const [certificateFile, setnewCertificateFile] = useState<File | null>(null); // Nayi certificate ke liye state
+// Isse badlein
+    const [newCertificateFile, setNewCertificateFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -89,8 +92,8 @@ const EditCertificatePage = () => {
         // formData.append('certificateUrl', certificatePreview); // Purani certificate URL bhi bhejein
         
         // Sirf tabhi certificate add karo agar user ne nayi file select ki hai
-        if (certificateFile) {
-            formData.append('certificates', certificateFile);
+        if (newCertificateFile) {
+            formData.append('certificateFile', newCertificateFile); // Yahan 'certificateFile' hona chahiye
         }
 
         try {
@@ -142,18 +145,42 @@ const EditCertificatePage = () => {
                 <div>
                     <label htmlFor="issuedBy" className="block text-sm font-medium text-gray-400">issuedBy</label>
                     <textarea id="issuedBy" value={issuedBy} onChange={(e) => setIssuedBy(e.target.value)} required rows={4} className="input-field"></textarea>
-                </div>                
+                </div> 
+
+                <div>
+                    <label htmlFor="dateEarned" className="block text-sm font-medium text-gray-400">
+                        Date Earned
+                    </label>
+                    <DatePicker
+                        selected={dateEarned}
+                        onChange={(date) => setDateEarned(date)}
+                        dateFormat="dd/MM/yyyy"
+                        className="input-field" // Hum wahi class use kar rahe hain
+                        placeholderText="Select the date"
+                        required // Ise required banayein
+                    />
+                </div>               
 
                 {/* category */}
                 <div>
                     <label htmlFor="category" className="block text-sm font-medium text-gray-400">category</label>
-                    <input type="text" id="category" value={category} onChange={(e) => setCategory(e.target.value)} required className="input-field" />
-                </div>
-
-                {/* Live URL */}
-                <div>
-                    <label htmlFor="duration" className="block text-sm font-medium text-gray-400">Duration </label>
-                    <input type="text" id="duration" value={duration} onChange={(e) => setDuration(e.target.value)} className="input-field" />
+                    {/* <input type="text" id="category" value={category} onChange={(e) => setCategory(e.target.value)} required className="input-field" /> */}
+                    <select
+                        id="category"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        required
+                        className="input-field"
+                    >
+                        <option value="" disabled>Select a category</option>
+                        <option value="Course">Course</option>
+                        <option value="Participation">Participation</option>
+                        <option value="Hackathon">Hackathon</option>
+                        <option value="Workshop">Workshop</option>
+                        <option value="Competition">Competition</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </div>
 
                 {/* certificate Upload */}
@@ -168,7 +195,7 @@ const EditCertificatePage = () => {
                         id="certificate"
                         onChange={(e) => {
                             if (e.target.files) {
-                                newCertificateFile(e.target.files[0]);
+                                setNewCertificateFile(e.target.files[0]);
                                 // Nayi certificate select hone par preview bhi badal dein
                                 setCertificatePreview(URL.createObjectURL(e.target.files[0]));
                             }
