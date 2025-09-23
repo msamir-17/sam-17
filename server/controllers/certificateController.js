@@ -2,13 +2,13 @@
 const Certificate = require('../models/certificationS.js'); // Sahi model ka naam
 const cloudinary = require('cloudinary').v2;
 const GetCertificate = async (req, res) => {
-    try{
-        const Certificates = await Certificate.find({});  
-         // Certificate model se kaho ki database mein jitni bhi internships hain, sab dhoondh kar le aaye
+    try {
+        const Certificates = await Certificate.find({});
+        // Certificate model se kaho ki database mein jitni bhi internships hain, sab dhoondh kar le aaye
         res.status(200).json(Certificates)
     }
-    catch(err){
-        res.status(500).json({message:'Server Error in fetching Certificates'});
+    catch (err) {
+        res.status(500).json({ message: 'Server Error in fetching Certificates' });
     }
 };
 
@@ -63,40 +63,50 @@ const AddCertificate = async (req, res) => {
 };
 
 
+// Sirf is function ko replace karein
+
 const UpdateCertificate = async (req, res) => {
     try {
-        // Step 1: URL se us internship ki ID nikalo jise update karna hai
-        const { id } = req.params;
-
-        // console.log(id);
-        // console.log(req.body);
-
-        // Step 2: Client (admin panel) se aane waale naye data ko nikalo
         const { title, issuedBy, dateEarned, category } = req.body;
+        
+        const updatedData = { title, issuedBy, dateEarned, category };
 
-        // Step 3: Database mein us ID ko dhoondho aur naye data se update kar do
-        const updatedcertificate = await Certificate.findByIdAndUpdate(
-            id,
-            { title, issuedBy, dateEarned, category },
-            {new: true} 
-            // Yeh option ensure karta hai ki updated document return ho
+        // Check karo ki user ne nayi file upload ki hai ya nahi
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'General_Certificates'
+            });
+            // Naye URL ko updatedData object mein add kar do
+            updatedData.certificateLink = result.secure_url;
+        }
+
+        const updatedCertificate = await Certificate.findByIdAndUpdate(
+            req.params.id,
+            updatedData,
+            { new: true }
         );
-        res.status(200).json(updatedcertificate);
+
+        if (!updatedCertificate) {
+            return res.status(404).json({ message: "Certificate not found to update." });
+        }
+
+        res.status(200).json(updatedCertificate);
+
+    } catch (err) {
+        console.error("--- UPDATE CERTIFICATE FAILED ---", err);
+        res.status(500).json({ message: 'Server Error: Unable to update Certificate' });
     }
-    catch(err){
-        res.status(500).json({message:'Server Error: Unable to update Certificate'});
-    }
-}
+};
 
 const DeleteCertificate = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
         await Certificate.findByIdAndDelete(id)
 
-        res.status(200).json({message:'Certificate Deleted Successfully'});
+        res.status(200).json({ message: 'Certificate Deleted Successfully' });
     }
-    catch(err){
-        res.status(500).json({message:'Server Error: Unable to delete Certificate'});
+    catch (err) {
+        res.status(500).json({ message: 'Server Error: Unable to delete Certificate' });
     }
 }
 

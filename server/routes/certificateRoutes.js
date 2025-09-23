@@ -17,9 +17,10 @@ const {
 router.get('/', GetCertificate);
 //
 router.get('/:id', GetCertificateById);
+//
 router.post('/', protect, upload.single('certificateFile'), AddCertificate);
 //
-router.put('/:id', UpdateCertificate);
+router.put('/:id', protect, upload.single('certificateFile'), UpdateCertificate);
 //
 router.delete('/:id', DeleteCertificate);   
 
