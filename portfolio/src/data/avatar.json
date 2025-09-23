@@ -1,0 +1,49 @@
+{
+  "asset_id": "TpGPRoVNR",
+  "character": {
+    "age_appearance": "young-teen",
+    "gender_presentation": "androgynous",
+    "identity_markers": {
+      "face": "matches reference — same facial features and friendly expression",
+      "glasses": "round black frames",
+      "hair": "purple textured hair, short voluminous style",
+      "earrings": "pink tassel earrings"
+    }
+  },
+  "outfit": {
+    "top": {
+      "type": "layered with visible pink hoodie",
+      "color": "pastel pink (hoodie)",
+      "details": "hoodie visible under outer layer, soft fabric texture"
+    },
+    "outer": {
+      "type": "light jacket (kept subtle)",
+      "color": "soft blue tones",
+      "details": "open front, casual fit"
+    },
+    "bottom": {
+      "type": "slim joggers",
+      "color": "matching pastel pink",
+      "details": "soft fabric, subtle seam details"
+    },
+    "shoes": {
+      "type": "white low-top sneakers",
+      "condition": "clean, minimal scuffing"
+    },
+    "accessories": {
+      "backpack": "straps visible on shoulders, continued down the back",
+      "other": "no logos or added props"
+    }
+  },
+  "background": {
+    "type": "studio gradient",
+    "colors": {
+      "primary": "soft blue",
+      "secondary": "darker blue toward edges"
+    }
+  },
+  "render_settings": {
+    "style": "high-quality 3D stylized character render",
+    "resolution_recommendation": "4096x6144 (2:3)"
+  }
+}

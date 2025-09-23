@@ -262,6 +262,7 @@
 
 'use client'
 // import ClientOnly from './ClientOnly';
+// import avatarData from "../data/avatar.json";
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { HiDownload, HiMail, HiSparkles, HiMenu, HiX, HiHome, HiUser, HiCode, HiBriefcase, HiPhone, HiSun, HiMoon } from 'react-icons/hi'
@@ -768,7 +769,11 @@ const downloadResume = async () => {
                   <div className="w-full h-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full p-1 shadow-2xl">
                     <div className="w-full h-full bg-white dark:bg-gray-900 rounded-full flex items-center justify-center relative overflow-hidden">
                       {/* Developer Emoji */}
-                      <div className="text-8xl lg:text-9xl">👨‍💻</div>
+                      {/* <div className="text-8xl lg:text-9xl">👨‍💻
+
+                      </div> */}
+                      <img src="/avtar.jpg" alt="Avatar" className="w-80 h-80 rounded-full object-cover" />
+
                       
                       {/* Floating Code Elements */}
                       <motion.div 
@@ -790,7 +795,7 @@ const downloadResume = async () => {
                         animate={{ y: [-5, 5, -5] }}
                         transition={{ duration: 3, repeat: Infinity }}
                       >
-                        ⚡
+                      
                       </motion.div>
                     </div>
                   </div>
