@@ -1,9 +1,11 @@
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-
+import LayoutWrapper from './LayoutWrapper';
 import './globals.css';
 
-import ThemeToggle from '@/components/ThemeToggle';
+// import ThemeToggle from '@/components/ThemeToggle';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <main className="min-h-screen">
+          <LayoutWrapper>
           {children}
+        </LayoutWrapper>
         </main>
       </body>
     </html>
