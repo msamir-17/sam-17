@@ -39,6 +39,7 @@ export interface Interest {
   name: string;
   icon?: string;
   color?: string;
+  description?: string;
 }
 
 export interface ContactForm {

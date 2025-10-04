@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion ,Variants  } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { 
   SiPython, SiJavascript, SiReact, SiNextdotjs, SiMongodb, 
@@ -62,24 +62,24 @@ const Skills = () => {
     { name: 'AI/ML', color: 'from-purple-500 to-pink-500', skills: skills.filter(s => s.category === 'ai') },
   ]
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
     }
   }
+};
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6 }
-    }
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6 }
   }
+};
 
   return (
     <section id="skills" className="section-spacing notion-bg">

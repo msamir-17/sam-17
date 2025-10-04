@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion';
+import { motion ,Variants, Easing  } from 'framer-motion';
 import axios from 'axios';
 import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
@@ -65,40 +65,41 @@ const Projects = () => {
     setCurrentIndex(index);
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
+const easeCustom: Easing = [0.25, 0.46, 0.45, 0.94]; // cubic-bezier equivalent
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      transition: { 
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2
     }
-  };
+  }
+};
 
-  const shimmerVariants = {
-    animate: {
-      x: ['-100%', '100%'],
-      transition: {
-        repeat: Infinity,
-        duration: 1.5,
-        ease: 'linear'
-      }
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: { 
+      duration: 0.5,
+      ease: easeCustom
     }
-  };
+  }
+};
+const shimmerVariants: Variants = {
+  animate: {
+    x: ['-100%', '100%'],
+    transition: {
+      repeat: Infinity,
+      duration: 1.5,
+      ease: 'linear' as any // linear string ko type-safe karne ke liye
+    }
+  }
+};
 
   // Loading Skeleton Component
   const ProjectSkeleton = () => (

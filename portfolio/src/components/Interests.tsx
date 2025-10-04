@@ -159,7 +159,7 @@
 // export default Interests
 
 'use client'
-
+import { Variants,Easing } from "framer-motion";
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { FaBrain, FaRobot, FaCode, FaReact } from 'react-icons/fa'
@@ -214,25 +214,57 @@ const Interests = () => {
     }
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15
-      }
-    }
-  }
+  // const containerVariants = {
+  //   hidden: { opacity: 0 },
+  //   visible: {
+  //     opacity: 1,
+  //     transition: {
+  //       staggerChildren: 0.15
+  //     }
+  //   }
+  // }
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.7, type: "spring", stiffness: 100 }
+  // const itemVariants = {
+  //   hidden: { opacity: 0, y: 50, scale: 0.8 },
+  //   visible: { 
+  //     opacity: 1, 
+  //     y: 0,
+  //     scale: 1,
+  //     transition: { duration: 0.7, type: "spring" , stiffness: 100 }
+  //   }
+  // }
+
+
+const ease: Easing = [0.42, 0, 0.58, 1]; // cubic-bezier for smooth easing
+
+const sectionHeaderVariants: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.7, ease: ease } // ✅ type-safe
+  }
+};
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15
     }
   }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 50, scale: 0.8 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.7, type: "spring", stiffness: 100 }
+  }
+};
 
   return (
     <section id="interests" className="section-spacing relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-purple-950 overflow-hidden">

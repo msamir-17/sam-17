@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { HiExternalLink, HiCalendar, HiBriefcase } from 'react-icons/hi'
 import { HiCheckBadge } from 'react-icons/hi2'
-
+import { Variants, Easing } from "framer-motion";
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 
@@ -41,6 +41,19 @@ const Internships = () => {
     triggerOnce: true,
     threshold: 0.1
   })
+
+
+  
+  const ease: Easing = [0.42, 0, 0.58, 1]; // cubic-bezier equivalent of easeInOut
+
+  const sectionHeaderVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.7, ease: ease } // ✅ type-safe
+    }
+  };
 
   // const internships: Internship[] = [
   //   {
@@ -143,55 +156,41 @@ const Internships = () => {
       }
     }
   }
-
-  const leftToRightVariants = {
-    hidden: {
-      opacity: 0,
-      x: -100,
-      scale: 0.8
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
+const leftToRightVariants = {
+  hidden: { opacity: 0, x: -100, scale: 0.8 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    scale: 1, 
+    transition: { duration: 0.8, ease: "easeOut" as any } 
   }
+}
 
-  const rightToLeftVariants = {
-    hidden: {
-      opacity: 0,
-      x: 100,
-      scale: 0.8
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
+const rightToLeftVariants = {
+  hidden: { opacity: 0, x: 100, scale: 0.8 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    scale: 1, 
+    transition: { duration: 0.8, ease: "easeOut" as any } 
   }
+}
 
-  const sectionHeaderVariants = {
-    hidden: {
-      opacity: 0,
-      y: -50
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  }
+
+  // const sectionHeaderVariants = {
+  //   hidden: {
+  //     opacity: 0,
+  //     y: -50
+  //   },
+  //   visible: {
+  //     opacity: 1,
+  //     y: 0,
+  //     transition: {
+  //       duration: 0.6,
+  //       ease: "easeOut"
+  //     }
+  //   }
+  // }
   if (loading) {
     return (
       <section className="min-h-screen flex items-center justify-center">
