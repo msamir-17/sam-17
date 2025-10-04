@@ -11,7 +11,7 @@ const Footer = () => {
   const [ clickCount, setClickCount] = useState(0);
   const router = useRouter();
   const currentYear = new Date().getFullYear()
-  const [hoveredSocial, setHoveredSocial] = useState(null)
+  const [hoveredSocial, setHoveredSocial] = useState<number | null>(null);
 
   const handleSecretClick = () => {
     const newCount = clickCount + 1;
