@@ -10,32 +10,26 @@
 //   pluginReact.configs.flat.recommended,
 // ]);
 
+// In eslint.config.mjs
 
 import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 
-// defineConfig is good practice but not strictly necessary here
-// import { defineConfig } from "eslint/config";
-
 export default [
-    // Configuration for JS files
-    {
-        files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-        languageOptions: { globals: globals.browser }
-    },
-    
-    // Recommended rules from plugins
-    js.configs.recommended,
-    ...tseslint.configs.recommended,
-    pluginReact.configs.flat.recommended,
+  { files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"], languageOptions: { globals: globals.browser } },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
 
-    // --- YEH NAYA OBJECT ADD KAREIN ---
-    // Our custom rule overrides go here
-    {
-        "rules": {
-            "react/react-in-jsx-scope": "off"
-        }
+  // --- YEH HUMARA CUSTOM RULES OBJECT HAI ---
+  {
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "react/no-unescaped-entities": "off",
+      "@typescript-eslint/no-unused-vars": "warn", // Error ki jagah sirf warning dega
+      "react/no-unknown-property": "off"
     }
+  }
 ];

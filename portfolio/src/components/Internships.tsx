@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { HiAcademicCap, HiExternalLink, HiCalendar, HiBriefcase } from 'react-icons/hi'
+import { HiExternalLink, HiCalendar, HiBriefcase } from 'react-icons/hi'
 import { HiCheckBadge } from 'react-icons/hi2'
 
 import { useState, useEffect } from 'react';

@@ -165,7 +165,6 @@ import { useInView } from 'react-intersection-observer'
 import { FaBrain, FaRobot, FaCode, FaReact } from 'react-icons/fa'
 import { HiSparkles } from 'react-icons/hi'
 import { Interest } from '@/types'
-import { variants } from "framer-motion";
 
 const Interests = () => {
   const [ref, inView] = useInView({
