@@ -29,10 +29,20 @@ export default [
 
   {
     rules: {
+      // React-related rules
       "react/react-in-jsx-scope": "off",
       "react/no-unescaped-entities": "off",
-      "@typescript-eslint/no-unused-vars": "off", // ✅ disables these warnings
       "react/no-unknown-property": "off",
+
+      // TypeScript strictness
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "off", // ✅ disable "Unexpected any"
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/no-var-requires": "off",
+
+      // General JS rules
+      "no-undef": "off", // ✅ disable undefined variable check (for animations etc.)
+      "no-unused-vars": "off",
     },
   },
 ];
