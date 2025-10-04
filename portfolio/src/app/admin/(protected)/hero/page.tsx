@@ -103,7 +103,7 @@ const EditHeroPage = () => {
                 {/* Resume */}
                 <div>
                     <label>Resume</label>
-                    {resumeUrl && <a href={resumeUrl} target="_blank" className="text-blue-400 block my-2">View Current Resume</a>}
+                    {resumeUrl && <a href={resumeUrl} target="_blank" rel="noopener noreferrer"  className="text-blue-400 block my-2">View Current Resume</a>}
                     <input type="file" onChange={(e) => e.target.files && setNewResumeFile(e.target.files[0])} accept=".pdf" className="mt-2 text-sm ..." />
                 </div>
                 <button type="submit" disabled={updating} className="px-6 py-2 rounded-md ...">

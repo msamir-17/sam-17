@@ -43,6 +43,7 @@ export default [
       // General JS rules
       "no-undef": "off", // ✅ disable undefined variable check (for animations etc.)
       "no-unused-vars": "off",
+      "react/jsx-no-target-blank": "off"
     },
   },
 ];
