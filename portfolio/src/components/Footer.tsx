@@ -111,7 +111,7 @@ const Footer = () => {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, threshold: 0.2 }}
+            viewport={{ once: true }}
             variants={containerVariants}
           >
             {/* Main Footer Content */}
