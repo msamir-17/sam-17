@@ -290,7 +290,10 @@ const Hero = () => {
     const fetchHeroData = async () => {
       try{
         setLoading(true);
-        const response = await axios.get('http://localhost:5000/api/hero');
+        // const response = await axios.get('http://localhost:5000/api/hero');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/hero`);
+
+
             // Agar data milta hai, toh use state mein set kar do
 
         if(response.data){

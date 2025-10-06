@@ -31,7 +31,8 @@ const Projects = () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await axios.get('http://localhost:5000/api/projects');
+        // const response = await axios.get('http://localhost:5000/api/projects');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`);
         setProjects(response.data);
       } catch (error) {
         console.error("Failed to fetch projects from API:", error);
@@ -709,3 +710,5 @@ const shimmerVariants: Variants = {
 }
 
 export default Projects
+
+// https://dashboard.render.com/web/srv-d3ggc7qli9vc73f441i0/deploys/dep-d3ggc82li9vc73f441ng

@@ -129,8 +129,10 @@ const Internships = () => {
 
         // Promise.all ka istemaal karke dono requests ek saath bhejein
         const [internshipsRes, certificationsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/internships'),
-          axios.get('http://localhost:5000/api/certificates')
+          // axios.get('http://localhost:5000/api/internships'),
+          // axios.get('http://localhost:5000/api/certificates')
+           await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/internships`),
+           await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/certificates`)
         ]);
 
         // Dono ke data ko respective states mein daal dein

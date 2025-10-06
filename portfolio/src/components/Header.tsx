@@ -53,11 +53,11 @@ const Header = () => {
   }, [])
 
   const navigationLinks = [
-    { name: 'About ', href: '#hero', icon: HiUser },
-    { name: 'Projects ', href: '#projects', icon: GrProjects },
+    { name: 'About ', href: '#Hero', icon: HiUser },
+    { name: 'Projects ', href: '#Projects', icon: GrProjects },
     { name: 'Skills ', href: '#skills', icon: HiCode },
-    { name: 'Experience ', href: '#internships', icon: HiBriefcase },
-    { name: 'Contact ', href: '#contact', icon: HiPhone }
+    { name: 'Experience ', href: '#Internships', icon: HiBriefcase },
+    { name: 'Contact ', href: '#Contact', icon: HiPhone }
   ]
  
 
