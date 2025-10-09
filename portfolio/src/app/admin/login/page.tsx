@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from '@/lib/axios';
 import { useRouter } from "next/navigation";
 const page = () => {
     const [username, setUsername] = useState("");
@@ -21,13 +22,8 @@ const page = () => {
 
         try {
             // Step 3: Backend ke login endpoint par POST request bhejein
-            const response = await axios.post(
-                "http://localhost:5000/api/users/login",
-                {
-                    username,
-                    password,
-                }
-            );
+            const response = await api.post('/users/login', { username, password });
+            
 
             // Step 4: Agar login safal hota hai, toh token ko localStorage mein save karein
 

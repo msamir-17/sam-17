@@ -31,7 +31,7 @@ const Footer = () => {
     },
     {
       name: 'LinkedIn',
-      url: 'https://linkedin.com/in/samir',
+      url: 'https://www.linkedin.com/in/mohammad-samir-khan-199a7b266',
       icon: FaLinkedin,
       color: 'hover:text-blue-600',
       hoverBg: 'group-hover:from-blue-500 group-hover:to-blue-700'
@@ -49,7 +49,7 @@ const Footer = () => {
     { name: 'About', href: '#hero' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Experience', href: '#internships' },
+    { name: 'Experience', href: '#Internships' },
     { name: 'Contact', href: '#contact' }
   ]
 

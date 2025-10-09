@@ -270,7 +270,7 @@ const rightToLeftVariants = {
                   whileHover={{ scale: 1.02, y: -5 }}
                   className={`flex ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} flex-col gap-8`}
                 >
-                  <div className="lg:w-1/2">
+                  {/* <div className="lg:w-1/2">
                     <div className="glass-effect p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm h-full">
                       <div className="flex items-start gap-6">
                         <motion.div
@@ -315,6 +315,44 @@ const rightToLeftVariants = {
                         </div>
                       </div>
                     </div>
+                  </div> */}
+
+                  <div className=" gap-20">
+                      <div className="flex items-start pt-4 ">                      
+
+                        <div className="flex-1 p-2 space-y-8">
+                          <div>
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                              {internship.role}
+                            </h3>
+                            <p className="text-blue-600 dark:text-blue-400 font-semibold text-lg">
+                              {internship.company}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+                            <HiCalendar className="w-5 h-5" />
+                            <span className="font-medium">{internship.duration}</span>
+                          </div>
+
+                          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                            {internship.description}
+                          </p>
+
+                          {internship.certificateUrl && (
+                            <motion.a
+                              href={internship.certificateUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              whileHover={{ scale: 1.05 }}
+                              className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors group"
+                            >
+                              <HiExternalLink className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                              View Certificate
+                            </motion.a>
+                          )}
+                        </div>
+                      </div>
                   </div>
 
                   {/* Visual Element */}

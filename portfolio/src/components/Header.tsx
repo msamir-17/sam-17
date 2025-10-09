@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { HiMenu, HiX, HiUser, HiCode, HiBriefcase, HiPhone, HiSun, HiMoon } from 'react-icons/hi';
 import { GrProjects } from "react-icons/gr";
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import Link from 'next/link'; 
+import Link from 'next/link';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -53,29 +53,43 @@ const Header = () => {
   }, [])
 
   const navigationLinks = [
-    { name: 'About ', href: '#Hero', icon: HiUser },
-    { name: 'Projects ', href: '#Projects', icon: GrProjects },
+    { name: 'About ', href: '#hero', icon: HiUser },
+    { name: 'Projects ', href: '#projects', icon: GrProjects },
     { name: 'Skills ', href: '#skills', icon: HiCode },
-    { name: 'Experience ', href: '#Internships', icon: HiBriefcase },
-    { name: 'Contact ', href: '#Contact', icon: HiPhone }
+    { name: 'Experience ', href: '#internships', icon: HiBriefcase },
+    { name: 'Contact ', href: '#contact', icon: HiPhone }
   ]
- 
+
 
   const socialLinks = [
     { name: 'GitHub', url: 'https://github.com/msamir-17', icon: FaGithub },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/mohammad-samir-khan-199a7b266', icon: FaLinkedin }
   ]
 
+
+
+  const handleMobileLinkClick = (href: string) => {
+    // Step 1: Menu ko band kar do
+    setIsMenuOpen(false);
+
+    // Step 2: Manually scroll karo
+    const elementId = href.replace('#', '');
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl border-b border-gray-200/50 dark:border-gray-700/30' 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl border-b border-gray-200/50 dark:border-gray-700/30'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
@@ -94,7 +108,7 @@ const Header = () => {
           </motion.div>
 
           {/* Desktop Navigation */}
-          
+
           <nav className="hidden lg:flex items-center gap-8">
             {navigationLinks.map((link, index) => (
               <motion.a
@@ -131,7 +145,7 @@ const Header = () => {
                 <social.icon className="w-5 h-5" />
               </motion.a>
             ))}
-            
+
             {/* Theme Toggle */}
             <motion.button
               onClick={toggleTheme}
@@ -168,27 +182,27 @@ const Header = () => {
         {/* Mobile Menu */}
         <motion.div
           initial={{ opacity: 0, height: 0 }}
-          animate={{ 
-            opacity: isMenuOpen ? 1 : 0, 
-            height: isMenuOpen ? 'auto' : 0 
+          animate={{
+            opacity: isMenuOpen ? 1 : 0,
+            height: isMenuOpen ? 'auto' : 0
           }}
           transition={{ duration: 0.3 }}
           className="lg:hidden overflow-hidden bg-white/98 dark:bg-gray-900/98 backdrop-blur-lg rounded-2xl mt-2 shadow-xl border border-gray-200/50 dark:border-gray-700/30"
         >
           <div className="p-6 space-y-4">
             {navigationLinks.map((link) => (
-              <motion.a
+              <motion.button
                 key={link.name}
-                href={link.href}
+                onClick={() => handleMobileLinkClick(link.href)}
                 whileHover={{ x: 10, scale: 1.02 }}
-                onClick={() => setIsMenuOpen(false)}
+                // onClick={() => setIsMenuOpen(false)}
                 className="flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2"
               >
                 <link.icon className="w-5 h-5" />
                 {link.name}
-              </motion.a>
+              </motion.button>
             ))}
-            
+
             <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-4">
                 {socialLinks.map((social) => (
@@ -205,7 +219,7 @@ const Header = () => {
                   </motion.a>
                 ))}
               </div>
-              
+
               {/* Mobile Theme Toggle */}
               <motion.button
                 onClick={toggleTheme}
