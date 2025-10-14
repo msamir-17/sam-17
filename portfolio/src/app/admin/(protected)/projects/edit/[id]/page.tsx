@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import axios from "axios";
+import api from '@/lib/axios'
 
 const EditProjectPage = () => {
     // --- All your State and Logic (useEffect, handleSubmit) remains exactly the same ---
@@ -28,7 +28,7 @@ const EditProjectPage = () => {
         if (!id) return;
         const fetchProject = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/projects/${id}`);
+                const response = await api.get(`http://localhost:5000/api/projects/${id}`);
                 const projectData = response.data;
                 setTitle(projectData.title);
                 setDescription(projectData.description);
@@ -60,7 +60,7 @@ const EditProjectPage = () => {
         }
         try {
             const token = localStorage.getItem('authToken');
-            await axios.put(`http://localhost:5000/api/projects/${id}`, formData, {
+            await api.put(`http://localhost:5000/api/projects/${id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}` }
             });
             router.push('/admin/projects');

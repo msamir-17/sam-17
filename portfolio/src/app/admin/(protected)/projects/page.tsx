@@ -131,7 +131,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '@/lib/axios';
 import Link from 'next/link';
 import { HiOutlineExternalLink, HiOutlineCode, HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi';
 
@@ -154,7 +154,7 @@ const ProjectsPage = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/projects');
+                const response = await api.get('http://localhost:5000/api/projects');
                 setProjects(response.data);
             } catch (err) {
                 setError('Failed to fetch projects.');
@@ -170,7 +170,7 @@ const ProjectsPage = () => {
         if (!window.confirm('Are you sure you want to delete this project?')) return;
         try {
             const token = localStorage.getItem('authToken');
-            await axios.delete(`http://localhost:5000/api/projects/${projectId}`, {
+            await api.delete(`http://localhost:5000/api/projects/${projectId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setProjects(projects.filter(p => p._id !== projectId));

@@ -3,7 +3,7 @@
 'use client';
 
 import { useState } from 'react';
-import axios from 'axios';
+import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 
 const AddInternshipPage = () => {
@@ -47,7 +47,7 @@ const AddInternshipPage = () => {
                 return;
             }
 
-            await axios.post('http://localhost:5000/api/internships', formData, {
+            await api.post('http://localhost:5000/api/internships', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

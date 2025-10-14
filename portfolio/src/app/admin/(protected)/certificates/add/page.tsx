@@ -1,11 +1,11 @@
-// In portfolio/src/app/admin/(protected)/Certificates/add/page.tsx
+
 
 'use client';
 
 import { useState } from 'react';
-import axios from 'axios';
+import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
-// File ke top par
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -63,7 +63,7 @@ const AddCertificatePage = () => {
                 return;
             }
 
-            await axios.post('http://localhost:5000/api/certificates', formData, {
+            await api.post('http://localhost:5000/api/certificates', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

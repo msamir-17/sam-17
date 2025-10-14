@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import axios from "axios";
+import api from "@/lib/axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -38,7 +38,7 @@ const EditCertificatePage = () => {
             try {
                 setLoading(true);
                 // Backend se us ek Certificate ka data laao
-                const response = await axios.get(`http://localhost:5000/api/certificates/${id}`);
+                const response = await api.get(`http://localhost:5000/api/certificates/${id}`);
 
                 console.log(response.data)
 
@@ -104,7 +104,7 @@ const EditCertificatePage = () => {
             }
 
             // Backend ke PUT endpoint par request bhejein
-            await axios.put(`http://localhost:5000/api/certificates/${id}`, formData, {
+            await api.put(`http://localhost:5000/api/certificates/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

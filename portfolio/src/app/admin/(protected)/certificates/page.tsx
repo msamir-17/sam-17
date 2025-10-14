@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '@/lib/axios';
 import Link from 'next/link';
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi';
 
@@ -22,7 +22,7 @@ const CertificatePage = () => {
     useEffect(() => {
         const fetchCertificate = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/certificates');
+                const response = await api.get('http://localhost:5000/api/certificates');
                 setCertificate(response.data);
             } catch (err) {
                 setError('Failed to fetch Certificate.');
@@ -44,7 +44,7 @@ const CertificatePage = () => {
                 return;
             }
 
-            await axios.delete(`http://localhost:5000/api/certificates/${certificateId}`, {
+            await api.delete(`http://localhost:5000/api/certificates/${certificateId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 

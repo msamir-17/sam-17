@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import axios from 'axios';
+import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 
 const AddProjectPage = () => {
@@ -48,7 +48,7 @@ const AddProjectPage = () => {
                 return;
             }
 
-            await axios.post('http://localhost:5000/api/projects', formData, {
+            await api.post('http://localhost:5000/api/projects', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

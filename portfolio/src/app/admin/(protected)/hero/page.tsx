@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from '@/lib/axios';
 import { useRouter } from "next/navigation";
 
 const EditHeroPage = () => {
@@ -24,7 +24,7 @@ const EditHeroPage = () => {
         const fetchHeroData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`http://localhost:5000/api/hero`);
+                const response = await api.get(`http://localhost:5000/api/hero`);
                 const data = response.data;
                 if (data) {
                     setGreeting(data.greeting);
@@ -58,7 +58,7 @@ const EditHeroPage = () => {
 
         try {
             const token = localStorage.getItem('authToken');
-            await axios.put(`http://localhost:5000/api/hero`, formData, {
+            await api.put(`http://localhost:5000/api/hero`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

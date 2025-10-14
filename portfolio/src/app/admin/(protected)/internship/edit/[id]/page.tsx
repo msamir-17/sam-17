@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import axios from "axios";
+import api from '@/lib/axios';
 
 const EditInternshipPage = () => {
 
@@ -36,7 +36,7 @@ const EditInternshipPage = () => {
                 setLoading(true); // Data fetch shuru hone par loading dikhao
 
                 // Backend se us ek Internship ka data laao
-                const response = await axios.get(`http://localhost:5000/api/internships/${id}`);
+                const response = await api.get(`http://localhost:5000/api/internships/${id}`);
                 console.log(response.data)
                 // Backend se aaye data ko ek variable mein rakho
                 const InternshipData = response.data;
@@ -91,7 +91,7 @@ const EditInternshipPage = () => {
             }
 
             // Backend ke PUT endpoint par request bhejein
-            await axios.put(`http://localhost:5000/api/internships/${id}`, formData, {
+            await api.put(`http://localhost:5000/api/internships/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

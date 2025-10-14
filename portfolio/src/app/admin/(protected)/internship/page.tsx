@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '@/lib/axios';
 import Link from 'next/link';
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi';
 
@@ -22,7 +22,7 @@ const InternshipPage = () => {
     useEffect(() => {
         const fetchInternship = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/Internships');
+                const response = await api.get('http://localhost:5000/api/Internships');
                 setInternship(response.data);
             } catch (err) {
                 setError('Failed to fetch Internship.');
@@ -44,7 +44,7 @@ const InternshipPage = () => {
                 return;
             }
 
-            await axios.delete(`http://localhost:5000/api/internships/${internshipId}`, {
+            await api.delete(`http://localhost:5000/api/internships/${internshipId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
