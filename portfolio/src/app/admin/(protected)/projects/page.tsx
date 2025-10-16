@@ -170,7 +170,8 @@ const ProjectsPage = () => {
         if (!window.confirm('Are you sure you want to delete this project?')) return;
         try {
             const token = localStorage.getItem('authToken');
-            await api.delete(`http://localhost:5000/api/projects/${projectId}`, {
+            // await api.delete(`http://localhost:5000/api/projects/${projectId}`, {
+            await api.delete(`/projects/${projectId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setProjects(projects.filter(p => p._id !== projectId));

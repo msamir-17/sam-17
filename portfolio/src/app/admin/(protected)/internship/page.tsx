@@ -22,7 +22,8 @@ const InternshipPage = () => {
     useEffect(() => {
         const fetchInternship = async () => {
             try {
-                const response = await api.get('http://localhost:5000/api/Internships');
+                // const response = await api.get('http://localhost:5000/api/Internships');
+                const response = await api.get(`/Internships`);
                 setInternship(response.data);
             } catch (err) {
                 setError('Failed to fetch Internship.');
@@ -44,7 +45,8 @@ const InternshipPage = () => {
                 return;
             }
 
-            await api.delete(`http://localhost:5000/api/internships/${internshipId}`, {
+            // await api.delete(`http://localhost:5000/api/internships/${internshipId}`, {
+            await api.delete(`/internships/${internshipId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 

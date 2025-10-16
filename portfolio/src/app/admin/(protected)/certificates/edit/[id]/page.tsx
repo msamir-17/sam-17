@@ -38,8 +38,8 @@ const EditCertificatePage = () => {
             try {
                 setLoading(true);
                 // Backend se us ek Certificate ka data laao
-                const response = await api.get(`http://localhost:5000/api/certificates/${id}`);
-
+                // const response = await api.get(`http://localhost:5000/api/certificates/${id}`);
+                const response = await api.get(`/certificates/${id}`);
                 console.log(response.data)
 
                 // Backend se aaye data ko ek variable mein rakho

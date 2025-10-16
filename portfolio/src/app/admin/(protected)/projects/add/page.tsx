@@ -48,7 +48,8 @@ const AddProjectPage = () => {
                 return;
             }
 
-            await api.post('http://localhost:5000/api/projects', formData, {
+            // await api.post('http://localhost:5000/api/projects', formData, {
+            await api.post('/projects', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

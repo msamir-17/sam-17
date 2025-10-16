@@ -47,7 +47,8 @@ const AddInternshipPage = () => {
                 return;
             }
 
-            await api.post('http://localhost:5000/api/internships', formData, {
+            // await api.post('http://localhost:5000/api/internships', formData, {
+            await api.post('/internships', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

@@ -60,7 +60,8 @@ const EditProjectPage = () => {
         }
         try {
             const token = localStorage.getItem('authToken');
-            await api.put(`http://localhost:5000/api/projects/${id}`, formData, {
+            // await api.put(`http://localhost:5000/api/projects/${id}`, formData, {
+            await api.put(`/projects/${id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}` }
             });
             router.push('/admin/projects');

@@ -22,7 +22,8 @@ const CertificatePage = () => {
     useEffect(() => {
         const fetchCertificate = async () => {
             try {
-                const response = await api.get('http://localhost:5000/api/certificates');
+                // const response = await api.get('http://localhost:5000/api/certificates');
+                const response = await api.get('/certificates')
                 setCertificate(response.data);
             } catch (err) {
                 setError('Failed to fetch Certificate.');

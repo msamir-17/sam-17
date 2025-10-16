@@ -36,7 +36,8 @@ const EditInternshipPage = () => {
                 setLoading(true); // Data fetch shuru hone par loading dikhao
 
                 // Backend se us ek Internship ka data laao
-                const response = await api.get(`http://localhost:5000/api/internships/${id}`);
+                // const response = await api.get(`http://localhost:5000/api/internships/${id}`);
+                const response = await api.get(`/internships/${id}`);
                 console.log(response.data)
                 // Backend se aaye data ko ek variable mein rakho
                 const InternshipData = response.data;

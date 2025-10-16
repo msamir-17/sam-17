@@ -24,7 +24,8 @@ const EditHeroPage = () => {
         const fetchHeroData = async () => {
             try {
                 setLoading(true);
-                const response = await api.get(`http://localhost:5000/api/hero`);
+                // const response = await api.get(`http://localhost:5000/api/hero`);
+                const response = await api.get(`/hero`);
                 const data = response.data;
                 if (data) {
                     setGreeting(data.greeting);
