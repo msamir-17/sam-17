@@ -63,7 +63,7 @@ const AddCertificatePage = () => {
                 return;
             }
 
-            await api.post('http://localhost:5000/api/certificates', formData, {
+            await api.post('/certificates', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
