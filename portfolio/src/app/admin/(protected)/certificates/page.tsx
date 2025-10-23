@@ -45,7 +45,7 @@ const CertificatePage = () => {
                 return;
             }
 
-            await api.delete(`http://localhost:5000/api/certificates/${certificateId}`, {
+            await api.delete(`/certificates/${certificateId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
