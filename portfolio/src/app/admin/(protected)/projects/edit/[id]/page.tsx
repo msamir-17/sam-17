@@ -28,7 +28,7 @@ const EditProjectPage = () => {
         if (!id) return;
         const fetchProject = async () => {
             try {
-                const response = await api.get(`http://localhost:5000/api/projects/${id}`);
+                const response = await api.get(`/projects/${id}`);
                 const projectData = response.data;
                 setTitle(projectData.title);
                 setDescription(projectData.description);
@@ -64,6 +64,15 @@ const EditProjectPage = () => {
             await api.put(`/projects/${id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}` }
             });
+
+            //  await api.put(`/certificates/${id}`, formData, {
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data',
+            //         'Authorization': `Bearer ${token}`
+            //     }
+            // });
+
+
             router.push('/admin/projects');
         } catch (err: any) {
             setError(err.response?.data?.message || 'Failed to update project.');
