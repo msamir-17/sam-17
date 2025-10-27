@@ -1,13 +1,250 @@
+// 'use client'
+
+// import { motion ,Variants  } from 'framer-motion'
+// import { useInView } from 'react-intersection-observer'
+// import { 
+//   SiPython, SiJavascript, SiReact, SiNextdotjs, SiMongodb, 
+//   SiHtml5, SiCss3, SiTailwindcss, SiTensorflow, SiPandas,
+//   SiFastapi, SiDjango, SiNodedotjs
+// } from 'react-icons/si'
+// import { FaBrain, FaRobot } from 'react-icons/fa'
+// import { Skill } from '@/types'
+
+// const Skills = () => {
+//   const [ref, inView] = useInView({
+//     triggerOnce: true,
+//     threshold: 0.1
+//   })
+
+//   const skills: Skill[] = [
+//     { id: '1', name: 'Python', category: 'backend', level: 90, icon: 'SiPython' },
+//     { id: '2', name: 'JavaScript', category: 'frontend', level: 85, icon: 'SiJavascript' },
+//     { id: '3', name: 'React.js', category: 'frontend', level: 88, icon: 'SiReact' },
+//     { id: '4', name: 'Next.js', category: 'frontend', level: 85, icon: 'SiNextdotjs' },
+//     { id: '5', name: 'MongoDB', category: 'backend', level: 80, icon: 'SiMongodb' },
+//     { id: '6', name: 'HTML', category: 'frontend', level: 95, icon: 'SiHtml5' },
+//     { id: '7', name: 'CSS', category: 'frontend', level: 90, icon: 'SiCss3' },
+//     { id: '8', name: 'Tailwind CSS', category: 'frontend', level: 88, icon: 'SiTailwindcss' },
+//     { id: '9', name: 'Machine Learning', category: 'ai', level: 85, icon: 'FaBrain' },
+//     { id: '10', name: 'Deep Learning', category: 'ai', level: 80, icon: 'SiTensorflow' },
+//     { id: '11', name: 'AI', category: 'ai', level: 82, icon: 'FaRobot' },
+//     { id: '12', name: 'Pandas', category: 'ai', level: 85, icon: 'SiPandas' },
+//     { id: '13', name: 'Node.js', category: 'backend', level: 80, icon: 'SiNodedotjs' },
+//     { id: '14', name: 'FastAPI', category: 'backend', level: 75, icon: 'SiFastapi' },
+//     { id: '15', name: 'Django', category: 'backend', level: 70, icon: 'SiDjango' },
+//   ]
+
+//   const getIcon = (iconName: string) => {
+//     const iconProps = { className: "w-7 h-7" }
+//     switch (iconName) {
+//       case 'SiPython': return <SiPython {...iconProps} style={{ color: '#3776ab' }} />
+//       case 'SiJavascript': return <SiJavascript {...iconProps} style={{ color: '#f7df1e' }} />
+//       case 'SiReact': return <SiReact {...iconProps} style={{ color: '#61dafb' }} />
+//       case 'SiNextdotjs': return <SiNextdotjs {...iconProps} className="w-7 h-7 text-black dark:text-white" />
+//       case 'SiMongodb': return <SiMongodb {...iconProps} style={{ color: '#47a248' }} />
+//       case 'SiHtml5': return <SiHtml5 {...iconProps} style={{ color: '#e34f26' }} />
+//       case 'SiCss3': return <SiCss3 {...iconProps} style={{ color: '#1572b6' }} />
+//       case 'SiTailwindcss': return <SiTailwindcss {...iconProps} style={{ color: '#06b6d4' }} />
+//       case 'FaBrain': return <FaBrain {...iconProps} style={{ color: '#8b5cf6' }} />
+//       case 'SiTensorflow': return <SiTensorflow {...iconProps} style={{ color: '#ff6f00' }} />
+//       case 'FaRobot': return <FaRobot {...iconProps} style={{ color: '#6366f1' }} />
+//       case 'SiPandas': return <SiPandas {...iconProps} style={{ color: '#150458' }} />
+//       case 'SiNodedotjs': return <SiNodedotjs {...iconProps} style={{ color: '#339933' }} />
+//       case 'SiFastapi': return <SiFastapi {...iconProps} style={{ color: '#009688' }} />
+//       case 'SiDjango': return <SiDjango {...iconProps} style={{ color: '#092e20' }} />
+//       default: return <div className="w-7 h-7 bg-gray-400 rounded" />
+//     }
+//   }
+
+//   const categories = [
+//     { name: 'Frontend', color: 'from-blue-500 to-cyan-500', skills: skills.filter(s => s.category === 'frontend') },
+//     { name: 'Backend', color: 'from-green-500 to-emerald-500', skills: skills.filter(s => s.category === 'backend') },
+//     { name: 'AI/ML', color: 'from-purple-500 to-pink-500', skills: skills.filter(s => s.category === 'ai') },
+//   ]
+
+// const containerVariants: Variants = {
+//   hidden: { opacity: 0 },
+//   visible: {
+//     opacity: 1,
+//     transition: {
+//       staggerChildren: 0.1
+//     }
+//   }
+// };
+
+// const itemVariants: Variants = {
+//   hidden: { opacity: 0, y: 30 },
+//   visible: { 
+//     opacity: 1, 
+//     y: 0,
+//     transition: { duration: 0.6 }
+//   }
+// };
+
+//   return (
+//     <section id="skills" className="section-spacing notion-bg">
+//       <div className="section-container">
+//         <motion.div
+//           ref={ref}
+//           initial="hidden"
+//           animate={inView ? "visible" : "hidden"}
+//           variants={containerVariants}
+//         >
+//           <motion.div variants={itemVariants} className="text-center mb-16">
+//             <motion.div 
+//               className="inline-block mb-4"
+//               whileHover={{ scale: 1.1 }}
+//             >
+//               <span className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-semibold rounded-full">
+//                 🚀 Skills & Technologies
+//               </span>
+//             </motion.div>
+//             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+//               My Technical{' '}
+//               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+//                 Arsenal
+//               </span>
+//             </h2>
+//             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+//               A comprehensive toolkit of cutting-edge technologies I use to build intelligent solutions and exceptional digital experiences
+//             </p>
+//           </motion.div>
+
+//           <div className="space-y-12">
+//             {categories.map((category, categoryIndex) => (
+//               <motion.div
+//                 key={category.name}
+//                 variants={itemVariants}
+//                 className="space-y-6"
+//               >
+//                 {/* Category Header */}
+//                 <div className="flex items-center justify-center mb-8">
+//                   <div className={`px-8 py-3 bg-gradient-to-r ${category.color} rounded-full shadow-lg`}>
+//                     <h3 className="text-2xl font-bold text-white">{category.name}</h3>
+//                   </div>
+//                 </div>
+
+//                 {/* Skills Grid */}
+//                 <motion.div 
+//                   variants={containerVariants}
+//                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+//                 >
+//                   {category.skills.map((skill, index) => (
+//                     <motion.div
+//                       key={skill.id}
+//                       variants={itemVariants}
+//                       whileHover={{ 
+//                         scale: 1.05, 
+//                         y: -5,
+//                         rotateY: 5
+//                       }}
+//                       className="group glass-effect p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
+//                     >
+//                       <div className="flex items-center gap-4 mb-4">
+//                         <motion.div 
+//                           className="p-3 bg-gray-50 dark:bg-gray-800 rounded-xl group-hover:scale-110 transition-transform duration-300"
+//                           whileHover={{ rotate: 360 }}
+//                           transition={{ duration: 0.6 }}
+//                         >
+//                           {getIcon(skill.icon || '')}
+//                         </motion.div>
+//                         <div className="flex-1">
+//                           <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+//                             {skill.name}
+//                           </h4>
+//                           <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">
+//                             {category.name}
+//                           </p>
+//                         </div>
+//                       </div>
+                      
+//                       <div className="space-y-2">
+//                         <div className="flex justify-between items-center text-sm">
+//                           <span className="text-gray-600 dark:text-gray-400 font-medium">Proficiency</span>
+//                           <span className="text-blue-600 dark:text-blue-400 font-bold">{skill.level}%</span>
+//                         </div>
+//                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+//                           <motion.div
+//                             className={`h-full bg-gradient-to-r ${category.color} rounded-full relative overflow-hidden`}
+//                             initial={{ width: 0 }}
+//                             animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
+//                             transition={{ 
+//                               duration: 1.5, 
+//                               delay: categoryIndex * 0.2 + index * 0.1,
+//                               ease: "easeOut"
+//                             }}
+//                           >
+//                             <motion.div
+//                               className="absolute inset-0 bg-white/30"
+//                               animate={{ x: ['-100%', '100%'] }}
+//                               transition={{ 
+//                                 duration: 2, 
+//                                 repeat: Infinity, 
+//                                 delay: categoryIndex * 0.2 + index * 0.1 + 1.5 
+//                               }}
+//                             />
+//                           </motion.div>
+//                         </div>
+//                       </div>
+
+//                       {/* Hover Glow Effect */}
+//                       <div className={`absolute inset-0 bg-gradient-to-r ${category.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300 pointer-events-none`} />
+//                     </motion.div>
+//                   ))}
+//                 </motion.div>
+//               </motion.div>
+//             ))}
+//           </div>
+
+//           {/* Bottom CTA */}
+//           <motion.div
+//             variants={itemVariants}
+//             className="text-center mt-16"
+//           >
+//             <motion.div
+//               whileHover={{ scale: 1.05 }}
+//               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+//             >
+//               <span>Always learning, always growing</span>
+//               <motion.div
+//                 animate={{ rotate: 360 }}
+//                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+//               >
+//                 ⚡
+//               </motion.div>
+//             </motion.div>
+//           </motion.div>
+//         </motion.div>
+//       </div>
+//     </section>
+//   )
+// }
+
+// export default Skills
+
+
+
+
+
+
+
+
+
+
+
+
+
 'use client'
 
-import { motion ,Variants  } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { 
   SiPython, SiJavascript, SiReact, SiNextdotjs, SiMongodb, 
   SiHtml5, SiCss3, SiTailwindcss, SiTensorflow, SiPandas,
-  SiFastapi, SiDjango, SiNodedotjs
+  SiFastapi, SiDjango, SiNodedotjs, SiPytorch, SiScikitlearn,
+  SiNumpy, SiJupyter, SiPlotly
 } from 'react-icons/si'
-import { FaBrain, FaRobot } from 'react-icons/fa'
+import { FaBrain, FaRobot, FaChartLine, FaChartBar } from 'react-icons/fa'
 import { Skill } from '@/types'
 
 const Skills = () => {
@@ -17,30 +254,44 @@ const Skills = () => {
   })
 
   const skills: Skill[] = [
-    { id: '1', name: 'Python', category: 'backend', level: 90, icon: 'SiPython' },
-    { id: '2', name: 'JavaScript', category: 'frontend', level: 85, icon: 'SiJavascript' },
-    { id: '3', name: 'React.js', category: 'frontend', level: 88, icon: 'SiReact' },
-    { id: '4', name: 'Next.js', category: 'frontend', level: 85, icon: 'SiNextdotjs' },
-    { id: '5', name: 'MongoDB', category: 'backend', level: 80, icon: 'SiMongodb' },
-    { id: '6', name: 'HTML', category: 'frontend', level: 95, icon: 'SiHtml5' },
-    { id: '7', name: 'CSS', category: 'frontend', level: 90, icon: 'SiCss3' },
-    { id: '8', name: 'Tailwind CSS', category: 'frontend', level: 88, icon: 'SiTailwindcss' },
-    { id: '9', name: 'Machine Learning', category: 'ai', level: 85, icon: 'FaBrain' },
-    { id: '10', name: 'Deep Learning', category: 'ai', level: 80, icon: 'SiTensorflow' },
-    { id: '11', name: 'AI', category: 'ai', level: 82, icon: 'FaRobot' },
-    { id: '12', name: 'Pandas', category: 'ai', level: 85, icon: 'SiPandas' },
-    { id: '13', name: 'Node.js', category: 'backend', level: 80, icon: 'SiNodedotjs' },
-    { id: '14', name: 'FastAPI', category: 'backend', level: 75, icon: 'SiFastapi' },
-    { id: '15', name: 'Django', category: 'backend', level: 70, icon: 'SiDjango' },
+    // Frontend
+    { id: '1', name: 'JavaScript', category: 'frontend', level: 85, icon: 'SiJavascript' },
+    { id: '2', name: 'React.js', category: 'frontend', level: 88, icon: 'SiReact' },
+    { id: '3', name: 'Next.js', category: 'frontend', level: 85, icon: 'SiNextdotjs' },
+    { id: '4', name: 'HTML', category: 'frontend', level: 95, icon: 'SiHtml5' },
+    { id: '5', name: 'CSS', category: 'frontend', level: 90, icon: 'SiCss3' },
+    { id: '6', name: 'Tailwind CSS', category: 'frontend', level: 88, icon: 'SiTailwindcss' },
+    
+    // Backend
+    { id: '7', name: 'Python', category: 'backend', level: 90, icon: 'SiPython' },
+    { id: '8', name: 'Node.js', category: 'backend', level: 80, icon: 'SiNodedotjs' },
+    { id: '9', name: 'FastAPI', category: 'backend', level: 75, icon: 'SiFastapi' },
+    { id: '10', name: 'Django', category: 'backend', level: 70, icon: 'SiDjango' },
+    { id: '11', name: 'MongoDB', category: 'backend', level: 80, icon: 'SiMongodb' },
+    
+    // AI/ML
+    { id: '12', name: 'Machine Learning', category: 'ai', level: 85, icon: 'FaBrain' },
+    { id: '13', name: 'Deep Learning', category: 'ai', level: 80, icon: 'SiTensorflow' },
+    { id: '14', name: 'AI Agents', category: 'ai', level: 82, icon: 'FaRobot' },
+    { id: '15', name: 'PyTorch', category: 'ai', level: 82, icon: 'SiPytorch' },
+    { id: '16', name: 'TensorFlow', category: 'ai', level: 80, icon: 'SiTensorflow' },
+    { id: '17', name: 'Scikit-learn', category: 'ai', level: 85, icon: 'SiScikitlearn' },
+    { id: '18', name: 'Pandas', category: 'ai', level: 85, icon: 'SiPandas' },
+    { id: '19', name: 'NumPy', category: 'ai', level: 88, icon: 'SiNumpy' },
+    { id: '20', name: 'Matplotlib', category: 'ai', level: 80, icon: 'FaChartLine' },
+    { id: '21', name: 'Seaborn', category: 'ai', level: 78, icon: 'FaChartBar' },
+    { id: '22', name: 'Plotly', category: 'ai', level: 75, icon: 'SiPlotly' },
+    { id: '23', name: 'Data Viz', category: 'ai', level: 82, icon: 'FaChartLine' },
+    { id: '24', name: 'Jupyter', category: 'ai', level: 90, icon: 'SiJupyter' },
   ]
 
   const getIcon = (iconName: string) => {
-    const iconProps = { className: "w-7 h-7" }
+    const iconProps = { className: "w-8 h-8" }
     switch (iconName) {
       case 'SiPython': return <SiPython {...iconProps} style={{ color: '#3776ab' }} />
       case 'SiJavascript': return <SiJavascript {...iconProps} style={{ color: '#f7df1e' }} />
       case 'SiReact': return <SiReact {...iconProps} style={{ color: '#61dafb' }} />
-      case 'SiNextdotjs': return <SiNextdotjs {...iconProps} className="w-7 h-7 text-black dark:text-white" />
+      case 'SiNextdotjs': return <SiNextdotjs {...iconProps} className="w-8 h-8 text-black dark:text-white" />
       case 'SiMongodb': return <SiMongodb {...iconProps} style={{ color: '#47a248' }} />
       case 'SiHtml5': return <SiHtml5 {...iconProps} style={{ color: '#e34f26' }} />
       case 'SiCss3': return <SiCss3 {...iconProps} style={{ color: '#1572b6' }} />
@@ -52,143 +303,115 @@ const Skills = () => {
       case 'SiNodedotjs': return <SiNodedotjs {...iconProps} style={{ color: '#339933' }} />
       case 'SiFastapi': return <SiFastapi {...iconProps} style={{ color: '#009688' }} />
       case 'SiDjango': return <SiDjango {...iconProps} style={{ color: '#092e20' }} />
-      default: return <div className="w-7 h-7 bg-gray-400 rounded" />
+      case 'SiPytorch': return <SiPytorch {...iconProps} style={{ color: '#ee4c2c' }} />
+      case 'SiScikitlearn': return <SiScikitlearn {...iconProps} style={{ color: '#f7931e' }} />
+      case 'SiNumpy': return <SiNumpy {...iconProps} style={{ color: '#013243' }} />
+      case 'SiJupyter': return <SiJupyter {...iconProps} style={{ color: '#f37626' }} />
+      case 'FaChartLine': return <FaChartLine {...iconProps} style={{ color: '#10b981' }} />
+      case 'FaChartBar': return <FaChartBar {...iconProps} style={{ color: '#3b82f6' }} />
+      case 'SiPlotly': return <SiPlotly {...iconProps} style={{ color: '#3f4f75' }} />
+      default: return <div className="w-8 h-8 bg-gray-400 rounded" />
     }
   }
 
   const categories = [
     { name: 'Frontend', color: 'from-blue-500 to-cyan-500', skills: skills.filter(s => s.category === 'frontend') },
     { name: 'Backend', color: 'from-green-500 to-emerald-500', skills: skills.filter(s => s.category === 'backend') },
-    { name: 'AI/ML', color: 'from-purple-500 to-pink-500', skills: skills.filter(s => s.category === 'ai') },
+    { name: 'AI/ML & Data Science', color: 'from-purple-500 to-pink-500', skills: skills.filter(s => s.category === 'ai') },
   ]
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08
+      }
     }
   }
-};
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.6 }
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    }
   }
-};
 
   return (
-    <section id="skills" className="section-spacing notion-bg">
-      <div className="section-container">
+    <section id="skills" className="py-16 md:py-24 bg-white dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={containerVariants}
         >
+          {/* Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
             <motion.div 
               className="inline-block mb-4"
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400 }}
             >
-              <span className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-semibold rounded-full">
+              <span className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-semibold rounded-full shadow-lg">
                 🚀 Skills & Technologies
               </span>
             </motion.div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
               My Technical{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Arsenal
               </span>
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              A comprehensive toolkit of cutting-edge technologies I use to build intelligent solutions and exceptional digital experiences
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              A comprehensive toolkit of technologies I use to build intelligent solutions
             </p>
           </motion.div>
 
-          <div className="space-y-12">
+          {/* Categories */}
+          <div className="space-y-16">
             {categories.map((category, categoryIndex) => (
               <motion.div
                 key={category.name}
                 variants={itemVariants}
-                className="space-y-6"
+                className="space-y-8"
               >
                 {/* Category Header */}
-                <div className="flex items-center justify-center mb-8">
-                  <div className={`px-8 py-3 bg-gradient-to-r ${category.color} rounded-full shadow-lg`}>
-                    <h3 className="text-2xl font-bold text-white">{category.name}</h3>
+                <div className="flex items-center justify-center">
+                  <div className={`px-6 py-2.5 bg-gradient-to-r ${category.color} rounded-full shadow-lg`}>
+                    <h3 className="text-xl font-bold text-white">{category.name}</h3>
                   </div>
                 </div>
 
                 {/* Skills Grid */}
                 <motion.div 
                   variants={containerVariants}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4"
                 >
-                  {category.skills.map((skill, index) => (
+                  {category.skills.map((skill) => (
                     <motion.div
                       key={skill.id}
                       variants={itemVariants}
                       whileHover={{ 
-                        scale: 1.05, 
-                        y: -5,
-                        rotateY: 5
+                        scale: 1.05,
+                        transition: { type: "spring", stiffness: 300, damping: 15 }
                       }}
-                      className="group glass-effect p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
+                      className="group relative bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center text-center gap-3 cursor-pointer"
                     >
-                      <div className="flex items-center gap-4 mb-4">
-                        <motion.div 
-                          className="p-3 bg-gray-50 dark:bg-gray-800 rounded-xl group-hover:scale-110 transition-transform duration-300"
-                          whileHover={{ rotate: 360 }}
-                          transition={{ duration: 0.6 }}
-                        >
-                          {getIcon(skill.icon || '')}
-                        </motion.div>
-                        <div className="flex-1">
-                          <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                            {skill.name}
-                          </h4>
-                          <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">
-                            {category.name}
-                          </p>
-                        </div>
+                      {/* Icon Container */}
+                      <div className="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl group-hover:bg-gradient-to-br group-hover:from-gray-100 group-hover:to-gray-50 dark:group-hover:from-gray-700 dark:group-hover:to-gray-600 transition-all duration-300">
+                        {getIcon(skill.icon || '')}
                       </div>
                       
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-gray-600 dark:text-gray-400 font-medium">Proficiency</span>
-                          <span className="text-blue-600 dark:text-blue-400 font-bold">{skill.level}%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
-                          <motion.div
-                            className={`h-full bg-gradient-to-r ${category.color} rounded-full relative overflow-hidden`}
-                            initial={{ width: 0 }}
-                            animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
-                            transition={{ 
-                              duration: 1.5, 
-                              delay: categoryIndex * 0.2 + index * 0.1,
-                              ease: "easeOut"
-                            }}
-                          >
-                            <motion.div
-                              className="absolute inset-0 bg-white/30"
-                              animate={{ x: ['-100%', '100%'] }}
-                              transition={{ 
-                                duration: 2, 
-                                repeat: Infinity, 
-                                delay: categoryIndex * 0.2 + index * 0.1 + 1.5 
-                              }}
-                            />
-                          </motion.div>
-                        </div>
-                      </div>
+                      {/* Skill Name */}
+                      <h4 className="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                        {skill.name}
+                      </h4>
 
-                      {/* Hover Glow Effect */}
-                      <div className={`absolute inset-0 bg-gradient-to-r ${category.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300 pointer-events-none`} />
+                      {/* Subtle Glow on Hover */}
+                      <div className={`absolute inset-0 bg-gradient-to-r ${category.color} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300 pointer-events-none`} />
                     </motion.div>
                   ))}
                 </motion.div>
@@ -199,11 +422,12 @@ const itemVariants: Variants = {
           {/* Bottom CTA */}
           <motion.div
             variants={itemVariants}
-            className="text-center mt-16"
+            className="text-center mt-20"
           >
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+              transition={{ type: "spring", stiffness: 400 }}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
             >
               <span>Always learning, always growing</span>
               <motion.div
@@ -221,17 +445,3 @@ const itemVariants: Variants = {
 }
 
 export default Skills
-
-
-
-
-
-
-
-
-
-
-
-
-
-
