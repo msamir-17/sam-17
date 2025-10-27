@@ -92,7 +92,7 @@ const EditInternshipPage = () => {
             }
 
             // Backend ke PUT endpoint par request bhejein
-            await api.put(`http://localhost:5000/api/internships/${id}`, formData, {
+            await api.put(`/internships/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

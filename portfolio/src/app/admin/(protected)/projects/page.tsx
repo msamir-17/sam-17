@@ -154,7 +154,7 @@ const ProjectsPage = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await api.get('http://localhost:5000/api/projects');
+                const response = await api.get(`/projects`);
                 setProjects(response.data);
             } catch (err) {
                 setError('Failed to fetch projects.');
