@@ -710,5 +710,3 @@ const shimmerVariants: Variants = {
 }
 
 export default Projects
-
-// https://dashboard.render.com/web/srv-d3ggc7qli9vc73f441i0/deploys/dep-d3ggc82li9vc73f441ng 
