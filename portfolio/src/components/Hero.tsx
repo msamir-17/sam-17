@@ -317,10 +317,11 @@ const Hero = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      const titles = heroData.jobtitles;
       setCurrentTitle(prev => (prev + 1) % titles.length)
     }, 3000)
     return () => clearInterval(interval)
-  }, [])
+  }, [heroData.jobtitles])
 
   const scrollToContact = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
@@ -480,7 +481,8 @@ const downloadResume = async () => {
                   transition={{ duration: 0.5 }}
                   className="text-lg sm:text-xl text-blue-600 dark:text-blue-400 font-medium"
                 >
-                  {titles[currentTitle]}
+                  {titles?.[currentTitle] || "Loading..."}
+
                 </motion.span>
               </motion.div>
 
