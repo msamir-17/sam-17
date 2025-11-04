@@ -74,7 +74,8 @@ const UpdateCertificate = async (req, res) => {
         // Check karo ki user ne nayi file upload ki hai ya nahi
         if (req.file) {
             const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'General_Certificates'
+                folder: 'General_Certificates',
+                resource_type: 'auto'
             });
             // Naye URL ko updatedData object mein add kar do
             updatedData.certificateLink = result.secure_url;
