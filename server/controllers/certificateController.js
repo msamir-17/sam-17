@@ -67,6 +67,7 @@ const AddCertificate = async (req, res) => {
 
 const UpdateCertificate = async (req, res) => {
     try {
+        console.log("--- Checking Cloudinary Environment Variables on Render ---");
         const { title, issuedBy, dateEarned, category } = req.body;
         
         const updatedData = { title, issuedBy, dateEarned, category };
