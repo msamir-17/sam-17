@@ -296,7 +296,7 @@ const Header = () => {
   }
 
   const navigationLinks = [
-    { name: 'About', href: '#hero', icon: HiUser },
+    { name: 'Aboutiiiiiii', href: '#hero', icon: HiUser },
     { name: 'Projects', href: '#projects', icon: GrProjects },
     { name: 'Skills', href: '#skills', icon: HiCode },
     { name: 'Experience', href: '#internships', icon: HiBriefcase },
@@ -427,15 +427,18 @@ const Header = () => {
         >
           <div className="py-4 space-y-1">
             {navigationLinks.map((link) => (
-              <motion.button
+              <motion.a
                 key={link.name}
-                onClick={() => handleMobileLinkClick(link.href)}
+                href={link.href}
+                onClick={() => setIsMenuOpen(false)}
+                  target="_self"
+                  rel="noopener noreferrer"
                 whileTap={{ scale: 0.98 }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors text-left"
               >
                 <link.icon className="w-5 h-5" />
                 <span className="font-medium">{link.name}</span>
-              </motion.button>
+              </motion.a>
             ))}
 
             {/* Mobile Social Links */}
@@ -446,6 +449,7 @@ const Header = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  
                   whileTap={{ scale: 0.95 }}
                   className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >

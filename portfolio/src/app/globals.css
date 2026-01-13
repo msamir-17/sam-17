@@ -1,3 +1,5 @@
+
+
 @import 'tailwindcss';
 /* @tailwind base;
 @tailwind components; */
@@ -5,7 +7,8 @@
 
 @layer base {
   * {
-    @apply border box-border;
+    /* REMOVED: @apply border - This was causing the unwanted borders! */
+    @apply box-border;
   }
   
   html {
@@ -14,12 +17,10 @@
 
   body {
    @apply bg-white text-gray-900;
-
   }
 
   .dark body {
     @apply bg-gray-950 text-gray-50;
-
   }
 }
 
