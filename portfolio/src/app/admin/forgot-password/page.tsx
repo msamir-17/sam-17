@@ -2,8 +2,8 @@
 'use client';
 
 import { useState } from 'react';
-import axios from 'axios';
 import Link from 'next/link';
+import api from '@/lib/axios';
 
 const ForgotPasswordPage = () => {
     const [username, setUsername] = useState('');
@@ -19,9 +19,7 @@ const ForgotPasswordPage = () => {
 
         try {
             // Backend ke 'forgot-password' endpoint ko call karein
-            const response = await axios.post('http://localhost:5000/api/users/forgot-password', {
-                username
-            });
+            const response = await api.post('/users/forgot-password', { username })
             
             setMessage(response.data.message); // "Token sent to email!"
 
