@@ -31,13 +31,29 @@ cloudinary.config({
 const app = express();
 
 
-// Replace the old CORS code with this
-// app.use(cors({
-//     origin: 'https://sam-17-f42l.vercel.app',
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-// }));
-app.use(cors());
+app.use((req, res, next) => {
+    const allowedOrigins = [
+        'http://localhost:3000',
+        'https://sam-17.vercel.app',
+        'https://sam-17-f42l.vercel.app'
+    ];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    
+    // Handle pre-flight requests for CORS
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    
+    next();
+});
+
+app.use(express.json());
+
 
 app.use(express.json());
 
