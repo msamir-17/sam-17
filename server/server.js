@@ -34,7 +34,7 @@ const app = express();
 const corsOptions = {
     origin: [
         'http://localhost:3000', // Your local frontend for development
-         // Your main production frontend
+         'https://sam-17.vercel.app',// Your main production frontend
         'https://sam-17-f42l.vercel.app' // The specific deployment URL from your screenshot
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
