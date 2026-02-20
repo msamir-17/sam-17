@@ -30,7 +30,20 @@ cloudinary.config({
 
 const app = express();
 
-app.use(cors());
+const cors = require('cors');
+
+const corsOptions = {
+    origin: [
+        'http://localhost:3000', // Your local frontend for development
+         // Your main production frontend
+        'https://sam-17-f42l.vercel.app' // The specific deployment URL from your screenshot
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
