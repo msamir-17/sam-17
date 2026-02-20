@@ -30,7 +30,6 @@ cloudinary.config({
 
 const app = express();
 
-const cors = require('cors');
 
 const corsOptions = {
     origin: [
