@@ -30,26 +30,14 @@ cloudinary.config({
 
 const app = express();
 
-const whitelist = [
-    'http://localhost:3000',
-    'https://sam-17.vercel.app',
-    'https://sam-17-f42l.vercel.app' 
-];
 
-const corsOptions = {
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin || whitelist.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-app.use(cors(corsOptions));
+// Replace the old CORS code with this
+// app.use(cors({
+//     origin: 'https://sam-17-f42l.vercel.app',
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+// }));
+app.use(cors());
 
 app.use(express.json());
 
