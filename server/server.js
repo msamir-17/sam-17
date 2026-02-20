@@ -32,11 +32,14 @@ const app = express();
 
 
 const corsOptions = {
-    origin: [
-        'http://localhost:3000', // Your local frontend for development
-         'https://sam-17.vercel.app',// Your main production frontend
-        'https://sam-17-f42l.vercel.app' // The specific deployment URL from your screenshot
-    ],
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin || whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
