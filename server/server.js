@@ -30,6 +30,11 @@ cloudinary.config({
 
 const app = express();
 
+const whitelist = [
+    'http://localhost:3000',
+    'https://sam-17.vercel.app',
+    'https://sam-17-f42l.vercel.app' 
+];
 
 const corsOptions = {
     origin: function (origin, callback) {
