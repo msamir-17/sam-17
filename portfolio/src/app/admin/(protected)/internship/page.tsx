@@ -14,7 +14,7 @@ interface Internship {
     certificateUrl?: string;
 }
 
-const InternshipPage = () => {
+const InternshipsPage = () => {
     const [Internship, setInternship] = useState<Internship[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -192,4 +192,4 @@ const InternshipPage = () => {
     );
 };
 
-export default InternshipPage;
+export default InternshipsPage;
