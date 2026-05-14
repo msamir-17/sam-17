@@ -83,10 +83,9 @@ const forgotPassword = async (req, res) => {
     await user.save({ validateBeforeSave: false });
 
     // 3. User ko email bhejein
-    // const resetURL = `${req.protocol}://${req.get('host')}/admin/reset-password/${resetToken}`;
     const resetURL = `${process.env.FRONTEND_URL}/admin/reset-password/${resetToken}`;
 
-    const message = `Forgot your password? Submit a PUT request with your new password to: ${resetURL}.\nIf you didn't forget your password, please ignore this email.`;
+    const message = `You requested a password reset for your portfolio admin account.\n\nClick the link below to reset your password:\n${resetURL}\n\nThis link will expire in 10 minutes.\n\nIf you didn't request this, please ignore this email.`;
 
     try {
         const transporter = nodemailer.createTransport({
