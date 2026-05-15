@@ -72,8 +72,8 @@ const CertificatePage = () => {
             </div>
 
             {/* Desktop / Tablet Table View */}
-            <div className="hidden md:block bg-gray-800 rounded-lg shadow">
-                <table className="w-full text-left text-sm md:text-base">
+            <div className="hidden md:block bg-gray-800 rounded-lg shadow overflow-x-auto">
+                <table className="w-full text-left text-sm md:text-base min-w-[800px]">
                     <thead className="bg-gray-700">
                         <tr>
                             <th className="px-6 py-4 font-semibold uppercase text-sm">Title</th>
