@@ -52,7 +52,8 @@ const AnalyticsPage = () => {
 
   useEffect(() => { fetchAll(); }, []);
 
-  const formatDate = (d: string) => {
+  const formatDate = (d: any) => {
+    if (!d) return "";
     const date = new Date(d);
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
   };
@@ -196,7 +197,7 @@ const AnalyticsPage = () => {
                 <div className="h-48">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                      <Pie data={devices.devices} dataKey="count" nameKey="_id" cx="50%" cy="50%" outerRadius={70} label={({ _id, percent }) => `${_id} ${(percent * 100).toFixed(0)}%`} labelLine={false}>
+                      <Pie data={devices.devices} dataKey="count" nameKey="_id" cx="50%" cy="50%" outerRadius={70} label={(props: any) => `${props._id || props.name} ${((props.percent || 0) * 100).toFixed(0)}%`} labelLine={false}>
                         {devices.devices.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                       </Pie>
                       <Tooltip contentStyle={{ backgroundColor: "#1f2937", border: "1px solid #374151", borderRadius: "12px", color: "#fff", fontSize: 13 }} />
