@@ -4,7 +4,7 @@ import { motion, Variants } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { 
   SiPython, SiJavascript, SiReact, SiNextdotjs, SiMongodb, 
-  SiHtml5, SiCss3, SiTailwindcss, SiTensorflow, SiPandas,
+  SiHtml5, SiCss, SiTailwindcss, SiTensorflow, SiPandas,
   SiFastapi, SiDjango, SiNodedotjs, SiPytorch, SiScikitlearn,
   SiNumpy, SiJupyter, SiPlotly
 } from 'react-icons/si'
@@ -22,7 +22,7 @@ const Skills = () => {
     { id: '2', name: 'React.js', category: 'frontend', level: 88, icon: 'SiReact' },
     { id: '3', name: 'Next.js', category: 'frontend', level: 85, icon: 'SiNextdotjs' },
     { id: '4', name: 'HTML', category: 'frontend', level: 95, icon: 'SiHtml5' },
-    { id: '5', name: 'CSS', category: 'frontend', level: 90, icon: 'SiCss3' },
+    { id: '5', name: 'CSS', category: 'frontend', level: 90, icon: 'SiCss' },
     { id: '6', name: 'Tailwind CSS', category: 'frontend', level: 88, icon: 'SiTailwindcss' },
     { id: '7', name: 'Python', category: 'backend', level: 90, icon: 'SiPython' },
     { id: '8', name: 'Node.js', category: 'backend', level: 80, icon: 'SiNodedotjs' },
@@ -53,7 +53,7 @@ const Skills = () => {
       case 'SiNextdotjs': return <SiNextdotjs {...iconProps} className="w-8 h-8 text-black dark:text-white" />
       case 'SiMongodb': return <SiMongodb {...iconProps} style={{ color: '#47a248' }} />
       case 'SiHtml5': return <SiHtml5 {...iconProps} style={{ color: '#e34f26' }} />
-      case 'SiCss3': return <SiCss3 {...iconProps} style={{ color: '#1572b6' }} />
+      case 'SiCss3': return <SiCss {...iconProps} style={{ color: '#1572b6' }} />
       case 'SiTailwindcss': return <SiTailwindcss {...iconProps} style={{ color: '#06b6d4' }} />
       case 'FaBrain': return <FaBrain {...iconProps} style={{ color: '#8b5cf6' }} />
       case 'SiTensorflow': return <SiTensorflow {...iconProps} style={{ color: '#ff6f00' }} />
