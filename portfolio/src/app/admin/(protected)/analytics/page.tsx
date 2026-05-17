@@ -52,11 +52,20 @@ const AnalyticsPage = () => {
 
   useEffect(() => { fetchAll(); }, []);
 
-  const formatDate = (d: any) => {
+  const formatDate = (d: string | number | Date) => {
     if (!d) return "";
+
     const date = new Date(d);
-    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  };
+
+    if (isNaN(date.getTime())) {
+        return String(d);
+    }
+
+    return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+    });
+};
 
   const timeAgo = (d: string) => {
     const diff = Date.now() - new Date(d).getTime();
@@ -179,7 +188,7 @@ const AnalyticsPage = () => {
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis dataKey="date" tickFormatter={(val: any) => formatDate(val)} stroke="#6b7280" tick={{ fontSize: 11 }} />
                     <YAxis stroke="#6b7280" tick={{ fontSize: 11 }} />
-                    <Tooltip contentStyle={{ backgroundColor: "#1f2937", border: "1px solid #374151", borderRadius: "12px", color: "#fff", fontSize: 13 }} labelFormatter={(label: any) => formatDate(label)} />
+                    <Tooltip contentStyle={{ backgroundColor: "#1f2937", border: "1px solid #374151", borderRadius: "12px", color: "#fff", fontSize: 13 }} labelFormatter={(label) => formatDate(String(label))} />
                     <Area type="monotone" dataKey="views" stroke="#3b82f6" fill="url(#viewsGrad)" strokeWidth={2} name="Page Views" />
                     <Area type="monotone" dataKey="visitors" stroke="#8b5cf6" fill="url(#visitorsGrad)" strokeWidth={2} name="Unique Visitors" />
                   </AreaChart>
