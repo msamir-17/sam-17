@@ -20,10 +20,10 @@ export const metadata: Metadata = {
   keywords: ['AI Engineer', 'ML Engineer', 'Full Stack Developer', 'Next.js', 'React', 'Python', 'Machine Learning', 'Portfolio'],
   authors: [{ name: 'Samir' }],
   openGraph: {
-    title: 'Samir — AI/ML Engineer & Full Stack Developer',
+    title: 'Samir Khan AI/ML Engineer & Full Stack Developer',
     description: 'Professional portfolio showcasing AI/ML and full-stack development projects.',
     type: 'website',
-    url: 'https://sam-17.vercel.app',
+    url: 'https://sam-17-f42l.vercel.app/',
   },
 }
 
@@ -33,26 +33,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <head>
-        {/* Blocking script to prevent flash of wrong theme */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var theme = localStorage.getItem('theme');
-                  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
-                } catch(e) {}
-              })();
-            `,
-          }}
-        />
-      </head>
+    <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
         <main className="min-h-screen">
           <LayoutWrapper>
