@@ -89,6 +89,11 @@ const EditCertificatePage = () => {
         formData.append('category', category);
         formData.append('duration', duration);
         
+        if (dateEarned) {
+             const formattedDate = `${dateEarned.getDate().toString().padStart(2, '0')}/${(dateEarned.getMonth() + 1).toString().padStart(2, '0')}/${dateEarned.getFullYear()}`;
+             formData.append('dateEarned', formattedDate);
+        }
+        
         // formData.append('certificateUrl', certificatePreview); // Purani certificate URL bhi bhejein
         
         // Sirf tabhi certificate add karo agar user ne nayi file select ki hai
@@ -106,7 +111,6 @@ const EditCertificatePage = () => {
             // Backend ke PUT endpoint par request bhejein
             await api.put(`/certificates/${id}`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
                 }
             });

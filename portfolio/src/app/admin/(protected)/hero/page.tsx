@@ -59,9 +59,8 @@ const EditHeroPage = () => {
 
         try {
             const token = localStorage.getItem('authToken');
-            await api.put(`/hero`, formData, {
+            await api.put('/hero', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
                 }
             });

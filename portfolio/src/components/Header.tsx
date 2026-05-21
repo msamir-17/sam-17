@@ -10,7 +10,7 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,16 +20,21 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Initialize theme from localStorage or system preference (client-only)
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme')
     if (savedTheme) {
       setIsDarkMode(savedTheme === 'dark')
     } else {
-      setIsDarkMode(true)
+      // Respect system preference, default to dark
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      setIsDarkMode(prefersDark !== undefined ? prefersDark : true)
     }
   }, [])
 
+  // Apply theme class to <html>
   useEffect(() => {
+    if (isDarkMode === null) return // Skip until initialized
     if (isDarkMode) {
       document.documentElement.classList.add('dark')
       localStorage.setItem('theme', 'dark')
@@ -52,7 +57,13 @@ const Header = () => {
   }, [isMenuOpen])
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode)
+    // Enable smooth transition temporarily
+    document.documentElement.classList.add('theme-transition')
+    setIsDarkMode(prev => !prev)
+    // Remove transition class after animation completes to avoid perf overhead
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-transition')
+    }, 400)
   }
 
   const navigationLinks = [
@@ -126,13 +137,15 @@ const Header = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="ml-1 p-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="ml-1 p-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-all duration-200"
               aria-label="Toggle theme"
             >
-              {isDarkMode ? (
+              {isDarkMode === null ? (
+                <div className="w-4 h-4" />
+              ) : isDarkMode ? (
                 <HiSun className="w-4 h-4 text-yellow-500" />
               ) : (
-                <HiMoon className="w-4 h-4 text-blue-600" />
+                <HiMoon className="w-4 h-4 text-slate-700" />
               )}
             </button>
           </div>
@@ -144,10 +157,12 @@ const Header = () => {
               className="p-2 text-gray-700 dark:text-gray-300"
               aria-label="Toggle theme"
             >
-              {isDarkMode ? (
+              {isDarkMode === null ? (
+                <div className="w-5 h-5" />
+              ) : isDarkMode ? (
                 <HiSun className="w-5 h-5 text-yellow-500" />
               ) : (
-                <HiMoon className="w-5 h-5 text-blue-600" />
+                <HiMoon className="w-5 h-5 text-slate-700" />
               )}
             </button>
 

@@ -31,7 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const handleLogout = () => {
         localStorage.removeItem("authToken");
-        router.replace("/admin/login");
+        router.replace("/");
     };
 
     if (!isAuthorized) {
