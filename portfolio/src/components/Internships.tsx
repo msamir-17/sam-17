@@ -333,47 +333,98 @@ const Internships = () => {
 
             {/* Certifications Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {certifications.map((cert) => (
-                <motion.div
-                  key={cert._id}
-                  variants={itemVariants}
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                  onClick={() => cert.certificateLink && setSelectedCertificate(cert.certificateLink)}
-                  className="bg-white dark:bg-[var(--color-bg-tertiary)] p-4 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-[var(--color-border)] hover:border-emerald-500 dark:hover:border-emerald-400/60 group cursor-pointer"
-                >
-                  <div className="space-y-4">
-                    {/* Certificate Thumbnail */}
-                    <div className="w-full h-48 rounded-xl overflow-hidden bg-transparent relative flex items-center justify-center">
+              {certifications.map((cert) => {
+                const certSkills = getCertSkills(cert.title);
+                const displayedTechs = certSkills.slice(0, 3);
+                const remainingCount = certSkills.length - displayedTechs.length;
+
+                return (
+                  <motion.div
+                    key={cert._id}
+                    variants={itemVariants}
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.2 }}
+                    onClick={() => cert.certificateLink && setSelectedCertificate(cert.certificateLink)}
+                    className="group flex flex-col h-full bg-white dark:bg-[var(--color-bg-tertiary)] rounded-3xl p-5 transition-all duration-300 cursor-pointer border border-gray-100 dark:border-[var(--color-border)] hover:border-blue-500/50 dark:hover:border-blue-400/40 shadow-sm hover:shadow-md"
+                  >
+                    {/* Certificate Thumbnail (Inset and Rounded) */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-zinc-50 dark:bg-zinc-950/30 flex items-center justify-center">
                       {cert.certificateLink ? (
                         <img
                           src={cert.certificateLink}
                           alt={`${cert.title} Certificate`}
-                          className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
                           loading="lazy"
                         />
                       ) : (
-                        <div className="w-full h-full flex flex-col items-center justify-center text-emerald-600 dark:text-emerald-400">
+                        <div className="w-full h-full flex flex-col items-center justify-center text-blue-600 dark:text-blue-400">
                           <HiCheckBadge className="w-12 h-12" />
                           <span className="mt-2 font-semibold text-sm">Certificate</span>
                         </div>
                       )}
                     </div>
 
-                    <div className="space-y-1 text-left">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                    {/* Certificate Info */}
+                    <div className="pt-4 flex flex-col flex-grow text-left">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                         {cert.title}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-400 font-medium text-sm">
+                      
+                      <p className="text-gray-600 dark:text-gray-400 font-semibold text-sm mb-1">
                         {cert.issuedBy}
                       </p>
-                      <p className="text-xs text-gray-400 dark:text-gray-500">
+                      
+                      <p className="text-xs text-gray-400 dark:text-gray-500 mb-4">
                         Earned in {cert.dateEarned}
                       </p>
+
+                      <div className="flex-grow" />
+
+                      {/* Tech Stack Badges */}
+                      <div className="flex items-center -space-x-2.5 mb-2 isolate">
+                        {displayedTechs.map((techName) => {
+                          const tech = techIcons[techName] || { icon: HiCode, color: 'text-gray-400' };
+                          const Icon = tech.icon;
+                          const isHovered = hoveredTech === `${cert._id}-${techName}`;
+
+                          return (
+                            <div
+                              key={techName}
+                              onMouseEnter={() => setHoveredTech(`${cert._id}-${techName}`)}
+                              onMouseLeave={() => setHoveredTech(null)}
+                              onClick={(e) => e.stopPropagation()} // Prevent card click
+                              className="flex items-center h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 border-2 border-white dark:border-[var(--color-bg-tertiary)] hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 ease-out overflow-hidden px-2 cursor-pointer shadow-sm relative"
+                              style={{
+                                maxWidth: isHovered ? '200px' : '36px',
+                                zIndex: isHovered ? 10 : 1,
+                                transitionProperty: 'max-width, background-color, border-color'
+                              }}
+                            >
+                              <div className={`flex-shrink-0 ${tech.color} flex items-center justify-center w-5 h-5`}>
+                                <Icon className="w-5 h-5" />
+                              </div>
+                              <span
+                                className={`text-xs font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap transition-all duration-300 ${
+                                  isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0 pointer-events-none'
+                                }`}
+                              >
+                                {techName}
+                              </span>
+                            </div>
+                          );
+                        })}
+
+                        {/* Remaining tech count badge */}
+                        {remainingCount > 0 && (
+                          <div className="flex items-center justify-center w-9 h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 border-2 border-white dark:border-[var(--color-bg-tertiary)] text-xs font-bold text-gray-500 dark:text-gray-400 shadow-sm relative z-0">
+                            +{remainingCount}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </div>

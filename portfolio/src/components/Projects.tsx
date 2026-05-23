@@ -147,16 +147,20 @@ const Projects = () => {
 
   // Skeleton loader
   const ProjectSkeleton = () => (
-    <div className="bg-white dark:bg-[var(--color-bg-tertiary)] rounded-2xl overflow-hidden shadow-md">
-      <div className="relative h-48 skeleton" />
-      <div className="p-5 space-y-3">
-        <div className="h-5 w-3/4 skeleton rounded" />
-        <div className="flex gap-2">
+    <div className="bg-white dark:bg-[var(--color-bg-tertiary)] rounded-3xl p-5 shadow-sm border border-gray-100 dark:border-[var(--color-border)] flex flex-col h-full">
+      <div className="relative aspect-[16/10] w-full skeleton rounded-2xl" />
+      <div className="pt-4 flex-grow space-y-3">
+        <div className="h-6 w-3/4 skeleton rounded" />
+        <div className="space-y-2">
+          <div className="h-4 w-full skeleton rounded" />
+          <div className="h-4 w-5/6 skeleton rounded" />
+        </div>
+        <div className="flex-grow" />
+        <div className="flex -space-x-2">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-6 w-16 skeleton rounded-full" />
+            <div key={i} className="h-9 w-9 skeleton rounded-full border-2 border-white dark:border-[var(--color-bg-tertiary)]" />
           ))}
         </div>
-        <div className="h-4 w-24 skeleton rounded" />
       </div>
     </div>
   );
@@ -240,16 +244,16 @@ const Projects = () => {
                   <motion.div
                     key={project._id}
                     variants={itemVariants}
-                    whileHover={{ y: -2 }}
+                    whileHover={{ y: -4 }}
                     transition={{ duration: 0.2 }}
-                    className="group bg-white dark:bg-[var(--color-bg-tertiary)] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border border-gray-100 dark:border-[var(--color-border)] hover:border-blue-500 dark:hover:border-blue-400/60"
+                    className="group flex flex-col h-full bg-white dark:bg-[var(--color-bg-tertiary)] rounded-3xl p-5 transition-all duration-300 cursor-pointer border border-gray-100 dark:border-[var(--color-border)] hover:border-blue-500/50 dark:hover:border-blue-400/40 shadow-sm hover:shadow-md"
                     onClick={() => {
                       trackProjectClick(project._id, project.title);
                       setSelectedProject(project);
                     }}
                   >
-                    {/* Project Image */}
-                    <div className="relative h-52 overflow-hidden bg-gray-50 dark:bg-[var(--color-bg-inset)]">
+                    {/* Project Image Container (Inset and Rounded) */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-zinc-950">
                       <img
                         src={project.imageUrl}
                         alt={`Screenshot of ${project.title}`}
@@ -260,13 +264,19 @@ const Projects = () => {
                     </div>
 
                     {/* Project Info */}
-                    <div className="p-5">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    <div className="pt-4 flex flex-col flex-grow">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                         {project.title}
                       </h3>
 
+                      <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-4 line-clamp-2">
+                        {project.description}
+                      </p>
+
+                      <div className="flex-grow" />
+
                       {/* Tech Stack Badges */}
-                      <div className="flex flex-wrap gap-2 items-center mb-4">
+                      <div className="flex items-center -space-x-2.5 mb-2 isolate">
                         {displayedTechs.map((techName) => {
                           const tech = techIcons[techName] || { icon: HiCode, color: 'text-gray-400' };
                           const Icon = tech.icon;
@@ -278,14 +288,15 @@ const Projects = () => {
                               onMouseEnter={() => setHoveredTech(`${project._id}-${techName}`)}
                               onMouseLeave={() => setHoveredTech(null)}
                               onClick={(e) => e.stopPropagation()} // Prevent card click
-                              className="flex items-center h-8 rounded-full bg-gray-50 dark:bg-[var(--color-bg-inset)]/50 border border-gray-200/50 dark:border-[var(--color-border)]/50 hover:bg-gray-100 dark:hover:bg-[var(--color-surface-hover)] transition-all duration-300 ease-out overflow-hidden px-2 cursor-pointer"
+                              className="flex items-center h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 border-2 border-white dark:border-[var(--color-bg-tertiary)] hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 ease-out overflow-hidden px-2 cursor-pointer shadow-sm relative"
                               style={{
-                                maxWidth: isHovered ? '200px' : '32px',
+                                maxWidth: isHovered ? '200px' : '36px',
+                                zIndex: isHovered ? 10 : 1,
                                 transitionProperty: 'max-width, background-color, border-color'
                               }}
                             >
-                              <div className={`flex-shrink-0 ${tech.color} flex items-center justify-center w-4 h-4`}>
-                                <Icon className="w-4 h-4" />
+                              <div className={`flex-shrink-0 ${tech.color} flex items-center justify-center w-5 h-5`}>
+                                <Icon className="w-5 h-5" />
                               </div>
                               <span
                                 className={`text-xs font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap transition-all duration-300 ${
@@ -300,15 +311,11 @@ const Projects = () => {
 
                         {/* Remaining tech count badge */}
                         {remainingCount > 0 && (
-                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-[var(--color-bg-inset)] border border-gray-200/50 dark:border-[var(--color-border)]/50 text-xs font-bold text-gray-500 dark:text-gray-400">
+                          <div className="flex items-center justify-center w-9 h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 border-2 border-white dark:border-[var(--color-bg-tertiary)] text-xs font-bold text-gray-500 dark:text-gray-400 shadow-sm relative z-0">
                             +{remainingCount}
                           </div>
                         )}
                       </div>
-
-                      <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
-                        View Details →
-                      </span>
                     </div>
                   </motion.div>
                 );
