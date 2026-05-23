@@ -20,15 +20,14 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Initialize theme from localStorage or system preference (client-only)
+  // Initialize theme from localStorage, default to light mode
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme')
     if (savedTheme) {
       setIsDarkMode(savedTheme === 'dark')
     } else {
-      // Respect system preference, default to dark
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setIsDarkMode(prefersDark !== undefined ? prefersDark : true)
+      // Default to light mode for first-time visitors/recruiters
+      setIsDarkMode(false)
     }
   }, [])
 
@@ -81,28 +80,31 @@ const Header = () => {
 
   const handleMobileLinkClick = (href: string) => {
     setIsMenuOpen(false);
-    const elementId = href.replace('#', '');
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.body.style.overflow = ''; // Release scroll lock immediately
+    setTimeout(() => {
+      const elementId = href.replace('#', '');
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-sm border-b border-gray-200/50 dark:border-gray-700/50'
-          : 'bg-white/70 dark:bg-gray-900/70 backdrop-blur-md'
+          ? 'bg-white/90 dark:bg-[var(--glass-bg)] backdrop-blur-xl shadow-sm border-b border-gray-200/50 dark:border-[var(--color-border)]'
+          : 'bg-white/70 dark:bg-[var(--glass-bg)]/80 backdrop-blur-md'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="#hero" className="flex items-center">
-            <div className="w-9 h-9 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-sm">
-              <span className="text-white font-bold text-sm">S</span>
-            </div>
+          <a href="#hero" className="flex items-center gap-2 group">
+            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white transition-colors duration-200">
+              Samir<span className="text-blue-600 dark:text-blue-400">.</span>
+            </span>
           </a>
 
           {/* Desktop Navigation */}
@@ -111,7 +113,7 @@ const Header = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200"
+                className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-[var(--color-surface-hover)] rounded-lg transition-all duration-200"
               >
                 <link.icon className="w-4 h-4" />
                 {link.name}
@@ -137,7 +139,7 @@ const Header = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="ml-1 p-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-all duration-200"
+              className="ml-1 p-2.5 bg-gray-100 dark:bg-[var(--color-bg-inset)] hover:bg-gray-200 dark:hover:bg-[var(--color-surface-hover)] rounded-xl transition-all duration-200"
               aria-label="Toggle theme"
             >
               {isDarkMode === null ? (
@@ -195,7 +197,7 @@ const Header = () => {
                   e.preventDefault();
                   handleMobileLinkClick(link.href);
                 }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors text-left"
+                className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[var(--color-surface-hover)] rounded-lg transition-colors text-left"
               >
                 <link.icon className="w-5 h-5" />
                 <span className="font-medium">{link.name}</span>
@@ -203,7 +205,7 @@ const Header = () => {
             ))}
 
             {/* Mobile Social Links */}
-            <div className="flex items-center gap-4 px-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-4 px-4 pt-4 border-t border-gray-200 dark:border-[var(--color-border)]">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}

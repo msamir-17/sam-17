@@ -9,7 +9,7 @@ const ThemeToggle = () => {
 
   if (!mounted) {
     return (
-      <div className="fixed top-6 right-6 z-50 w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse" />
+      <div className="fixed top-6 right-6 z-50 w-12 h-12 rounded-full bg-gray-200 dark:bg-[var(--color-bg-tertiary)] animate-pulse" />
     )
   }
 

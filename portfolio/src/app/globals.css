@@ -45,37 +45,37 @@
 }
 
 .dark {
-  --color-bg-primary: #0a0a0a;
-  --color-bg-secondary: #0f0f0f;
-  --color-bg-tertiary: #171717;
-  --color-bg-elevated: #1a1a1a;
-  --color-bg-inset: #141414;
+  --color-bg-primary: #050A17;
+  --color-bg-secondary: #0C1323;
+  --color-bg-tertiary: #14182D;
+  --color-bg-elevated: #1A2039;
+  --color-bg-inset: #0C1323;
 
-  --color-surface: #1a1a1a;
-  --color-surface-hover: #262626;
-  --color-surface-active: #2e2e2e;
+  --color-surface: #14182D;
+  --color-surface-hover: #1A2039;
+  --color-surface-active: #201A3B;
 
-  --color-border: #2e2e2e;
-  --color-border-subtle: #1f1f1f;
+  --color-border: rgba(42, 19, 74, 0.25);
+  --color-border-subtle: rgba(42, 19, 74, 0.12);
 
-  --color-text-primary: #fafaf9;
-  --color-text-secondary: #a8a29e;
-  --color-text-tertiary: #78716c;
-  --color-text-inverse: #1c1917;
+  --color-text-primary: #f0f0f5;
+  --color-text-secondary: #94a3b8;
+  --color-text-tertiary: #64748b;
+  --color-text-inverse: #050A17;
 
   --color-accent: #3b82f6;
   --color-accent-hover: #60a5fa;
-  --color-accent-subtle: rgba(59, 130, 246, 0.1);
+  --color-accent-subtle: rgba(59, 130, 246, 0.08);
 
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.2);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -4px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 8px 10px -6px rgba(0, 0, 0, 0.7);
 
-  --glass-bg: rgba(10, 10, 10, 0.80);
-  --glass-border: rgba(46, 46, 46, 0.50);
-  --glass-card-bg: rgba(26, 26, 26, 0.70);
-  --glass-card-border: rgba(46, 46, 46, 0.40);
+  --glass-bg: rgba(5, 10, 23, 0.85);
+  --glass-border: rgba(42, 19, 74, 0.20);
+  --glass-card-bg: rgba(20, 24, 45, 0.70);
+  --glass-card-border: rgba(42, 19, 74, 0.12);
 }
 
 @layer base {
@@ -139,7 +139,7 @@
   }
 
   .section-spacing {
-    @apply py-20 md:py-28 lg:py-32;
+    @apply py-16 md:py-20 lg:py-24;
   }
 
   /* ─── Glassmorphism ─── */
@@ -162,6 +162,10 @@
   /* ─── Typography ─── */
   .gradient-text {
     @apply bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent;
+  }
+
+  .dark .gradient-text {
+    @apply bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent;
   }
 
   /* ─── Section Helpers ─── */
@@ -239,13 +243,21 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  @apply bg-gray-300 rounded-full transition-colors duration-200;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.2); /* Subtle blue in dark mode */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
+  @apply bg-gray-400;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.4);
 }

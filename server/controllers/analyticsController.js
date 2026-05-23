@@ -117,7 +117,7 @@ const getStats = async (req, res) => {
             Analytics.countDocuments({ type: 'page_view', createdAt: { $gte: monthAgo } }),
             Analytics.distinct('visitorId', { type: 'page_view', createdAt: { $gte: monthAgo } }).then(ids => ids.length),
             Analytics.countDocuments({ type: 'resume_download' }),
-            Analytics.countDocuments({ type: 'project_click' }),
+            Analytics.countDocuments({ type: { $in: ['project_click', 'live_link_click', 'github_click'] } }),
             // Returning visitors: visitors with more than 1 session
             Analytics.aggregate([
                 { $match: { type: 'page_view' } },
@@ -185,7 +185,7 @@ const getVisitorTrend = async (req, res) => {
 const getProjectAnalytics = async (req, res) => {
     try {
         const projectStats = await Analytics.aggregate([
-            { $match: { type: 'project_click', projectTitle: { $ne: null } } },
+            { $match: { type: { $in: ['project_click', 'live_link_click', 'github_click'] }, projectTitle: { $ne: null } } },
             {
                 $group: {
                     _id: '$projectTitle',

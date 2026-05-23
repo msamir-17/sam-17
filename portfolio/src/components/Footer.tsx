@@ -55,7 +55,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="relative bg-gray-900 dark:bg-black text-white">
+    <footer className="relative bg-gray-900 dark:bg-[#050A17] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <motion.div
           initial="hidden"
@@ -84,7 +84,7 @@ const Footer = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-xl transition-colors duration-200 group"
+                className="p-3 bg-gray-800 dark:bg-[var(--color-bg-inset)] hover:bg-gray-700 dark:hover:bg-[var(--color-surface-hover)] rounded-xl transition-colors duration-200 group"
                 aria-label={social.name}
               >
                 <social.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
@@ -106,7 +106,7 @@ const Footer = () => {
           </motion.div>
 
           {/* Divider */}
-          <div className="w-full h-px bg-gray-800 mb-8" />
+          <div className="w-full h-px bg-gray-800 dark:bg-[var(--color-border)] mb-8" />
 
           {/* Bottom Section */}
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-between items-center gap-4">

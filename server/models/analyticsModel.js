@@ -4,7 +4,7 @@ const analyticsSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
-        enum: ['page_view', 'project_click', 'resume_download'],
+        enum: ['page_view', 'project_click', 'resume_download', 'live_link_click', 'github_click'],
         index: true
     },
     page: {

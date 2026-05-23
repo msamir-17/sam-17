@@ -15,6 +15,7 @@ const userRoutes = require('./routes/userRoutes.js');
 const projectRoutes = require('./routes/projectRoutes.js');
 const heroRoutes = require('./routes/heroRoutes.js')
 const analyticsRoutes = require('./routes/analyticsRoutes.js')
+const contactRoutes = require('./routes/contactRoutes.js');
 
 dotenv.config();
 
@@ -39,7 +40,9 @@ app.use((req, res, next) => {
         'https://sam-17-f42l.vercel.app'
     ];
     const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
+    const isAllowedVercel = origin && origin.endsWith('.vercel.app') && (origin.includes('sam-17') || origin.includes('sam17'));
+    
+    if (allowedOrigins.includes(origin) || isAllowedVercel) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -68,6 +71,7 @@ app.use('/api/users', userRoutes)
 app.use('/api/projects', projectRoutes);
 app.use('/api/hero', heroRoutes)
 app.use('/api/analytics', analyticsRoutes)
+app.use('/api/contact', contactRoutes);
 
 
 

@@ -97,7 +97,7 @@ const Skills = () => {
   }
 
   return (
-    <section id="skills" className="section-spacing bg-gray-50/50 dark:bg-gray-900/50">
+    <section id="skills" className="section-spacing bg-gray-50/50 dark:bg-gradient-to-b dark:from-[#14182D] dark:via-[#0C1323] dark:to-[#0C1323]">
       <div className="section-container">
         <motion.div
           ref={ref}
@@ -107,15 +107,12 @@ const Skills = () => {
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <span className="section-badge">
-              🚀 Skills & Technologies
-            </span>
             <h2 className="section-title">
               My Technical{' '}
               <span className="gradient-text">Arsenal</span>
             </h2>
             <p className="section-subtitle">
-              A comprehensive toolkit of technologies I use to build intelligent solutions
+              A comprehensive toolkit of technologies I use to build intelligent solutions.
             </p>
           </motion.div>
 
@@ -128,10 +125,8 @@ const Skills = () => {
                 className="space-y-6"
               >
                 {/* Category Header */}
-                <div className="flex items-center justify-center">
-                  <div className={`px-6 py-2.5 bg-gradient-to-r ${category.color} rounded-full shadow-md`}>
-                    <h3 className="text-lg font-bold text-white">{category.name}</h3>
-                  </div>
+                <div className="flex items-center">
+                  <h3 className={`text-lg font-bold bg-gradient-to-r ${category.color} bg-clip-text text-transparent`}>{category.name}</h3>
                 </div>
 
                 {/* Skills Grid */}
@@ -143,13 +138,11 @@ const Skills = () => {
                     <motion.div
                       key={skill.id}
                       variants={itemVariants}
-                      whileHover={{ 
-                        scale: 1.05,
-                        transition: { type: "spring", stiffness: 300, damping: 15 }
-                      }}
-                      className="group relative bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 dark:border-gray-700/60 flex flex-col items-center justify-center text-center gap-3 cursor-default"
+                      whileHover={{ y: -2 }}
+                      transition={{ duration: 0.2 }}
+                      className="group relative bg-white dark:bg-[var(--color-bg-tertiary)] p-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-[var(--color-border)] flex flex-col items-center justify-center text-center gap-3 cursor-default"
                     >
-                      <div className="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl group-hover:scale-105 transition-transform duration-300">
+                      <div className="p-3 bg-gray-50 dark:bg-[var(--color-bg-inset)]/50 rounded-xl transition-all duration-300">
                         {getIcon(skill.icon || '')}
                       </div>
                       <h4 className="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
@@ -163,13 +156,7 @@ const Skills = () => {
             ))}
           </div>
 
-          {/* Bottom CTA */}
-          <motion.div variants={itemVariants} className="text-center mt-16">
-            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full shadow-lg cursor-default">
-              <span>Always learning, always growing</span>
-              <span>⚡</span>
-            </div>
-          </motion.div>
+
         </motion.div>
       </div>
     </section>

@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
 import { HiMail, HiUser, HiChatAlt, HiCheckCircle, HiPhone, HiLocationMarker, HiGlobeAlt } from 'react-icons/hi'
 import { ContactForm } from '@/types'
+import api from '@/lib/axios'
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -19,6 +20,7 @@ const Contact = () => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -30,14 +32,19 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError(null)
 
-    // Simulate form submission (replace with real API later)
-    setTimeout(() => {
+    try {
+      await api.post('/contact', formData)
       setIsSubmitting(false)
       setIsSubmitted(true)
       setFormData({ name: '', email: '', message: '' })
       setTimeout(() => setIsSubmitted(false), 4000)
-    }, 1500)
+    } catch (err: any) {
+      setIsSubmitting(false)
+      setError(err?.response?.data?.message || 'Failed to send message. Please try again.')
+      setTimeout(() => setError(null), 5000)
+    }
   }
 
   const containerVariants: Variants = {
@@ -89,7 +96,7 @@ const Contact = () => {
   ]
 
   return (
-    <section id="contact" className="section-spacing bg-gray-50/50 dark:bg-gray-900/50">
+    <section id="contact" className="section-spacing bg-gray-50/50 dark:bg-gradient-to-b dark:from-[#14182D] dark:via-[#0C1323] dark:to-[#0C1323]">
       <div className="section-container">
         <motion.div
           ref={ref}
@@ -98,19 +105,16 @@ const Contact = () => {
           variants={containerVariants}
         >
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <span className="section-badge">📞 Let&apos;s Connect</span>
-            <h2 className="section-title">
-              Get In <span className="gradient-text">Touch</span>
-            </h2>
+            <h2 className="section-title">Contact</h2>
             <p className="section-subtitle">
-              Ready to collaborate on your next project? Let&apos;s discuss how we can work together
+              Ready to collaborate on your next project? Let&apos;s discuss how we can work together.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Contact Form */}
             <motion.div variants={itemVariants} className="lg:col-span-2">
-              <div className="bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/60">
+              <div className="bg-white dark:bg-[var(--color-bg-tertiary)] p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100 dark:border-[var(--color-border)]">
                 <div className="flex items-center gap-4 mb-8">
                   <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl">
                     <HiMail className="w-5 h-5 text-white" />
@@ -151,7 +155,7 @@ const Contact = () => {
                             value={formData.name}
                             onChange={handleChange}
                             required
-                            className="w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700/50 text-gray-900 dark:text-white transition-all duration-200 placeholder-gray-400 text-sm"
+                            className="w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-[var(--color-bg-inset)] text-gray-900 dark:text-white transition-all duration-200 placeholder-gray-400 text-sm"
                             placeholder="Your full name"
                           />
                         </div>
@@ -170,7 +174,7 @@ const Contact = () => {
                             value={formData.email}
                             onChange={handleChange}
                             required
-                            className="w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700/50 text-gray-900 dark:text-white transition-all duration-200 placeholder-gray-400 text-sm"
+                            className="w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-[var(--color-bg-inset)] text-gray-900 dark:text-white transition-all duration-200 placeholder-gray-400 text-sm"
                             placeholder="your.email@example.com"
                           />
                         </div>
@@ -190,18 +194,24 @@ const Contact = () => {
                           onChange={handleChange}
                           required
                           rows={5}
-                          className="w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700/50 text-gray-900 dark:text-white transition-all duration-200 resize-none placeholder-gray-400 text-sm"
+                          className="w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-[var(--color-bg-inset)] text-gray-900 dark:text-white transition-all duration-200 resize-none placeholder-gray-400 text-sm"
                           placeholder="Tell me about your project or just say hello!"
                         />
                       </div>
                     </div>
+
+                    {error && (
+                      <div className="p-3 text-sm text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 rounded-xl text-center font-medium">
+                        {error}
+                      </div>
+                    )}
 
                     <button
                       type="submit"
                       disabled={isSubmitting}
                       className={`w-full py-3.5 px-8 rounded-xl font-semibold text-sm transition-all duration-300 ${
                         isSubmitting
-                          ? 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed text-gray-500'
+                          ? 'bg-gray-300 dark:bg-[var(--color-bg-inset)]/80 cursor-not-allowed text-gray-500'
                           : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl active:scale-[0.98]'
                       }`}
                     >
@@ -223,8 +233,8 @@ const Contact = () => {
             </motion.div>
 
             {/* Contact Info */}
-            <motion.div variants={itemVariants}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/60">
+            <motion.div variants={itemVariants} className="hidden lg:block">
+              <div className="bg-white dark:bg-[var(--color-bg-tertiary)] p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-[var(--color-border)]">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6">Contact Information</h3>
                 
                 <div className="space-y-4">
@@ -232,7 +242,7 @@ const Contact = () => {
                     <a
                       key={info.label}
                       href={info.href}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors duration-200 group"
+                      className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-[var(--color-bg-inset)]/50 hover:bg-gray-100 dark:hover:bg-[var(--color-surface-hover)] transition-colors duration-200 group"
                     >
                       <div className={`w-10 h-10 bg-gradient-to-r ${info.color} rounded-lg flex items-center justify-center shadow-sm flex-shrink-0`}>
                         <info.icon className="w-5 h-5 text-white" />

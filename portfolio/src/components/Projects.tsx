@@ -6,11 +6,98 @@ import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
 import { HiExternalLink, HiCode, HiX } from 'react-icons/hi';
 import { Project as ProjectTypeFromTypes } from '@/types';
-import { trackProjectClick } from '@/hooks/useAnalytics';
+import { trackProjectClick, trackLiveLinkClick, trackGithubClick } from '@/hooks/useAnalytics';
+import { 
+  SiTensorflow, SiPytorch, SiPython, SiScikitlearn, SiTailwindcss, SiNextdotjs, SiReact, 
+  SiTypescript, SiJavascript, SiMongodb, SiNodedotjs, SiCplusplus, SiC, SiHtml5, SiCss,
+  SiNumpy, SiPandas, SiOpenai, SiHuggingface, SiFlask, SiFastapi, SiDjango, SiDocker, 
+  SiPostgresql, SiMysql, SiSqlite, SiGit, SiGithub
+} from 'react-icons/si';
 
 interface DynamicProject extends Omit<ProjectTypeFromTypes, 'id'> {
   _id: string;
 }
+
+// Map technology names to Simple Icons and Tailwind text colors
+const techIcons: Record<string, { icon: any, color: string }> = {
+  'TensorFlow': { icon: SiTensorflow, color: 'text-orange-500' },
+  'PyTorch': { icon: SiPytorch, color: 'text-red-500' },
+  'Python': { icon: SiPython, color: 'text-blue-500' },
+  'Scikit-Learn': { icon: SiScikitlearn, color: 'text-orange-400' },
+  'React': { icon: SiReact, color: 'text-sky-400' },
+  'Next.js': { icon: SiNextdotjs, color: 'text-black dark:text-white' },
+  'Tailwind CSS': { icon: SiTailwindcss, color: 'text-cyan-400' },
+  'TypeScript': { icon: SiTypescript, color: 'text-blue-600' },
+  'JavaScript': { icon: SiJavascript, color: 'text-yellow-500' },
+  'MongoDB': { icon: SiMongodb, color: 'text-green-500' },
+  'Node.js': { icon: SiNodedotjs, color: 'text-green-600' },
+  'C++': { icon: SiCplusplus, color: 'text-blue-700' },
+  'C': { icon: SiC, color: 'text-blue-800' },
+  'HTML5': { icon: SiHtml5, color: 'text-orange-600' },
+  'CSS3': { icon: SiCss, color: 'text-blue-500' },
+  'NumPy': { icon: SiNumpy, color: 'text-blue-700' },
+  'Pandas': { icon: SiPandas, color: 'text-indigo-900 dark:text-indigo-400' },
+  'OpenAI': { icon: SiOpenai, color: 'text-green-600 dark:text-green-400' },
+  'Hugging Face': { icon: SiHuggingface, color: 'text-yellow-500' },
+  'Flask': { icon: SiFlask, color: 'text-gray-700 dark:text-gray-300' },
+  'FastAPI': { icon: SiFastapi, color: 'text-teal-500' },
+  'Django': { icon: SiDjango, color: 'text-green-800 dark:text-green-600' },
+  'Docker': { icon: SiDocker, color: 'text-blue-500' },
+  'PostgreSQL': { icon: SiPostgresql, color: 'text-blue-600' },
+  'MySQL': { icon: SiMysql, color: 'text-blue-800' },
+  'SQLite': { icon: SiSqlite, color: 'text-blue-500' },
+  'Git': { icon: SiGit, color: 'text-orange-600' },
+  'GitHub': { icon: SiGithub, color: 'text-black dark:text-white' },
+};
+
+// Normalize technology names to match the techIcons dictionary keys
+const getNormalizedTech = (tech: string): string | undefined => {
+  const t = tech.toLowerCase().trim().replace(/[\s.-]/g, '');
+  const keyMap: Record<string, string> = {
+    'react': 'React',
+    'nextjs': 'Next.js',
+    'next': 'Next.js',
+    'tailwindcss': 'Tailwind CSS',
+    'tailwind': 'Tailwind CSS',
+    'typescript': 'TypeScript',
+    'ts': 'TypeScript',
+    'javascript': 'JavaScript',
+    'js': 'JavaScript',
+    'mongodb': 'MongoDB',
+    'mongo': 'MongoDB',
+    'nodejs': 'Node.js',
+    'node': 'Node.js',
+    'python': 'Python',
+    'py': 'Python',
+    'tensorflow': 'TensorFlow',
+    'tf': 'TensorFlow',
+    'pytorch': 'PyTorch',
+    'scikitlearn': 'Scikit-Learn',
+    'sklearn': 'Scikit-Learn',
+    'numpy': 'NumPy',
+    'pandas': 'Pandas',
+    'openai': 'OpenAI',
+    'huggingface': 'Hugging Face',
+    'flask': 'Flask',
+    'fastapi': 'FastAPI',
+    'django': 'Django',
+    'docker': 'Docker',
+    'postgresql': 'PostgreSQL',
+    'postgres': 'PostgreSQL',
+    'mysql': 'MySQL',
+    'sqlite': 'SQLite',
+    'git': 'Git',
+    'github': 'GitHub',
+    'html5': 'HTML5',
+    'html': 'HTML5',
+    'css3': 'CSS3',
+    'css': 'CSS3',
+    'c++': 'C++',
+    'cpp': 'C++',
+    'c': 'C'
+  };
+  return keyMap[t];
+};
 
 const Projects = () => {
   const [ref, inView] = useInView({
@@ -22,6 +109,7 @@ const Projects = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<DynamicProject | null>(null);
+  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -59,7 +147,7 @@ const Projects = () => {
 
   // Skeleton loader
   const ProjectSkeleton = () => (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md">
+    <div className="bg-white dark:bg-[var(--color-bg-tertiary)] rounded-2xl overflow-hidden shadow-md">
       <div className="relative h-48 skeleton" />
       <div className="p-5 space-y-3">
         <div className="h-5 w-3/4 skeleton rounded" />
@@ -75,13 +163,10 @@ const Projects = () => {
 
   if (loading) {
     return (
-      <section id="projects" className="section-spacing bg-white dark:bg-gray-900">
+      <section id="projects" className="section-spacing bg-white dark:bg-gradient-to-b dark:from-[#0C1323] dark:via-[#14182D] dark:to-[#14182D]">
         <div className="section-container">
           <div className="text-center mb-12">
-            <span className="section-badge">🚀 Loading Projects...</span>
-            <h2 className="section-title">
-              Featured <span className="gradient-text">Projects</span>
-            </h2>
+            <h2 className="section-title">Projects</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
@@ -95,7 +180,7 @@ const Projects = () => {
 
   if (error) {
     return (
-      <section id="projects" className="section-spacing bg-white dark:bg-gray-900">
+      <section id="projects" className="section-spacing bg-white dark:bg-gradient-to-b dark:from-[#0C1323] dark:via-[#14182D] dark:to-[#14182D]">
         <div className="section-container">
           <div className="text-center">
             <div className="max-w-md mx-auto bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8">
@@ -117,7 +202,7 @@ const Projects = () => {
 
   return (
     <>
-      <section id="projects" className="section-spacing bg-white dark:bg-gray-900">
+      <section id="projects" className="section-spacing bg-white dark:bg-gradient-to-b dark:from-[#0C1323] dark:via-[#14182D] dark:to-[#14182D]">
         <div className="section-container">
           <motion.div
             ref={ref}
@@ -127,12 +212,9 @@ const Projects = () => {
           >
             {/* Header */}
             <motion.div variants={itemVariants} className="text-center mb-12">
-              <span className="section-badge">🚀 Featured Work</span>
-              <h2 className="section-title">
-                Featured <span className="gradient-text">Projects</span>
-              </h2>
+              <h2 className="section-title">Projects</h2>
               <p className="section-subtitle">
-                A showcase of my recent work combining AI, web development, and innovative solutions
+                A showcase of my recent work combining AI, web development, and innovative solutions.
               </p>
             </motion.div>
 
@@ -141,59 +223,96 @@ const Projects = () => {
               variants={containerVariants}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-              {projects.map((project) => (
-                <motion.div
-                  key={project._id}
-                  variants={itemVariants}
-                  whileHover={{
-                    y: -6,
-                    transition: { type: "spring", stiffness: 300, damping: 20 }
-                  }}
-                  className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 dark:border-gray-700/60"
-                  onClick={() => {
-                    trackProjectClick(project._id, project.title);
-                    setSelectedProject(project);
-                  }}
-                >
-                  {/* Project Image */}
-                  <div className="relative h-48 overflow-hidden bg-gray-100 dark:bg-gray-700">
-                    <img
-                      src={project.imageUrl}
-                      alt={`Screenshot of ${project.title}`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
+              {projects.map((project) => {
+                // Filter technologies to identify ones that have icons
+                const techsWithLogos = project.technologies
+                  .map(tech => getNormalizedTech(tech))
+                  .filter((tech): tech is string => !!tech);
+                
+                // Get unique items
+                const uniqueTechsWithLogos = Array.from(new Set(techsWithLogos));
+                const displayedTechs = uniqueTechsWithLogos.slice(0, 3);
+                
+                // Remaining technologies count
+                const remainingCount = project.technologies.length - displayedTechs.length;
 
-                  {/* Project Info */}
-                  <div className="p-5">
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {project.title}
-                    </h3>
-
-                    <div className="flex flex-wrap gap-1.5 mb-3">
-                      {project.technologies.slice(0, 3).map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <span className="px-2.5 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full">
-                          +{project.technologies.length - 3}
-                        </span>
-                      )}
+                return (
+                  <motion.div
+                    key={project._id}
+                    variants={itemVariants}
+                    whileHover={{ y: -2 }}
+                    transition={{ duration: 0.2 }}
+                    className="group bg-white dark:bg-[var(--color-bg-tertiary)] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border border-gray-100 dark:border-[var(--color-border)] hover:border-blue-500 dark:hover:border-blue-400/60"
+                    onClick={() => {
+                      trackProjectClick(project._id, project.title);
+                      setSelectedProject(project);
+                    }}
+                  >
+                    {/* Project Image */}
+                    <div className="relative h-52 overflow-hidden bg-gray-50 dark:bg-[var(--color-bg-inset)]">
+                      <img
+                        src={project.imageUrl}
+                        alt={`Screenshot of ${project.title}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                     </div>
 
-                    <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
-                      View Details →
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
+                    {/* Project Info */}
+                    <div className="p-5">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {project.title}
+                      </h3>
+
+                      {/* Tech Stack Badges */}
+                      <div className="flex flex-wrap gap-2 items-center mb-4">
+                        {displayedTechs.map((techName) => {
+                          const tech = techIcons[techName] || { icon: HiCode, color: 'text-gray-400' };
+                          const Icon = tech.icon;
+                          const isHovered = hoveredTech === `${project._id}-${techName}`;
+
+                          return (
+                            <div
+                              key={techName}
+                              onMouseEnter={() => setHoveredTech(`${project._id}-${techName}`)}
+                              onMouseLeave={() => setHoveredTech(null)}
+                              onClick={(e) => e.stopPropagation()} // Prevent card click
+                              className="flex items-center h-8 rounded-full bg-gray-50 dark:bg-[var(--color-bg-inset)]/50 border border-gray-200/50 dark:border-[var(--color-border)]/50 hover:bg-gray-100 dark:hover:bg-[var(--color-surface-hover)] transition-all duration-300 ease-out overflow-hidden px-2 cursor-pointer"
+                              style={{
+                                maxWidth: isHovered ? '200px' : '32px',
+                                transitionProperty: 'max-width, background-color, border-color'
+                              }}
+                            >
+                              <div className={`flex-shrink-0 ${tech.color} flex items-center justify-center w-4 h-4`}>
+                                <Icon className="w-4 h-4" />
+                              </div>
+                              <span
+                                className={`text-xs font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap transition-all duration-300 ${
+                                  isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0 pointer-events-none'
+                                }`}
+                              >
+                                {techName}
+                              </span>
+                            </div>
+                          );
+                        })}
+
+                        {/* Remaining tech count badge */}
+                        {remainingCount > 0 && (
+                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-[var(--color-bg-inset)] border border-gray-200/50 dark:border-[var(--color-border)]/50 text-xs font-bold text-gray-500 dark:text-gray-400">
+                            +{remainingCount}
+                          </div>
+                        )}
+                      </div>
+
+                      <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
+                        View Details →
+                      </span>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
 
             {/* View All Projects */}
@@ -227,15 +346,15 @@ const Projects = () => {
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+            className="bg-white dark:bg-[var(--color-bg-tertiary)] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100 dark:border-[var(--color-border)]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="sticky top-0 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm z-10 p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <div className="sticky top-0 bg-white/95 dark:bg-[var(--color-bg-tertiary)]/95 backdrop-blur-sm z-10 p-4 border-b border-gray-200 dark:border-[var(--color-border)] flex justify-between items-center">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white">Project Details</h3>
               <button
                 onClick={() => setSelectedProject(null)}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-[var(--color-surface-hover)] rounded-xl transition-colors"
               >
                 <HiX className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               </button>
@@ -269,7 +388,7 @@ const Projects = () => {
                   {selectedProject.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1.5 text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg"
+                      className="px-3 py-1.5 text-sm font-medium bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 rounded-lg"
                     >
                       {tech}
                     </span>
@@ -283,7 +402,8 @@ const Projects = () => {
                     href={selectedProject.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl transition-colors"
+                    onClick={() => trackGithubClick(selectedProject._id, selectedProject.title)}
+                    className="flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[var(--color-bg-inset)] hover:bg-gray-200 dark:hover:bg-[var(--color-surface-hover)] rounded-xl transition-colors"
                   >
                     <HiCode className="w-4 h-4" />
                     View Code
@@ -294,6 +414,7 @@ const Projects = () => {
                     href={selectedProject.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackLiveLinkClick(selectedProject._id, selectedProject.title)}
                     className="flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
                   >
                     <HiExternalLink className="w-4 h-4" />

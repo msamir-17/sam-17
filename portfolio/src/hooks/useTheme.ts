@@ -8,14 +8,13 @@ export const useTheme = () => {
 
   useEffect(() => {
     setMounted(true)
-    // Get saved theme or system preference
+    // Get saved theme or default to light
     const savedTheme = localStorage.getItem('portfolio-theme') as 'light' | 'dark' | null
     
     if (savedTheme) {
       setTheme(savedTheme)
     } else {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      setTheme(systemTheme)
+      setTheme('light')
     }
   }, [])
 

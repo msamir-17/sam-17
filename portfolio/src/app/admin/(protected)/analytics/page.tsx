@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { HiChartBar, HiUsers, HiEye, HiDownload, HiCursorClick, HiGlobe, HiDeviceMobile, HiDesktopComputer, HiRefresh, HiClock } from "react-icons/hi";
+import { HiChartBar, HiUsers, HiEye, HiDownload, HiCursorClick, HiGlobe, HiDeviceMobile, HiDesktopComputer, HiRefresh, HiClock, HiExternalLink, HiCode } from "react-icons/hi";
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import api from "@/lib/axios";
 
@@ -79,12 +79,16 @@ const AnalyticsPage = () => {
 
   const eventIcon = (type: string) => {
     if (type === "project_click") return <HiCursorClick className="w-4 h-4 text-purple-400" />;
+    if (type === "live_link_click") return <HiExternalLink className="w-4 h-4 text-sky-400" />;
+    if (type === "github_click") return <HiCode className="w-4 h-4 text-amber-400" />;
     if (type === "resume_download") return <HiDownload className="w-4 h-4 text-emerald-400" />;
     return <HiEye className="w-4 h-4 text-blue-400" />;
   };
 
   const eventLabel = (item: ActivityItem) => {
-    if (item.type === "project_click") return `Viewed "${item.projectTitle}"`;
+    if (item.type === "project_click") return `Viewed details for "${item.projectTitle}"`;
+    if (item.type === "live_link_click") return `Opened live link for "${item.projectTitle}"`;
+    if (item.type === "github_click") return `Opened GitHub link for "${item.projectTitle}"`;
     if (item.type === "resume_download") return "Downloaded resume";
     return `Visited ${item.page}`;
   };

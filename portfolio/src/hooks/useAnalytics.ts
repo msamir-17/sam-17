@@ -2,34 +2,38 @@ import { useEffect, useRef, useCallback } from 'react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-// Generate a fingerprint-style visitor ID (privacy-safe, no PII)
+// Generate a persistent visitor ID (privacy-safe, stored in localStorage)
 function generateVisitorId(): string {
-    const raw = [
-        navigator.userAgent,
-        screen.width + 'x' + screen.height,
-        screen.colorDepth,
-        Intl.DateTimeFormat().resolvedOptions().timeZone,
-        navigator.language
-    ].join('|');
-
-    // Simple hash
-    let hash = 0;
-    for (let i = 0; i < raw.length; i++) {
-        const char = raw.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash |= 0; // Convert to 32bit int
+    try {
+        if (typeof window === 'undefined' || !window.localStorage) {
+            return 'v_temp';
+        }
+        let visitorId = localStorage.getItem('_sa_vid');
+        if (!visitorId) {
+            visitorId = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+            localStorage.setItem('_sa_vid', visitorId);
+        }
+        return visitorId;
+    } catch {
+        return 'v_temp';
     }
-    return 'v_' + Math.abs(hash).toString(36);
 }
 
 // Generate a session ID (unique per browser tab session)
 function getSessionId(): string {
-    let sessionId = sessionStorage.getItem('_sa_sid');
-    if (!sessionId) {
-        sessionId = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
-        sessionStorage.setItem('_sa_sid', sessionId);
+    try {
+        if (typeof window === 'undefined' || !window.sessionStorage) {
+            return 's_temp_' + Math.random().toString(36).slice(2, 8);
+        }
+        let sessionId = sessionStorage.getItem('_sa_sid');
+        if (!sessionId) {
+            sessionId = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+            sessionStorage.setItem('_sa_sid', sessionId);
+        }
+        return sessionId;
+    } catch {
+        return 's_temp_' + Math.random().toString(36).slice(2, 8);
     }
-    return sessionId;
 }
 
 // Detect device type
@@ -58,11 +62,11 @@ function getBrowser(): string {
 // Detect OS
 function getOS(): string {
     const ua = navigator.userAgent;
+    if (/iPhone|iPad|iPod/.test(ua)) return 'iOS';
+    if (ua.includes('Android')) return 'Android';
     if (ua.includes('Win')) return 'Windows';
     if (ua.includes('Mac')) return 'macOS';
-    if (ua.includes('Linux') && !ua.includes('Android')) return 'Linux';
-    if (ua.includes('Android')) return 'Android';
-    if (/iPhone|iPad|iPod/.test(ua)) return 'iOS';
+    if (ua.includes('Linux')) return 'Linux';
     return 'Other';
 }
 
@@ -79,8 +83,10 @@ function getReferrer(): string {
     }
 }
 
-// Send tracking event (fire-and-forget using sendBeacon with fetch fallback)
+// Send tracking event (fire-and-forget using fetch with keepalive fallback)
 async function sendTrackEvent(payload: Record<string, unknown>): Promise<void> {
+    if (typeof window === 'undefined') return;
+
     const data = {
         ...payload,
         visitorId: generateVisitorId(),
@@ -92,19 +98,14 @@ async function sendTrackEvent(payload: Record<string, unknown>): Promise<void> {
     };
 
     try {
-        // Use sendBeacon for reliability (works even on page unload)
-        const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-        const sent = navigator.sendBeacon(`${API_URL}/api/analytics/track`, blob);
-
-        // Fallback to fetch if sendBeacon fails
-        if (!sent) {
-            await fetch(`${API_URL}/api/analytics/track`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-                keepalive: true
-            });
-        }
+        await fetch(`${API_URL}/api/analytics/track`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            keepalive: true
+        });
     } catch {
         // Silently fail — analytics should never break the app
     }
@@ -146,5 +147,29 @@ export function trackResumeDownload() {
     sendTrackEvent({
         type: 'resume_download',
         page: '/hero'
+    });
+}
+
+// ==========================================
+// Utility: Track project live link click
+// ==========================================
+export function trackLiveLinkClick(projectId: string, projectTitle: string) {
+    sendTrackEvent({
+        type: 'live_link_click',
+        page: '/projects',
+        projectId,
+        projectTitle
+    });
+}
+
+// ==========================================
+// Utility: Track project github link click
+// ==========================================
+export function trackGithubClick(projectId: string, projectTitle: string) {
+    sendTrackEvent({
+        type: 'github_click',
+        page: '/projects',
+        projectId,
+        projectTitle
     });
 }
