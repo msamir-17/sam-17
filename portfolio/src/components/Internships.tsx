@@ -2,14 +2,10 @@
 
 import { motion, Variants } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { HiExternalLink, HiCalendar, HiX, HiLocationMarker, HiCode } from 'react-icons/hi'
+import { HiExternalLink, HiCalendar, HiX, HiLocationMarker } from 'react-icons/hi'
 import { HiCheckBadge } from 'react-icons/hi2'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { 
-  SiTensorflow, SiPytorch, SiPython, SiScikitlearn, SiTailwindcss, SiNextdotjs, SiReact, 
-  SiTypescript, SiJavascript, SiMongodb, SiNodedotjs, SiCplusplus, SiC, SiHtml5, SiCss
-} from 'react-icons/si'
 
 interface DynamicInternship {
   _id: string;
@@ -28,49 +24,6 @@ interface DynamicCertificate {
   certificateLink: string;
 }
 
-// Map technology names to Simple Icons and Tailwind text colors
-const techIcons: Record<string, { icon: any, color: string }> = {
-  'TensorFlow': { icon: SiTensorflow, color: 'text-orange-500' },
-  'PyTorch': { icon: SiPytorch, color: 'text-red-500' },
-  'Python': { icon: SiPython, color: 'text-blue-500' },
-  'Scikit-Learn': { icon: SiScikitlearn, color: 'text-orange-400' },
-  'React': { icon: SiReact, color: 'text-sky-400' },
-  'Next.js': { icon: SiNextdotjs, color: 'text-black dark:text-white' },
-  'Tailwind CSS': { icon: SiTailwindcss, color: 'text-cyan-400' },
-  'TypeScript': { icon: SiTypescript, color: 'text-blue-600' },
-  'JavaScript': { icon: SiJavascript, color: 'text-yellow-500' },
-  'MongoDB': { icon: SiMongodb, color: 'text-green-500' },
-  'Node.js': { icon: SiNodedotjs, color: 'text-green-600' },
-  'C++': { icon: SiCplusplus, color: 'text-blue-700' },
-  'C': { icon: SiC, color: 'text-blue-800' },
-  'HTML5': { icon: SiHtml5, color: 'text-orange-600' },
-  'CSS3': { icon: SiCss, color: 'text-blue-500' },
-};
-
-// Dynamically assign appropriate technologies based on certificate titles
-const getCertSkills = (title: string): string[] => {
-  const t = title.toLowerCase();
-  if (t.includes('deep learning')) {
-    return ['Python', 'TensorFlow', 'PyTorch'];
-  }
-  if (t.includes('machine learning')) {
-    return ['Python', 'Scikit-Learn'];
-  }
-  if (t.includes('frontend') || t.includes('web development') || t.includes('react')) {
-    return ['React', 'Tailwind CSS', 'JavaScript'];
-  }
-  if (t.includes('node') || t.includes('backend')) {
-    return ['Node.js', 'MongoDB', 'JavaScript'];
-  }
-  if (t.includes('python')) {
-    return ['Python'];
-  }
-  if (t.includes('c++') || t.includes('programming in c')) {
-    return ['C++', 'C'];
-  }
-  return ['HTML5', 'CSS3', 'JavaScript'];
-};
-
 const Internships = () => {
   const [internshipsRef, internshipsInView] = useInView({
     triggerOnce: true,
@@ -87,7 +40,7 @@ const Internships = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCertificate, setSelectedCertificate] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -333,27 +286,22 @@ const Internships = () => {
 
             {/* Certifications Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {certifications.map((cert) => {
-                const certSkills = getCertSkills(cert.title);
-                const displayedTechs = certSkills.slice(0, 3);
-                const remainingCount = certSkills.length - displayedTechs.length;
-
-                return (
+              {certifications.map((cert) => (
                   <motion.div
                     key={cert._id}
                     variants={itemVariants}
                     whileHover={{ y: -4 }}
                     transition={{ duration: 0.2 }}
                     onClick={() => cert.certificateLink && setSelectedCertificate(cert.certificateLink)}
-                    className="group flex flex-col h-full bg-white dark:bg-[var(--color-bg-tertiary)] rounded-3xl p-5 transition-all duration-300 cursor-pointer border border-gray-100 dark:border-[var(--color-border)] hover:border-blue-500/50 dark:hover:border-blue-400/40 shadow-sm hover:shadow-md"
+                    className="group flex flex-col h-full bg-white dark:bg-[var(--color-bg-tertiary)] rounded-3xl overflow-hidden transition-all duration-300 cursor-pointer border border-gray-100 dark:border-[var(--color-border)] hover:border-blue-500/50 dark:hover:border-blue-400/40 shadow-sm hover:shadow-md"
                   >
-                    {/* Certificate Thumbnail (Inset and Rounded) */}
-                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-zinc-50 dark:bg-zinc-950/30 flex items-center justify-center">
+                    {/* Certificate Thumbnail (Edge-to-edge) */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-50 dark:bg-zinc-950/30 flex items-center justify-center">
                       {cert.certificateLink ? (
                         <img
                           src={cert.certificateLink}
                           alt={`${cert.title} Certificate`}
-                          className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           loading="lazy"
                         />
                       ) : (
@@ -365,7 +313,7 @@ const Internships = () => {
                     </div>
 
                     {/* Certificate Info */}
-                    <div className="pt-4 flex flex-col flex-grow text-left">
+                    <div className="p-5 pt-4 flex flex-col flex-grow text-left">
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                         {cert.title}
                       </h3>
@@ -374,57 +322,12 @@ const Internships = () => {
                         {cert.issuedBy}
                       </p>
                       
-                      <p className="text-xs text-gray-400 dark:text-gray-500 mb-4">
+                      <p className="text-xs text-gray-400 dark:text-gray-500">
                         Earned in {cert.dateEarned}
                       </p>
-
-                      <div className="flex-grow" />
-
-                      {/* Tech Stack Badges */}
-                      <div className="flex items-center -space-x-2.5 mb-2 isolate">
-                        {displayedTechs.map((techName) => {
-                          const tech = techIcons[techName] || { icon: HiCode, color: 'text-gray-400' };
-                          const Icon = tech.icon;
-                          const isHovered = hoveredTech === `${cert._id}-${techName}`;
-
-                          return (
-                            <div
-                              key={techName}
-                              onMouseEnter={() => setHoveredTech(`${cert._id}-${techName}`)}
-                              onMouseLeave={() => setHoveredTech(null)}
-                              onClick={(e) => e.stopPropagation()} // Prevent card click
-                              className="flex items-center h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 border-2 border-white dark:border-[var(--color-bg-tertiary)] hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 ease-out overflow-hidden px-2 cursor-pointer shadow-sm relative"
-                              style={{
-                                maxWidth: isHovered ? '200px' : '36px',
-                                zIndex: isHovered ? 10 : 1,
-                                transitionProperty: 'max-width, background-color, border-color'
-                              }}
-                            >
-                              <div className={`flex-shrink-0 ${tech.color} flex items-center justify-center w-5 h-5`}>
-                                <Icon className="w-5 h-5" />
-                              </div>
-                              <span
-                                className={`text-xs font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap transition-all duration-300 ${
-                                  isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0 pointer-events-none'
-                                }`}
-                              >
-                                {techName}
-                              </span>
-                            </div>
-                          );
-                        })}
-
-                        {/* Remaining tech count badge */}
-                        {remainingCount > 0 && (
-                          <div className="flex items-center justify-center w-9 h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 border-2 border-white dark:border-[var(--color-bg-tertiary)] text-xs font-bold text-gray-500 dark:text-gray-400 shadow-sm relative z-0">
-                            +{remainingCount}
-                          </div>
-                        )}
-                      </div>
                     </div>
                   </motion.div>
-                );
-              })}
+              ))}
             </div>
           </motion.div>
         </div>
