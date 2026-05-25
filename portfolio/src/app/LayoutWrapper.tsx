@@ -4,22 +4,32 @@ import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { DataProvider, useData } from '@/context/DataContext';
 
-export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
+function LayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith('/admin');
-  const [loading, setLoading] = useState(true);
+  const { loaded } = useData();
+  const [showLoader, setShowLoader] = useState(true);
+  const [minTimePassed, setMinTimePassed] = useState(false);
 
+  // Ensure the loader shows for at least 800ms so it doesn't flash
   useEffect(() => {
-    // Fade out splash loader after hydration/asset fetch simulation
-    const timer = setTimeout(() => setLoading(false), 1200);
+    const timer = setTimeout(() => setMinTimePassed(true), 800);
     return () => clearTimeout(timer);
   }, []);
+
+  // Dismiss loader when both data is loaded AND minimum time has passed
+  useEffect(() => {
+    if (loaded && minTimePassed) {
+      setShowLoader(false);
+    }
+  }, [loaded, minTimePassed]);
 
   return (
     <>
       <AnimatePresence mode="wait">
-        {loading && !isAdminPage ? (
+        {showLoader && !isAdminPage ? (
           <motion.div
             key="loader"
             initial={{ opacity: 1 }}
@@ -53,5 +63,13 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       {!isAdminPage && <Header />}
       <main>{children}</main>
     </>
+  );
+}
+
+export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <DataProvider>
+      <LayoutContent>{children}</LayoutContent>
+    </DataProvider>
   );
 }

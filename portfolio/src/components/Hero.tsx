@@ -2,36 +2,14 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { HiDownload, HiMail } from 'react-icons/hi'
-import axios from 'axios';
 import { trackResumeDownload } from '@/hooks/useAnalytics';
+import { useData } from '@/context/DataContext';
 
 const Hero = () => {
-  const [heroData, setHeroData] = useState({
-    greeting: "",
-    name: 'Samir',
-    jobtitles: ['Loading...'],
-    bio: "Passionate about creating intelligent solutions...",
-    resumeurl: ''
-  });
+  const { hero: heroData, loaded } = useData();
   const [currentTitle, setCurrentTitle] = useState(0)
-  const [loading, setLoading] = useState(true);
+  const loading = !loaded;
 
-  useEffect(() => {
-    const fetchHeroData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/hero`);
-        if (response.data) {
-          setHeroData(response.data)
-        }
-      } catch (error) {
-        console.error("Failed to fetch data:", error)
-      } finally {
-        setLoading(false)
-      }
-    };
-    fetchHeroData();
-  }, []);
 
   useEffect(() => {
     if (heroData.jobtitles.length <= 1) return;

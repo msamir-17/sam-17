@@ -1,12 +1,12 @@
 'use client'
 
 import { motion, Variants } from 'framer-motion';
-import axios from 'axios';
 import { useInView } from 'react-intersection-observer';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { HiExternalLink, HiCode, HiX } from 'react-icons/hi';
 import { Project as ProjectTypeFromTypes } from '@/types';
 import { trackProjectClick, trackLiveLinkClick, trackGithubClick } from '@/hooks/useAnalytics';
+import { useData } from '@/context/DataContext';
 import { 
   SiTensorflow, SiPytorch, SiPython, SiScikitlearn, SiTailwindcss, SiNextdotjs, SiReact, 
   SiTypescript, SiJavascript, SiMongodb, SiNodedotjs, SiCplusplus, SiC, SiHtml5, SiCss,
@@ -105,28 +105,10 @@ const Projects = () => {
     threshold: 0.1
   });
 
-  const [projects, setProjects] = useState<DynamicProject[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { projects, loaded } = useData();
+  const loading = !loaded;
   const [selectedProject, setSelectedProject] = useState<DynamicProject | null>(null);
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`);
-        setProjects(response.data);
-      } catch (err) {
-        console.error("Failed to fetch projects from API:", err);
-        setError("Failed to load projects. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProjects();
-  }, []);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -182,27 +164,7 @@ const Projects = () => {
     );
   }
 
-  if (error) {
-    return (
-      <section id="projects" className="section-spacing bg-white dark:bg-gradient-to-b dark:from-[#0C1323] dark:via-[#14182D] dark:to-[#14182D]">
-        <div className="section-container">
-          <div className="text-center">
-            <div className="max-w-md mx-auto bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8">
-              <div className="text-red-500 text-4xl mb-4">⚠️</div>
-              <h3 className="text-xl font-semibold text-red-800 dark:text-red-200 mb-2">Error Loading Projects</h3>
-              <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
-              <button
-                onClick={() => window.location.reload()}
-                className="px-6 py-2.5 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors font-medium"
-              >
-                Retry
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+
 
   return (
     <>

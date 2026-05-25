@@ -4,25 +4,8 @@ import { motion, Variants } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { HiExternalLink, HiCalendar, HiX, HiLocationMarker } from 'react-icons/hi'
 import { HiCheckBadge } from 'react-icons/hi2'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-
-interface DynamicInternship {
-  _id: string;
-  role: string;
-  company: string;
-  duration: string;
-  description: string;
-  certificateUrl?: string;
-}
-
-interface DynamicCertificate {
-  _id: string;
-  title: string;
-  issuedBy: string;
-  dateEarned: string;
-  certificateLink: string;
-}
+import { useState } from 'react'
+import { useData } from '@/context/DataContext'
 
 const Internships = () => {
   const [internshipsRef, internshipsInView] = useInView({
@@ -35,31 +18,11 @@ const Internships = () => {
     threshold: 0.1
   })
 
-  const [internships, setInternships] = useState<DynamicInternship[]>([]);
-  const [certifications, setCertifications] = useState<DynamicCertificate[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { internships, certifications, loaded } = useData();
+  const loading = !loaded;
   const [selectedCertificate, setSelectedCertificate] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-
-  useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        setLoading(true);
-        const [internshipsRes, certificationsRes] = await Promise.all([
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/internships`),
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/certificates`)
-        ]);
-        setInternships(internshipsRes.data);
-        setCertifications(certificationsRes.data);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAllData();
-  }, []);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
