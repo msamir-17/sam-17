@@ -204,7 +204,7 @@ const EditCertificatePage = () => {
                                 setCertificatePreview(URL.createObjectURL(e.target.files[0]));
                             }
                         }}
-                        accept="certificate/*"
+                        accept="image/*,.pdf"
                         className="mt-2 text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
                     />
                     <p className="text-xs text-gray-500 mt-2">Select a new file only if you want to replace the current certificate.</p>
@@ -212,7 +212,7 @@ const EditCertificatePage = () => {
 
                 <div className="flex justify-end gap-4">
                     <button type="button" onClick={() => router.back()} className="px-6 py-2 rounded-md text-white bg-gray-600 hover:bg-gray-500">Cancel</button>
-                    <button type="submit" disabled={loading} className="...">
+                    <button type="submit" disabled={loading} className="px-6 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400">
                         {loading ? 'Updating...' : 'Update Certificate'}
                     </button>
                 </div>

@@ -23,6 +23,10 @@ connectDB();
 
 
 // Cloudinary configuration
+const isCloudinaryConfigured = process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET;
+if (!isCloudinaryConfigured) {
+    console.warn("⚠️  WARNING: Cloudinary is not fully configured in server/.env file. File uploads will fail! Please define CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET.");
+}
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,

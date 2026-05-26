@@ -2,6 +2,7 @@
 const Project = require('../models/projectModel.js'); // Importing the Project model
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const GetProject = async (req, res) => {
     
@@ -25,6 +26,15 @@ const AddProject = async (req, res) =>{
 
         if(!req.file){
             return res.status(400).json({message:'Project Image file is required'});
+        }
+
+        // Check if Cloudinary is configured
+        if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+            console.error("Cloudinary credentials are not configured in environment variables!");
+            fs.unlink(req.file.path, () => {});
+            return res.status(500).json({ 
+                message: 'Cloudinary configuration is missing on the server. Please define CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in your environment.' 
+                });
         }
 
         console.log(req.file.path);
@@ -75,6 +85,13 @@ const AddProject = async (req, res) =>{
 
 const UpdateProject = async (req, res) => {
     try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            if (req.file && req.file.path) {
+                fs.unlink(req.file.path, () => {});
+            }
+            return res.status(400).json({ message: 'Invalid Project ID format' });
+        }
+
         const { title, description, technologies, githubUrl, liveUrl } = req.body;
         
         // Yeh data humein form se mil raha hai
@@ -97,6 +114,15 @@ const UpdateProject = async (req, res) => {
         // --- SAFE CHECK for Image ---
         // Check karo ki user ne nayi image upload ki hai ya nahi aur uski path valid hai
         if (req.file && req.file.path && req.file.size > 0) {
+            // Check if Cloudinary is configured
+            if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+                console.error("Cloudinary credentials are not configured in environment variables!");
+                fs.unlink(req.file.path, () => {});
+                return res.status(500).json({ 
+                    message: 'Cloudinary configuration is missing on the server. Please define CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in your environment.' 
+                });
+            }
+
             console.log("New image detected, uploading to Cloudinary...");
             const result = await cloudinary.uploader.upload(req.file.path, {
                 folder: 'Projects_Photos',
@@ -137,6 +163,9 @@ const UpdateProject = async (req, res) => {
 const DeleteProject = async (req, res) => {
     try{
         const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid Project ID format' });
+        }
         await Project.findByIdAndDelete(id)
 
         res.status(200).json({message:'Project Deleted Successfully'});
@@ -151,6 +180,9 @@ const DeleteProject = async (req, res) => {
 // === GET SINGLE PROJECT BY ID ===
 const GetProjectById = async (req, res) => {
     try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Project ID format' });
+        }
         // URL se project ki ID nikalo
         const project = await Project.findById(req.params.id);
 

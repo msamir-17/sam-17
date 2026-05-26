@@ -2,6 +2,7 @@
 const Internship = require('../models/InternshipS.js'); // Importing the Internship model
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const GetInternships = async (req, res) => {
     try {
@@ -23,6 +24,15 @@ const AddInternships = async (req, res) => {
         let certificateUrl = '';
 
         if (req.file && req.file.path && req.file.size > 0) {
+            // Check if Cloudinary is configured
+            if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+                console.error("Cloudinary credentials are not configured in environment variables!");
+                fs.unlink(req.file.path, () => {});
+                return res.status(500).json({ 
+                    message: 'Cloudinary configuration is missing on the server. Please define CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in your environment.' 
+                });
+            }
+
             const result = await cloudinary.uploader.upload(req.file.path, {
                 folder: 'Internship_Certificates',
                 resource_type: 'auto'
@@ -66,6 +76,12 @@ const AddInternships = async (req, res) => {
 const UpdateInternships = async (req, res) => {
     try {
         // Step 1: URL se us internship ki ID nikalo jise update karna hai
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            if (req.file && req.file.path) {
+                fs.unlink(req.file.path, () => {});
+            }
+            return res.status(400).json({ message: 'Invalid Internship ID format' });
+        }
 
         // Step 2: Client (admin panel) se aane waale naye data ko nikalo
         const { company, role, duration, description } = req.body;
@@ -75,6 +91,15 @@ const UpdateInternships = async (req, res) => {
 
 
         if (req.file && req.file.path && req.file.size > 0) {
+            // Check if Cloudinary is configured
+            if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+                console.error("Cloudinary credentials are not configured in environment variables!");
+                fs.unlink(req.file.path, () => {});
+                return res.status(500).json({ 
+                    message: 'Cloudinary configuration is missing on the server. Please define CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in your environment.' 
+                });
+            }
+
             console.log("New image detected, uploading to Cloudinary...");
             const result = await cloudinary.uploader.upload(req.file.path, {
                 folder: 'Internship_Certificates',
@@ -107,6 +132,9 @@ const UpdateInternships = async (req, res) => {
 
 const GetIntershipById = async (req, res) => {
     try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Internship ID format' });
+        }
         // URL se internship ki ID nikalo
         const internship = await Internship.findById(req.params.id);
 
@@ -126,6 +154,9 @@ const GetIntershipById = async (req, res) => {
 const DeleteInternships = async (req, res) => {
     try {
         const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid Internship ID format' });
+        }
         await Internship.findByIdAndDelete(id)
 
         res.status(200).json({ message: 'Internship Deleted Successfully' });

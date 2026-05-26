@@ -17,7 +17,8 @@ const getHero = async (req , res ) => {
 
 const updateHero = async (req, res) => {
     try {
-        const { greeting, name, jobtitles, bio } = req.body;
+        const { greeting, name, jobtitles, jobTitles, bio } = req.body;
+        const actualJobTitles = jobtitles !== undefined ? jobtitles : jobTitles;
         
         // Start with an empty object to hold only the fields we receive
         const updatedData = {};
@@ -29,12 +30,21 @@ const updateHero = async (req, res) => {
 
         // --- THE ROBUST FIX for jobtitles ---
         // Only if jobtitles is a non-empty string, process it
-        if (typeof jobtitles === 'string' && jobtitles.trim() !== '') {
-            updatedData.jobtitles = jobtitles.split(',').map(title => title.trim());
+        if (typeof actualJobTitles === 'string' && actualJobTitles.trim() !== '') {
+            updatedData.jobtitles = actualJobTitles.split(',').map(title => title.trim());
         }
 
         // --- THE ROBUST FIX for the resume file ---
         if (req.file && req.file.path && req.file.size > 0) {
+            // Check if Cloudinary is configured
+            if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+                console.error("Cloudinary credentials are not configured in environment variables!");
+                fs.unlink(req.file.path, () => {});
+                return res.status(500).json({ 
+                    message: 'Cloudinary configuration is missing on the server. Please define CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in your environment.' 
+                });
+            }
+
             const result = await cloudinary.uploader.upload(req.file.path, {
                 folder: 'Portfolio_Resume',
                 resource_type: 'raw'
