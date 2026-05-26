@@ -1,6 +1,7 @@
 
 const Internship = require('../models/InternshipS.js'); // Importing the Internship model
 const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
 
 const GetInternships = async (req, res) => {
     try {
@@ -17,18 +18,23 @@ const GetInternships = async (req, res) => {
 
 const AddInternships = async (req, res) => {
     // Client (admin panel) se aane waale data ko nikalo (company, role, etc.)
-    const { company, role, duration, description } = req.body;
-    let certificateUrl = '';
+    try {
+        const { company, role, duration, description } = req.body;
+        let certificateUrl = '';
 
-     if (req.file) {
+        if (req.file && req.file.path && req.file.size > 0) {
             const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'Internship_Certificates'
+                folder: 'Internship_Certificates',
+                resource_type: 'auto'
             });
             certificateUrl = result.secure_url;
+
+            // Clean up the temporary file uploaded by multer
+            fs.unlink(req.file.path, (err) => {
+                if (err) console.error("Failed to delete temp file:", err);
+            });
         }
 
-
-    try {
         const newIntern = new Internship({
             company,
             role,
@@ -47,8 +53,12 @@ const AddInternships = async (req, res) => {
     }
     catch (err) {
         console.error("ADD INTERNSHIP FAILED:", err);
+        // Clean up the temporary file on failure if it exists
+        if (req.file && req.file.path) {
+            fs.unlink(req.file.path, () => {});
+        }
         res.status(500).json({ message: 'Server Error: Unable to add Internship' });
-    };
+    }
 
 };
 
@@ -64,12 +74,18 @@ const UpdateInternships = async (req, res) => {
         // Step 3: Database mein us ID ko dhoondho aur naye data se update kar do
 
 
-        if (req.file) {
+        if (req.file && req.file.path && req.file.size > 0) {
             console.log("New image detected, uploading to Cloudinary...");
             const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'Internship_Certificates'
+                folder: 'Internship_Certificates',
+                resource_type: 'auto'
             });
             updatedData.certificateUrl = result.secure_url;
+
+            // Clean up the temporary file uploaded by multer
+            fs.unlink(req.file.path, (err) => {
+                if (err) console.error("Failed to delete temp file:", err);
+            });
         }
 
         const updatedIntern = await Internship.findByIdAndUpdate(req.params.id, updatedData, { new: true });
@@ -81,6 +97,10 @@ const UpdateInternships = async (req, res) => {
     catch (err) {
         
         console.error("UPDATE INTERNSHIP FAILED:", err);
+        // Clean up the temporary file on failure if it exists
+        if (req.file && req.file.path) {
+            fs.unlink(req.file.path, () => {});
+        }
         res.status(500).json({ message: 'Server Error: Unable to update Internship' });
     }
 }

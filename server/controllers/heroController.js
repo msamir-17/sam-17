@@ -1,5 +1,6 @@
 const hero = require('../models/heroModel.js');
 const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
 
 const getHero = async (req , res ) => {
     try {
@@ -33,12 +34,17 @@ const updateHero = async (req, res) => {
         }
 
         // --- THE ROBUST FIX for the resume file ---
-        if (req.file) {
+        if (req.file && req.file.path && req.file.size > 0) {
             const result = await cloudinary.uploader.upload(req.file.path, {
                 folder: 'Portfolio_Resume',
                 resource_type: 'raw'
             });
             updatedData.resumeurl = result.secure_url;
+
+            // Clean up the temporary file uploaded by multer
+            fs.unlink(req.file.path, (err) => {
+                if (err) console.error("Failed to delete temp file:", err);
+            });
         }
 
         // Find the single hero document and update it with the new data
@@ -53,6 +59,10 @@ const updateHero = async (req, res) => {
 
     } catch (error) {
         console.error("UPDATE HERO FAILED:", error);
+        // Clean up the temporary file on failure if it exists
+        if (req.file && req.file.path) {
+            fs.unlink(req.file.path, () => {});
+        }
         res.status(500).json({ message: "Server Error: Unable to update Hero data" });
     }
 };

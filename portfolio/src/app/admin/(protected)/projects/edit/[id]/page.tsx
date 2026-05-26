@@ -49,6 +49,12 @@ const EditProjectPage = () => {
         e.preventDefault();
         setUpdating(true);
         setError('');
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            setError('Authentication error. Please log in again.');
+            setUpdating(false);
+            return;
+        }
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
@@ -59,7 +65,6 @@ const EditProjectPage = () => {
             formData.append('image', newImage);
         }
         try {
-            const token = localStorage.getItem('authToken');
             // await api.put(`http://localhost:5000/api/projects/${id}`, formData, {
             await api.put(`/projects/${id}`, formData, {
                 headers: { 'Authorization': `Bearer ${token}` }

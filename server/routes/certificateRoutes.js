@@ -22,6 +22,6 @@ router.post('/', protect, upload.single('certificateFile'), AddCertificate);
 //
 router.put('/:id', protect, upload.single('certificateFile'), UpdateCertificate);
 //
-router.delete('/:id', DeleteCertificate);   
+router.delete('/:id', protect, DeleteCertificate);   
 
 module.exports = router; 

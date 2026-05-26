@@ -1,6 +1,7 @@
 
 const Project = require('../models/projectModel.js'); // Importing the Project model
 const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
 
 const GetProject = async (req, res) => {
     
@@ -30,14 +31,20 @@ const AddProject = async (req, res) =>{
 
         const result = await cloudinary.uploader.upload(req.file.path,{
             folder: 'Projects_Photos',
-            resource_type: 'image'
+            resource_type: 'auto'
         });
         console.log(result);
+
+        // Clean up the temporary file uploaded by multer
+        fs.unlink(req.file.path, (err) => {
+            if (err) console.error("Failed to delete temp file:", err);
+        });
+
         const newProject = new Project({
             title,
             description,
             imageUrl: result.secure_url , // Cloudinary ka secure URL
-            technologies: technologies.split(',').map(tech => tech.trim()), // Comma-separated string ko array mein badlo 
+            technologies: typeof technologies === 'string' ? technologies.split(',').map(tech => tech.trim()) : [], // Safely handle string split
             githubUrl, 
             liveUrl
         });
@@ -52,6 +59,10 @@ const AddProject = async (req, res) =>{
     }
     catch(err){
         console.error("--- ADD PROJECT CRASHED ---", err);
+        // Clean up the temporary file on failure if it exists
+        if (req.file && req.file.path) {
+            fs.unlink(req.file.path, () => {});
+        }
         res.status(500).json({message:'Server Error: Unable to add Project'});
     };
 
@@ -84,14 +95,19 @@ const UpdateProject = async (req, res) => {
         }
 
         // --- SAFE CHECK for Image ---
-        // Check karo ki user ne nayi image upload ki hai ya nahi
-        if (req.file) {
+        // Check karo ki user ne nayi image upload ki hai ya nahi aur uski path valid hai
+        if (req.file && req.file.path && req.file.size > 0) {
             console.log("New image detected, uploading to Cloudinary...");
             const result = await cloudinary.uploader.upload(req.file.path, {
                 folder: 'Projects_Photos',
-                resource_type: 'image'
+                resource_type: 'auto'
             });
             updatedData.imageUrl = result.secure_url;
+
+            // Clean up the temporary file uploaded by multer
+            fs.unlink(req.file.path, (err) => {
+                if (err) console.error("Failed to delete temp file:", err);
+            });
         } 
         // Agar nayi image nahi hai, toh hum purani image ko nahi chhedenge
         // Isliye 'imageUrl' ko 'updatedData' mein add hi nahi karenge
@@ -110,6 +126,10 @@ const UpdateProject = async (req, res) => {
 
     } catch (err) {
         console.error("--- UPDATE PROJECT FAILED ---", err);
+        // Clean up the temporary file on failure if it exists
+        if (req.file && req.file.path) {
+            fs.unlink(req.file.path, () => {});
+        }
         res.status(500).json({ message: 'Server Error: Unable to update Project' });
     }
 };
