@@ -1,5 +1,3 @@
-const nodemailer = require('nodemailer');
-
 const sendContactEmail = async (req, res) => {
     try {
         const { name, email, message } = req.body;
@@ -9,27 +7,21 @@ const sendContactEmail = async (req, res) => {
             return res.status(400).json({ message: 'All fields (name, email, message) are required' });
         }
 
-        // Setup Nodemailer transporter using credentials from .env
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            connectionTimeout: 10000, // 10 seconds
-            socketTimeout: 10000,     // 10 seconds
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        });
+        const resendApiKey = process.env.RESEND_API_KEY;
+        if (!resendApiKey) {
+            console.error("Resend API key is missing in environment variables!");
+            return res.status(500).json({ message: 'Email configuration is missing on the server.' });
+        }
 
-        // Email layout
-        const mailOptions = {
-            from: `Portfolio Contact Form <${process.env.EMAIL_USER}>`,
-            to: process.env.EMAIL_USER, // Send email to the admin
-            replyTo: email, // If the admin replies, it goes to the visitor's email
+        const emailUser = process.env.EMAIL_USER || 'samirkhan003786@gmail.com';
+
+        // Prepare payload for Resend
+        // Note: Free tier Resend accounts can only send from onboarding@resend.dev to the owner's email address.
+        const payload = {
+            from: 'Portfolio Contact Form <onboarding@resend.dev>',
+            to: emailUser,
+            reply_to: email, // Direct replies go to the visitor's email
             subject: `New Message from ${name} via Portfolio`,
-            text: `You received a new message from your portfolio contact form.\n\n` +
-                  `Name: ${name}\n` +
-                  `Email: ${email}\n\n` +
-                  `Message:\n${message}`,
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px; max-width: 600px;">
                     <h2 style="color: #3b82f6; border-bottom: 1px solid #eee; padding-bottom: 10px;">New Portfolio Message</h2>
@@ -44,8 +36,24 @@ const sendContactEmail = async (req, res) => {
             `
         };
 
-        // Send the mail
-        await transporter.sendMail(mailOptions);
+        // Send via Resend HTTP REST API
+        const response = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${resendApiKey}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Resend API failed:', errorText);
+            throw new Error(`Resend API returned status ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Email sent successfully via Resend:', data.id);
 
         res.status(200).json({ message: 'Email sent successfully!' });
 
