@@ -8,7 +8,6 @@ const dotenv = require('dotenv');
 const cloudinary = require('cloudinary').v2;
 
 
-
 const internshipRoutes = require('./routes/internshipRoutes.js');
 const certificateRoutes = require('./routes/certificateRoutes.js');
 const userRoutes = require('./routes/userRoutes.js');

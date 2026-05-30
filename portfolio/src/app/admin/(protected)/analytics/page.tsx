@@ -174,10 +174,10 @@ const AnalyticsPage = () => {
         <div className="space-y-6">
           {/* Visitor Trend Chart */}
           {trend.length > 0 && (
-            <div className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-5">
+            <div className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-5 min-w-0">
               <h3 className="text-base font-semibold text-white mb-4">Visitor Trend (30 Days)</h3>
               <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <AreaChart data={trend}>
                     <defs>
                       <linearGradient id="viewsGrad" x1="0" y1="0" x2="0" y2="1">
@@ -216,10 +216,10 @@ const AnalyticsPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Device Pie */}
             {devices.devices.length > 0 && (
-              <div className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-5">
+              <div className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-5 min-w-0">
                 <h3 className="text-base font-semibold text-white mb-4 flex items-center gap-2"><HiDeviceMobile className="w-4 h-4 text-gray-400" /> Devices</h3>
                 <div className="h-48">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                     <PieChart>
                       <Pie data={devices.devices} dataKey="count" nameKey="_id" cx="50%" cy="50%" outerRadius={70} label={(props: any) => `${props._id || props.name} ${((props.percent || 0) * 100).toFixed(0)}%`} labelLine={false}>
                         {devices.devices.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
@@ -233,10 +233,10 @@ const AnalyticsPage = () => {
 
             {/* Browser Bar */}
             {devices.browsers.length > 0 && (
-              <div className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-5">
+              <div className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-5 min-w-0">
                 <h3 className="text-base font-semibold text-white mb-4 flex items-center gap-2"><HiDesktopComputer className="w-4 h-4 text-gray-400" /> Browsers</h3>
                 <div className="h-48">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                     <BarChart data={devices.browsers} layout="vertical">
                       <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                       <XAxis type="number" stroke="#6b7280" tick={{ fontSize: 11 }} />
@@ -284,14 +284,14 @@ const AnalyticsPage = () => {
 
       {/* Projects Tab */}
       {activeTab === "projects" && (
-        <div className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-5">
+        <div className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-5 min-w-0">
           <h3 className="text-base font-semibold text-white mb-4">Project Click Analytics</h3>
           {projectStats.length === 0 ? (
             <p className="text-gray-500 text-sm text-center py-8">No project click data yet.</p>
           ) : (
             <>
               <div className="h-56 mb-6">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <BarChart data={projectStats}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis dataKey="_id" stroke="#6b7280" tick={{ fontSize: 10 }} interval={0} angle={-20} textAnchor="end" height={50} />

@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import axios from 'axios'
+import api from '@/lib/axios'
 
 interface HeroData {
   greeting: string
@@ -72,16 +72,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    const API = process.env.NEXT_PUBLIC_API_URL
-
     const fetchAll = async () => {
       try {
         // Fetch all data in parallel
         const [heroRes, projectsRes, internshipsRes, certsRes] = await Promise.allSettled([
-          axios.get(`${API}/api/hero`),
-          axios.get(`${API}/api/projects`),
-          axios.get(`${API}/api/internships`),
-          axios.get(`${API}/api/certificates`)
+          api.get('/hero'),
+          api.get('/projects'),
+          api.get('/internships'),
+          api.get('/certificates')
         ])
 
         if (heroRes.status === 'fulfilled' && heroRes.value.data) {
