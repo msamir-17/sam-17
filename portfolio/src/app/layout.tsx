@@ -15,9 +15,9 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Samir — AI/ML Engineer & Full Stack Developer',
+  title: 'Samir AI/ML Engineer & Full Stack Developer',
   description: 'Professional portfolio of Samir, an AI/ML Engineer and Full Stack Developer specializing in modern web technologies, machine learning, and artificial intelligence.',
-  keywords: ['AI Engineer', 'ML Engineer', 'Full Stack Developer', 'Next.js', 'React', 'Python', 'Machine Learning', 'Portfolio'],
+  keywords: ['AI Engineer', 'ML Engineer', 'Full Stack Developer', 'Next.js', 'React', 'Python', 'Machine Learning', 'Portfolio', 'mumbai', 'AI Engineer Mumbai', 'ML Engineer Mumbai', 'Full Stack Developer Mumbai', 'Internships', 'mumbai', 'AI Developer Mumbai', 'Machine Learning Engineer Mumbai'],
   authors: [{ name: 'Samir' }],
   openGraph: {
     title: 'Samir Khan AI/ML Engineer & Full Stack Developer',
