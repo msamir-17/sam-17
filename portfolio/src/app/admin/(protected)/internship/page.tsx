@@ -10,6 +10,7 @@ interface Internship {
     company: string;
     role: string;
     duration: string;
+    location?: string;
     description: string;
     certificateUrl?: string;
 }
@@ -79,6 +80,7 @@ const InternshipsPage = () => {
                         <tr>
                             <th className="px-6 py-4 font-semibold uppercase text-sm">Company</th>
                             <th className="px-6 py-4 font-semibold uppercase text-sm">Role</th>
+                            <th className="px-6 py-4 font-semibold uppercase text-sm">Location</th>
                             <th className="px-6 py-4 font-semibold uppercase text-sm">Duration</th>
                             <th className="px-6 py-4 font-semibold uppercase text-sm">Description</th>
                             <th className="px-6 py-4 font-semibold uppercase text-sm">Certificate</th>
@@ -91,6 +93,7 @@ const InternshipsPage = () => {
                                 <tr key={internship._id} className="hover:bg-gray-700/50 transition">
                                     <td className="px-6 py-4">{internship.company}</td>
                                     <td className="px-6 py-4 text-gray-300">{internship.role}</td>
+                                    <td className="px-6 py-4 text-gray-300">{internship.location || 'Remote'}</td>
                                     <td className="px-6 py-4 text-gray-300">{internship.duration}</td>
                                     <td className="px-6 py-4 max-w-xs truncate text-gray-400">{internship.description}</td>
                                     <td className="px-6 py-4">
@@ -145,7 +148,11 @@ const InternshipsPage = () => {
                             className="bg-gray-800 rounded-lg p-4 shadow hover:shadow-lg transition"
                         >
                             <h2 className="text-lg font-semibold text-white mb-1">{internship.company}</h2>
-                            <p className="text-sm text-gray-400 mb-2">{internship.role}</p>
+                            <p className="text-sm text-gray-400 mb-1">{internship.role}</p>
+
+                            <div className="text-sm text-gray-300 mb-1">
+                                <span className="font-medium">Location:</span> {internship.location || 'Remote'}
+                            </div>
 
                             <div className="text-sm text-gray-300 mb-2">
                                 <span className="font-medium">Duration:</span> {internship.duration}

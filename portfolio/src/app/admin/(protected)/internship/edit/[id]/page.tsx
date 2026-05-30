@@ -16,6 +16,7 @@ const EditInternshipPage = () => {
     const [description, setDescription] = useState('');
     const [role, setRole] = useState('');
     const [duration, setduration] = useState('');
+    const [location, setLocation] = useState('');
     const [certificate, setCertificate] = useState<File | null>(null);
 
     const [certificatePreview, setCertificatePreview] = useState('');
@@ -48,6 +49,7 @@ const EditInternshipPage = () => {
                 // Agar role array hai toh use join karo, warna empty string rakho
                 setRole(InternshipData.role);
                 setduration(InternshipData.duration || ''); // Agar duration nahi hai, toh empty string
+                setLocation(InternshipData.location || ''); // Agar location nahi hai, toh empty string
                 setCertificatePreview(InternshipData.certificateUrl); // certificate preview ke liye URL set karo
 
             } catch (err) {
@@ -76,6 +78,7 @@ const EditInternshipPage = () => {
         formData.append('description', description);
         formData.append('role', role);
         formData.append('duration', duration);
+        formData.append('location', location);
         
         // formData.append('certificateUrl', certificatePreview); // Purani certificate URL bhi bhejein
         
@@ -144,6 +147,12 @@ const EditInternshipPage = () => {
                 <div>
                     <label htmlFor="duration" className="block text-sm font-medium text-gray-400">Duration </label>
                     <input type="text" id="duration" value={duration} onChange={(e) => setduration(e.target.value)} className="input-field" />
+                </div>
+
+                {/* Location */}
+                <div>
+                    <label htmlFor="location" className="block text-sm font-medium text-gray-400">Location</label>
+                    <input type="text" id="location" value={location} onChange={(e) => setLocation(e.target.value)} className="input-field" />
                 </div>
 
                 {/* certificate Upload */}

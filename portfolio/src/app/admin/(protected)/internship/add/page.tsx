@@ -10,6 +10,7 @@ const AddInternshipPage = () => {
     const [company, setCompany] = useState('');
     const [role, setRole] = useState('');
     const [duration, setDuration] = useState('');
+    const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
     const [certificateFile, setCertificateFile] = useState<File | null>(null);
 
@@ -32,6 +33,7 @@ const AddInternshipPage = () => {
         formData.append('company', company);
         formData.append('role', role);
         formData.append('duration', duration);
+        formData.append('location', location);
         formData.append('description', description);
         
         // Agar user ne file select ki hai, tabhi use FormData mein add karo
@@ -79,6 +81,10 @@ const AddInternshipPage = () => {
                 <div>
                     <label htmlFor="duration" className="block text-sm font-medium text-gray-400">Duration</label>
                     <input type="text" id="duration" value={duration} onChange={(e) => setDuration(e.target.value)} required className="input-field" />
+                </div>
+                <div>
+                    <label htmlFor="location" className="block text-sm font-medium text-gray-400">Location</label>
+                    <input type="text" id="location" value={location} onChange={(e) => setLocation(e.target.value)} className="input-field" />
                 </div>
                 <div>
                     <label htmlFor="description" className="block text-sm font-medium text-gray-400">Description</label>

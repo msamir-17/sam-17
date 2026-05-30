@@ -20,7 +20,7 @@ const GetInternships = async (req, res) => {
 const AddInternships = async (req, res) => {
     // Client (admin panel) se aane waale data ko nikalo (company, role, etc.)
     try {
-        const { company, role, duration, description } = req.body;
+        const { company, role, duration, description, location } = req.body;
         let certificateUrl = '';
 
         if (req.file && req.file.path && req.file.size > 0) {
@@ -50,6 +50,7 @@ const AddInternships = async (req, res) => {
             role,
             duration,
             description,
+            location,
             certificateUrl// Cloudinary ka secure URL
         });
 
@@ -84,8 +85,8 @@ const UpdateInternships = async (req, res) => {
         }
 
         // Step 2: Client (admin panel) se aane waale naye data ko nikalo
-        const { company, role, duration, description } = req.body;
-        const updatedData = { company, role, duration, description };
+        const { company, role, duration, description, location } = req.body;
+        const updatedData = { company, role, duration, description, location };
 
         // Step 3: Database mein us ID ko dhoondho aur naye data se update kar do
 

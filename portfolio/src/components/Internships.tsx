@@ -198,7 +198,7 @@ const Internships = () => {
                       
                       <div className="flex items-center gap-2 mt-0.5 text-gray-500 dark:text-gray-400 text-xs md:text-sm font-medium">
                         <HiLocationMarker className="w-4 h-4 text-gray-400" />
-                        <span>{getCompanyLocation(internships[activeIndex].company)}</span>
+                        <span>{internships[activeIndex].location || getCompanyLocation(internships[activeIndex].company)}</span>
                       </div>
                     </div>
                     

@@ -18,6 +18,10 @@ const InternshipSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        location: {
+            type: String,
+            required: false // Optional
+        },
         certificateUrl: {
             type: String,
             required: false // Optional

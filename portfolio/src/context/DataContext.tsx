@@ -26,6 +26,7 @@ interface DynamicInternship {
   role: string
   company: string
   duration: string
+  location?: string
   description: string
   certificateUrl?: string
 }

@@ -21,6 +21,7 @@ export interface Internship {
   role: string;
   organization: string;
   duration: string;
+  location?: string;
   description?: string;
   certificateUrl?: string;
 }
