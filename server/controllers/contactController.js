@@ -12,6 +12,8 @@ const sendContactEmail = async (req, res) => {
         // Setup Nodemailer transporter using credentials from .env
         const transporter = nodemailer.createTransport({
             service: 'gmail',
+            connectionTimeout: 10000, // 10 seconds
+            socketTimeout: 10000,     // 10 seconds
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
