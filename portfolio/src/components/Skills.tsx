@@ -53,7 +53,7 @@ const Skills = () => {
       case 'SiNextdotjs': return <SiNextdotjs {...iconProps} className="w-8 h-8 text-black dark:text-white" />
       case 'SiMongodb': return <SiMongodb {...iconProps} style={{ color: '#47a248' }} />
       case 'SiHtml5': return <SiHtml5 {...iconProps} style={{ color: '#e34f26' }} />
-      case 'SiCss3': return <SiCss {...iconProps} style={{ color: '#1572b6' }} />
+      case 'SiCss': return <SiCss {...iconProps} style={{ color: '#1572b6' }} />
       case 'SiTailwindcss': return <SiTailwindcss {...iconProps} style={{ color: '#06b6d4' }} />
       case 'FaBrain': return <FaBrain {...iconProps} style={{ color: '#8b5cf6' }} />
       case 'SiTensorflow': return <SiTensorflow {...iconProps} style={{ color: '#ff6f00' }} />
