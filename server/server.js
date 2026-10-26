@@ -62,11 +62,24 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
+const mongoose = require('mongoose');
+
 const PORT = process.env.PORT || 5000;
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.send("API is running...");
-})
+});
+
+// Health check endpoint for monitoring & keep-alive
+app.get('/api/health', (req, res) => {
+    const isDbConnected = mongoose.connection.readyState === 1;
+    res.status(200).json({
+        status: 'ok',
+        uptime: Math.floor(process.uptime()),
+        timestamp: new Date().toISOString(),
+        database: isDbConnected ? 'connected' : 'disconnected'
+    });
+});
 
 app.use('/api/internships', internshipRoutes);
 app.use('/api/certificates', certificateRoutes);
@@ -78,8 +91,24 @@ app.use('/api/contact', contactRoutes);
 
 
 
-app.listen( PORT, () => {   
-        console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, () => {   
+    console.log(`Server is running on port ${PORT}`);
+
+    // Keep-Alive Mechanism: Pings the server every 14 minutes to prevent Render free-tier spin down
+    const SERVER_URL = process.env.RENDER_EXTERNAL_URL || process.env.SERVER_URL;
+    if (SERVER_URL) {
+        const KEEP_ALIVE_INTERVAL = 14 * 60 * 1000; // 14 mins
+        setInterval(async () => {
+            try {
+                const response = await fetch(`${SERVER_URL}/api/health`);
+                if (response.ok) {
+                    console.log(`[Keep-Alive] Pinged ${SERVER_URL}/api/health - Status: ${response.status}`);
+                }
+            } catch (err) {
+                console.warn(`[Keep-Alive] Ping failed: ${err.message}`);
+            }
+        }, KEEP_ALIVE_INTERVAL);
+        console.log(`⏰ Keep-alive active for: ${SERVER_URL}`);
     }
-)
+});
 
