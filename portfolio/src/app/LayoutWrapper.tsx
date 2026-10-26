@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import Header from '@/components/Header';
+import SideNavbar from '@/components/SideNavbar';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DataProvider, useData } from '@/context/DataContext';
@@ -61,8 +61,8 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         ) : null}
       </AnimatePresence>
 
-      {!isAdminPage && <Header />}
-      <main>{children}</main>
+      {!isAdminPage && <SideNavbar />}
+      <main className={!isAdminPage ? 'md:pl-20 transition-all duration-300' : ''}>{children}</main>
     </>
   );
 }
