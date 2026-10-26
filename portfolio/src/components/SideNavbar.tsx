@@ -237,12 +237,9 @@ export default function SideNavbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden fixed inset-0 z-[100] bg-[#070b0e]/95 backdrop-blur-2xl text-white flex flex-col justify-between p-7 sm:p-9"
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="md:hidden fixed inset-0 z-[105] backdrop-blur-3xl text-gray-900 dark:text-white flex flex-col justify-between p-8 sm:p-10 pb-12 sm:pb-14 transition-colors duration-300"
           >
-            {/* Subtle atmospheric ambient glow in background */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
-
             {/* Top Bar: Logo + Close Button */}
             <div className="relative z-10 flex items-center justify-between">
               <a
@@ -251,14 +248,14 @@ export default function SideNavbar() {
                   e.preventDefault();
                   handleNavClick('#hero');
                 }}
-                className="text-2xl font-bold tracking-tight text-white hover:opacity-80 transition-opacity"
+                className="text-2xl font-bold tracking-wide text-gray-900 dark:text-white hover:opacity-85 transition-opacity"
               >
-                S<span className="text-blue-400">.</span>
+                S<span className="text-blue-600 dark:text-blue-400">.</span>
               </a>
 
               <button
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center justify-center w-10 h-10 rounded-lg border border-white/10 bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200"
+                className="flex items-center justify-center w-11 h-11 rounded-lg border border-gray-200/80 dark:border-white/10 bg-gray-100/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-white/20 transition-all duration-200"
                 aria-label="Close menu"
               >
                 <HiX className="w-5 h-5" />
@@ -282,8 +279,8 @@ export default function SideNavbar() {
                     }}
                     className={`text-2xl sm:text-3xl tracking-wide transition-all duration-200 ${
                       isActive
-                        ? 'text-white font-medium'
-                        : 'text-gray-300/80 hover:text-white font-light'
+                        ? 'text-blue-600 dark:text-blue-400 font-medium'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-light'
                     }`}
                   >
                     {item.name}
@@ -302,7 +299,7 @@ export default function SideNavbar() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors p-1"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-1"
                     aria-label={social.name}
                   >
                     <social.icon className="w-5 h-5" />
@@ -313,7 +310,7 @@ export default function SideNavbar() {
               {/* Bottom Right: Theme Toggle Icon */}
               <button
                 onClick={toggleTheme}
-                className="p-2 text-gray-400 hover:text-white transition-colors"
+                className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                 aria-label="Toggle Theme"
               >
                 {isDarkMode === null ? (
@@ -321,7 +318,7 @@ export default function SideNavbar() {
                 ) : isDarkMode ? (
                   <HiSun className="w-5 h-5 text-yellow-400" />
                 ) : (
-                  <HiMoon className="w-5 h-5 text-gray-300" />
+                  <HiMoon className="w-5 h-5 text-slate-700 dark:text-gray-300" />
                 )}
               </button>
             </div>
