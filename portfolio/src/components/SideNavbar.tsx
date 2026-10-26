@@ -202,10 +202,10 @@ export default function SideNavbar() {
       </aside>
 
       {/* ═════════════════════════════════════════════════════════════════
-          2. MOBILE TOP HEADER (< 768px)
+          2. MOBILE TOP HEADER (< 768px - Hamish Style)
           ═════════════════════════════════════════════════════════════════ */}
-      <header className="md:hidden fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-5 border-b border-gray-200/60 dark:border-white/10 bg-white/80 dark:bg-[#050A17]/85 backdrop-blur-xl">
-        {/* Left: Brand Logo */}
+      <header className="md:hidden fixed top-0 left-0 right-0 h-16 z-40 flex items-center justify-between px-6 bg-white/70 dark:bg-[#050A17]/75 backdrop-blur-md border-b border-gray-200/40 dark:border-white/5">
+        {/* Left: Minimal Monogram Logo */}
         <a
           href="#hero"
           onClick={(e) => {
@@ -213,107 +213,117 @@ export default function SideNavbar() {
             handleNavClick('#hero');
           }}
           className="text-xl font-bold tracking-tight text-gray-900 dark:text-white"
+          aria-label="Home"
         >
-          Samir<span className="text-blue-600 dark:text-blue-400">.</span>
+          S<span className="text-blue-600 dark:text-blue-400">.</span>
         </a>
 
-        {/* Right: Theme Toggle & Hamburger */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            className="p-2 text-gray-600 dark:text-gray-300 rounded-lg"
-            aria-label="Toggle Theme"
-          >
-            {isDarkMode === null ? (
-              <div className="w-5 h-5" />
-            ) : isDarkMode ? (
-              <HiSun className="w-5 h-5 text-yellow-400" />
-            ) : (
-              <HiMoon className="w-5 h-5 text-slate-700" />
-            )}
-          </button>
-
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <HiX className="w-6 h-6" /> : <HiMenu className="w-6 h-6" />}
-          </button>
-        </div>
+        {/* Right: Modern Hamburger Trigger */}
+        <button
+          onClick={() => setIsMenuOpen(true)}
+          className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-200/80 dark:border-white/10 bg-gray-100/60 dark:bg-white/5 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200/80 dark:hover:bg-white/10 transition-all duration-200"
+          aria-label="Open menu"
+        >
+          <HiMenu className="w-5 h-5" />
+        </button>
       </header>
 
       {/* ═════════════════════════════════════════════════════════════════
-          3. MOBILE SLIDE-DOWN DRAWER
+          3. FULLSCREEN MOBILE OVERLAY (Hamish Williams Reference Match)
           ═════════════════════════════════════════════════════════════════ */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="md:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-white/95 dark:bg-[#050A17]/95 backdrop-blur-2xl flex flex-col justify-between p-6 overflow-y-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="md:hidden fixed inset-0 z-[100] bg-[#070b0e]/95 backdrop-blur-2xl text-white flex flex-col justify-between p-7 sm:p-9"
           >
-            <nav className="flex flex-col gap-2 pt-4">
+            {/* Subtle atmospheric ambient glow in background */}
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+            {/* Top Bar: Logo + Close Button */}
+            <div className="relative z-10 flex items-center justify-between">
               <a
                 href="#hero"
                 onClick={(e) => {
                   e.preventDefault();
                   handleNavClick('#hero');
                 }}
-                className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-lg font-medium transition-colors ${
-                  activeSection === 'hero'
-                    ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400'
-                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/5'
-                }`}
+                className="text-2xl font-bold tracking-tight text-white hover:opacity-80 transition-opacity"
               >
-                <span>About</span>
-                {activeSection === 'hero' && <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400" />}
+                S<span className="text-blue-400">.</span>
               </a>
 
-              {navItems.map((item) => {
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center justify-center w-10 h-10 rounded-lg border border-white/10 bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200"
+                aria-label="Close menu"
+              >
+                <HiX className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Center: Vertically and Horizontally Centered Nav Links */}
+            <nav className="relative z-10 flex flex-col items-center justify-center gap-7 my-auto">
+              {navItems.map((item, idx) => {
                 const isActive = activeSection === item.id;
                 return (
-                  <a
+                  <motion.a
                     key={item.id}
                     href={item.href}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 + idx * 0.05, duration: 0.3 }}
                     onClick={(e) => {
                       e.preventDefault();
                       handleNavClick(item.href);
                     }}
-                    className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-lg font-medium transition-colors ${
+                    className={`text-2xl sm:text-3xl tracking-wide transition-all duration-200 ${
                       isActive
-                        ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400'
-                        : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/5'
+                        ? 'text-white font-medium'
+                        : 'text-gray-300/80 hover:text-white font-light'
                     }`}
                   >
-                    <span>{item.name}</span>
-                    {isActive && <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400" />}
-                  </a>
+                    {item.name}
+                  </motion.a>
                 );
               })}
             </nav>
 
-            {/* Mobile Footer in Drawer */}
-            <div className="pt-6 border-t border-gray-200 dark:border-white/10 flex items-center justify-between">
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                Connect with Samir
-              </span>
-              <div className="flex items-center gap-3">
+            {/* Bottom Bar: Social Icons (Left) + Theme Toggle (Right) */}
+            <div className="relative z-10 flex items-center justify-between pt-4 pb-2 px-2">
+              {/* Bottom Left: Socials */}
+              <div className="flex items-center gap-6">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-lg border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="text-gray-400 hover:text-white transition-colors p-1"
                     aria-label={social.name}
                   >
                     <social.icon className="w-5 h-5" />
                   </a>
                 ))}
               </div>
+
+              {/* Bottom Right: Theme Toggle Icon */}
+              <button
+                onClick={toggleTheme}
+                className="p-2 text-gray-400 hover:text-white transition-colors"
+                aria-label="Toggle Theme"
+              >
+                {isDarkMode === null ? (
+                  <div className="w-5 h-5" />
+                ) : isDarkMode ? (
+                  <HiSun className="w-5 h-5 text-yellow-400" />
+                ) : (
+                  <HiMoon className="w-5 h-5 text-gray-300" />
+                )}
+              </button>
             </div>
           </motion.div>
         )}
