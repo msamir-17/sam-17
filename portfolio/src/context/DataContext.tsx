@@ -75,7 +75,21 @@ export function DataProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        // Fetch all data in parallel
+        // Fast path: Fetch all data in a single unified API call
+        try {
+          const res = await api.get('/portfolio')
+          if (res.data) {
+            if (res.data.hero) setHero(res.data.hero)
+            if (Array.isArray(res.data.projects)) setProjects(res.data.projects)
+            if (Array.isArray(res.data.internships)) setInternships(res.data.internships)
+            if (Array.isArray(res.data.certifications)) setCertifications(res.data.certifications)
+            return
+          }
+        } catch (unifiedErr) {
+          console.warn('Unified /api/portfolio endpoint not reachable, falling back to separate calls:', unifiedErr)
+        }
+
+        // Fallback: Fetch individually if unified endpoint fails or is updating
         const [heroRes, projectsRes, internshipsRes, certsRes] = await Promise.allSettled([
           api.get('/hero'),
           api.get('/projects'),
@@ -86,13 +100,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
         if (heroRes.status === 'fulfilled' && heroRes.value.data) {
           setHero(heroRes.value.data)
         }
-        if (projectsRes.status === 'fulfilled') {
+        if (projectsRes.status === 'fulfilled' && Array.isArray(projectsRes.value.data)) {
           setProjects(projectsRes.value.data)
         }
-        if (internshipsRes.status === 'fulfilled') {
+        if (internshipsRes.status === 'fulfilled' && Array.isArray(internshipsRes.value.data)) {
           setInternships(internshipsRes.value.data)
         }
-        if (certsRes.status === 'fulfilled') {
+        if (certsRes.status === 'fulfilled' && Array.isArray(certsRes.value.data)) {
           setCertifications(certsRes.value.data)
         }
       } catch (error) {

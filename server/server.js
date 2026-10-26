@@ -15,6 +15,7 @@ const projectRoutes = require('./routes/projectRoutes.js');
 const heroRoutes = require('./routes/heroRoutes.js')
 const analyticsRoutes = require('./routes/analyticsRoutes.js')
 const contactRoutes = require('./routes/contactRoutes.js');
+const portfolioRoutes = require('./routes/portfolioRoutes.js');
 
 dotenv.config();
 
@@ -88,6 +89,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/hero', heroRoutes)
 app.use('/api/analytics', analyticsRoutes)
 app.use('/api/contact', contactRoutes);
+app.use('/api/portfolio', portfolioRoutes);
 
 
 
