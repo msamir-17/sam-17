@@ -13,11 +13,12 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const [showLoader, setShowLoader] = useState(true);
   const [minTimePassed, setMinTimePassed] = useState(false);
 
-  // Ensure the loader shows for at least 800ms so it doesn't flash
+  // Loader dismiss logic: If data is already cached & loaded, dismiss in 200ms for instant feel
   useEffect(() => {
-    const timer = setTimeout(() => setMinTimePassed(true), 800);
+    const delay = loaded ? 200 : 500;
+    const timer = setTimeout(() => setMinTimePassed(true), delay);
     return () => clearTimeout(timer);
-  }, []);
+  }, [loaded]);
 
   // Dismiss loader when both data is loaded AND minimum time has passed
   useEffect(() => {
