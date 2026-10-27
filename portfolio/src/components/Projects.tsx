@@ -7,6 +7,7 @@ import { HiExternalLink, HiCode, HiX } from 'react-icons/hi';
 import { Project as ProjectTypeFromTypes } from '@/types';
 import { trackProjectClick, trackLiveLinkClick, trackGithubClick } from '@/hooks/useAnalytics';
 import { useData } from '@/context/DataContext';
+import { getOptimizedImageUrl } from '@/lib/image';
 import { 
   SiTensorflow, SiPytorch, SiPython, SiScikitlearn, SiTailwindcss, SiNextdotjs, SiReact, 
   SiTypescript, SiJavascript, SiMongodb, SiNodedotjs, SiCplusplus, SiC, SiHtml5, SiCss,
@@ -227,7 +228,7 @@ const Projects = () => {
                     {/* Project Image Container (Inset and Rounded) */}
                     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-zinc-950">
                       <img
-                        src={project.imageUrl}
+                        src={getOptimizedImageUrl(project.imageUrl, 700)}
                         alt={`Screenshot of ${project.title}`}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
@@ -343,7 +344,7 @@ const Projects = () => {
             {/* Project Image */}
             <div className="relative h-64">
               <img
-                src={selectedProject.imageUrl}
+                src={getOptimizedImageUrl(selectedProject.imageUrl, 1000)}
                 alt={`Screenshot of ${selectedProject.title}`}
                 className="w-full h-full object-cover"
               />

@@ -238,7 +238,7 @@ export default function SideNavbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="md:hidden fixed inset-0 z-[105] backdrop-blur-3xl text-gray-900 dark:text-white flex flex-col justify-between p-8 sm:p-10 pb-12 sm:pb-14 transition-colors duration-300"
+            className="md:hidden fixed inset-0 z-[105] bg-white/80 dark:bg-[#050A17]/80 backdrop-blur-2xl text-gray-900 dark:text-white flex flex-col justify-between p-8 sm:p-10 pb-12 sm:pb-14 transition-colors duration-300"
           >
             {/* Top Bar: Logo + Close Button */}
             <div className="relative z-10 flex items-center justify-between">

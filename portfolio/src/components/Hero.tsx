@@ -155,7 +155,7 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="flex justify-center lg:justify-end mt-8 lg:mt-0"
           >
-            <div className="relative w-full max-w-xs sm:max-w-sm">
+            <div className="relative w-full max-w-[260px] sm:max-w-xs md:max-w-sm">
               {/* Soft glow behind avatar */}
               <div className="absolute inset-0 scale-110 bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-pink-400/20 dark:from-blue-500/10 dark:via-purple-500/10 dark:to-indigo-500/10 rounded-full blur-3xl" />
               <div className="w-full aspect-square relative">

@@ -6,6 +6,7 @@ import { HiExternalLink, HiCalendar, HiX, HiLocationMarker } from 'react-icons/h
 import { HiCheckBadge } from 'react-icons/hi2'
 import { useState } from 'react'
 import { useData } from '@/context/DataContext'
+import { getOptimizedImageUrl } from '@/lib/image'
 
 const Internships = () => {
   const [internshipsRef, internshipsInView] = useInView({
@@ -262,7 +263,7 @@ const Internships = () => {
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-50 dark:bg-zinc-950/30 flex items-center justify-center">
                       {cert.certificateLink ? (
                         <img
-                          src={cert.certificateLink}
+                          src={getOptimizedImageUrl(cert.certificateLink, 700)}
                           alt={`${cert.title} Certificate`}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           loading="lazy"
@@ -316,7 +317,7 @@ const Internships = () => {
               <HiX className="w-5 h-5" />
             </button>
             <img
-              src={selectedCertificate}
+              src={getOptimizedImageUrl(selectedCertificate, 1200)}
               alt="Certificate Preview"
               className="w-full h-full object-contain"
             />

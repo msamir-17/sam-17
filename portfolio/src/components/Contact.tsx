@@ -114,7 +114,7 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Contact Form */}
             <motion.div variants={itemVariants} className="lg:col-span-2">
-              <div className="bg-white dark:bg-[var(--color-bg-tertiary)] p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100 dark:border-[var(--color-border)]">
+              <div className="bg-white dark:bg-[var(--color-bg-tertiary)] p-5 sm:p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100 dark:border-[var(--color-border)]">
                 <div className="flex items-center gap-4 mb-8">
                   <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl">
                     <HiMail className="w-5 h-5 text-white" />
