@@ -4,7 +4,7 @@ import { motion, Variants } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { HiExternalLink, HiCalendar, HiX, HiLocationMarker } from 'react-icons/hi'
 import { HiCheckBadge } from 'react-icons/hi2'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useData } from '@/context/DataContext'
 import { getOptimizedImageUrl } from '@/lib/image'
 
@@ -23,6 +23,20 @@ const Internships = () => {
   const loading = !loaded;
   const [selectedCertificate, setSelectedCertificate] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  // ESC key listener & body scroll lock for Certificate modal
+  useEffect(() => {
+    if (!selectedCertificate) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedCertificate(null);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedCertificate]);
 
 
   const containerVariants: Variants = {

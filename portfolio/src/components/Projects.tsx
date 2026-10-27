@@ -2,7 +2,7 @@
 
 import { motion, Variants } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HiExternalLink, HiCode, HiX } from 'react-icons/hi';
 import { Project as ProjectTypeFromTypes } from '@/types';
 import { trackProjectClick, trackLiveLinkClick, trackGithubClick } from '@/hooks/useAnalytics';
@@ -110,6 +110,20 @@ const Projects = () => {
   const loading = !loaded;
   const [selectedProject, setSelectedProject] = useState<DynamicProject | null>(null);
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+
+  // ESC key listener & body scroll lock for Project modal
+  useEffect(() => {
+    if (!selectedProject) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedProject(null);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedProject]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
