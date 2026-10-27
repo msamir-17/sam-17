@@ -198,11 +198,7 @@ const Projects = () => {
             variants={containerVariants}
           >
             {/* Header */}
-            <motion.div variants={itemVariants} className="text-center mb-14">
-              <span className="section-badge">
-                <HiCode className="w-4 h-4" />
-                Featured Work
-              </span>
+            <motion.div variants={itemVariants} className="text-center mb-10">
               <h2 className="section-title">Projects</h2>
               {/* <p className="section-subtitle">
                 A showcase of my recent work combining AI, web development, and innovative solutions.

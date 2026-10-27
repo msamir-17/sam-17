@@ -94,10 +94,6 @@ const Contact = () => {
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center mb-10">
-            <span className="section-badge">
-              <HiMail className="w-4 h-4" />
-              Get in Touch
-            </span>
             <h2 className="section-title">
               Let&apos;s Build Something{' '}
               <span className="gradient-text">Amazing</span>

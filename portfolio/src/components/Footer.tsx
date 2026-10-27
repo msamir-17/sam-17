@@ -56,7 +56,7 @@ const Footer = () => {
 
   return (
     <footer className="relative bg-gray-900 dark:bg-[#050A17] text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -64,8 +64,8 @@ const Footer = () => {
           variants={containerVariants}
         >
           {/* Main Content */}
-          <motion.div variants={itemVariants} className="text-center mb-10">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-4">
+          <motion.div variants={itemVariants} className="text-center mb-6">
+            <h3 className="text-xl sm:text-2xl font-bold mb-2">
               Let&apos;s Build Something{' '}
               <span className="gradient-text">Amazing</span>{' '}
               Together
@@ -77,28 +77,28 @@ const Footer = () => {
           </motion.div>
 
           {/* Social Links */}
-          <motion.div variants={itemVariants} className="flex justify-center gap-4 mb-10">
+          <motion.div variants={itemVariants} className="flex justify-center gap-3 mb-6">
             {socialLinks.map((social) => (
               <a
                 key={social.name}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-gray-800 dark:bg-[var(--color-bg-inset)] hover:bg-gray-700 dark:hover:bg-[var(--color-surface-hover)] rounded-xl transition-colors duration-200 group"
+                className="p-2.5 bg-gray-800 dark:bg-[var(--color-bg-inset)] hover:bg-gray-700 dark:hover:bg-[var(--color-surface-hover)] rounded-xl transition-colors duration-200 group"
                 aria-label={social.name}
               >
-                <social.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
+                <social.icon className="w-4 h-4 text-gray-400 group-hover:text-white transition-colors" />
               </a>
             ))}
           </motion.div>
 
           {/* Navigation Links */}
-          <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-6 mb-10">
+          <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-5 mb-6">
             {navigationLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-gray-400 hover:text-white transition-colors duration-200 font-medium text-sm"
+                className="text-gray-400 hover:text-white transition-colors duration-200 font-medium text-xs sm:text-sm"
               >
                 {link.name}
               </a>
@@ -106,7 +106,7 @@ const Footer = () => {
           </motion.div>
 
           {/* Divider */}
-          <div className="w-full h-px bg-gray-800 dark:bg-[var(--color-border)] mb-8" />
+          <div className="w-full h-px bg-gray-800 dark:bg-[var(--color-border)] mb-5" />
 
           {/* Bottom Section */}
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-between items-center gap-4">
