@@ -143,9 +143,9 @@ const Internships = () => {
               <h2 className="section-title">
                 Work <span className="gradient-text">Experience</span>
               </h2>
-              <p className="section-subtitle">
+              {/* <p className="section-subtitle">
                 My professional journey and hands-on experience across software development, AI, and machine learning.
-              </p>
+              </p> */}
             </motion.div>
 
             {/* Timeline tab structure */}
@@ -242,9 +242,9 @@ const Internships = () => {
             {/* Section Header */}
             <motion.div variants={itemVariants} className="text-center mb-8">
               <h2 className="section-title">Certifications</h2>
-              <p className="section-subtitle">
+              {/* <p className="section-subtitle">
                 Professional certifications validating my expertise and commitment to continuous learning
-              </p>
+              </p> */}
             </motion.div>
 
             {/* Certifications Grid */}

@@ -97,8 +97,11 @@ const Skills = () => {
   }
 
   return (
-    <section id="skills" className="section-spacing bg-gray-50/50 dark:bg-gradient-to-b dark:from-[#14182D] dark:via-[#0C1323] dark:to-[#0C1323]">
-      <div className="section-container">
+    <section id="skills" className="relative section-spacing bg-gray-50/50 dark:bg-gradient-to-b dark:from-[#14182D] dark:via-[#0C1323] dark:to-[#0C1323]">
+      {/* Ambient background */}
+      <div className="absolute inset-0 dot-grid pointer-events-none" />
+      <div className="ambient-glow w-[350px] h-[350px] bg-purple-300/10 dark:bg-purple-500/4 bottom-[10%] left-[5%]" />
+      <div className="section-container relative z-10">
         <motion.div
           ref={ref}
           initial="hidden"
@@ -107,13 +110,17 @@ const Skills = () => {
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
+            <span className="section-badge">
+              <FaBrain className="w-4 h-4" />
+              Tech Stack
+            </span>
             <h2 className="section-title">
               My Technical{' '}
               <span className="gradient-text">Arsenal</span>
             </h2>
-            <p className="section-subtitle">
+            {/* <p className="section-subtitle">
               A comprehensive toolkit of technologies I use to build intelligent solutions.
-            </p>
+            </p> */}
           </motion.div>
 
           {/* Categories */}
@@ -159,6 +166,7 @@ const Skills = () => {
 
         </motion.div>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 section-divider" />
     </section>
   )
 }

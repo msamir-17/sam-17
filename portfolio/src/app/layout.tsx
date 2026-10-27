@@ -1,12 +1,19 @@
 
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import LayoutWrapper from './LayoutWrapper';
 import './globals.css';
 
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-inter',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-mono',
 })
 
 export const viewport: Viewport = {
@@ -34,7 +41,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} ${inter.className} antialiased`}>
         <main className="min-h-screen">
           <LayoutWrapper>
             {children}

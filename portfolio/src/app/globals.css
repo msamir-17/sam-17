@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @tailwind utilities;
 
+
 /* Tailwind v4: use class-based dark mode instead of prefers-color-scheme */
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -89,6 +90,11 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono), monospace;
   }
 
   /* Global theme transition — applied once, cascades everywhere */
@@ -166,6 +172,36 @@
 
   .dark .gradient-text {
     @apply bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent;
+  }
+
+  /* ─── Ambient Glow Orbs ─── */
+  .ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    opacity: 0.12;
+  }
+
+  .dark .ambient-glow {
+    opacity: 0.08;
+  }
+
+  /* ─── Dot Grid Pattern ─── */
+  .dot-grid {
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .dark .dot-grid {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* ─── Section Divider Gradient ─── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
   }
 
   /* ─── Section Helpers ─── */

@@ -70,10 +70,10 @@ const Footer = () => {
               <span className="gradient-text">Amazing</span>{' '}
               Together
             </h3>
-            <p className="text-gray-400 max-w-xl mx-auto leading-relaxed">
+            {/* <p className="text-gray-400 max-w-xl mx-auto leading-relaxed">
               I&apos;m always open to discussing new opportunities and exciting projects. 
               Feel free to reach out if you&apos;d like to collaborate!
-            </p>
+            </p> */}
           </motion.div>
 
           {/* Social Links */}

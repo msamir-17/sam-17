@@ -106,9 +106,9 @@ const Contact = () => {
         >
           <motion.div variants={itemVariants} className="text-center mb-16">
             <h2 className="section-title">Contact</h2>
-            <p className="section-subtitle">
+            {/* <p className="section-subtitle">
               Ready to collaborate on your next project? Let&apos;s discuss how we can work together.
-            </p>
+            </p> */}
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

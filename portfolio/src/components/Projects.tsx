@@ -149,8 +149,10 @@ const Projects = () => {
 
   if (loading) {
     return (
-      <section id="projects" className="section-spacing bg-white dark:bg-gradient-to-b dark:from-[#0C1323] dark:via-[#14182D] dark:to-[#14182D]">
-        <div className="section-container">
+      <section id="projects" className="relative section-spacing bg-white dark:bg-gradient-to-b dark:from-[#0C1323] dark:via-[#14182D] dark:to-[#14182D]">
+        {/* Ambient background */}
+        <div className="absolute inset-0 dot-grid pointer-events-none" />
+        <div className="section-container relative z-10">
           <div className="text-center mb-12">
             <h2 className="section-title">Projects</h2>
           </div>
@@ -160,6 +162,7 @@ const Projects = () => {
             ))}
           </div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 section-divider" />
       </section>
     );
   }
@@ -168,8 +171,11 @@ const Projects = () => {
 
   return (
     <>
-      <section id="projects" className="section-spacing bg-white dark:bg-gradient-to-b dark:from-[#0C1323] dark:via-[#14182D] dark:to-[#14182D]">
-        <div className="section-container">
+      <section id="projects" className="relative section-spacing bg-white dark:bg-gradient-to-b dark:from-[#0C1323] dark:via-[#14182D] dark:to-[#14182D]">
+        {/* Ambient background */}
+        <div className="absolute inset-0 dot-grid pointer-events-none" />
+        <div className="ambient-glow w-[400px] h-[400px] bg-blue-300/10 dark:bg-blue-500/4 top-[5%] right-[5%]" />
+        <div className="section-container relative z-10">
           <motion.div
             ref={ref}
             initial="hidden"
@@ -177,11 +183,15 @@ const Projects = () => {
             variants={containerVariants}
           >
             {/* Header */}
-            <motion.div variants={itemVariants} className="text-center mb-12">
+            <motion.div variants={itemVariants} className="text-center mb-14">
+              <span className="section-badge">
+                <HiCode className="w-4 h-4" />
+                Featured Work
+              </span>
               <h2 className="section-title">Projects</h2>
-              <p className="section-subtitle">
+              {/* <p className="section-subtitle">
                 A showcase of my recent work combining AI, web development, and innovative solutions.
-              </p>
+              </p> */}
             </motion.div>
 
             {/* Projects Grid */}
@@ -300,6 +310,7 @@ const Projects = () => {
             </motion.div>
           </motion.div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 section-divider" />
       </section>
 
       {/* Project Detail Modal */}
