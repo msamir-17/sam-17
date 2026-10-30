@@ -180,9 +180,9 @@ export default function SideNavbar() {
             {isDarkMode === null ? (
               <div className="w-4 h-4" />
             ) : isDarkMode ? (
-              <HiSun className="w-4 h-4 text-yellow-400" />
+              <HiSun className="w-4 h-4 text-yellow-400" aria-hidden="true" />
             ) : (
-              <HiMoon className="w-4 h-4 text-slate-700" />
+              <HiMoon className="w-4 h-4 text-slate-700" aria-hidden="true" />
             )}
           </button>
 
@@ -195,7 +195,7 @@ export default function SideNavbar() {
               className="p-2 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg transition-all duration-200"
               aria-label={social.name}
             >
-              <social.icon className="w-4 h-4" />
+              <social.icon className="w-4 h-4" aria-hidden="true" />
             </a>
           ))}
         </div>
@@ -224,7 +224,7 @@ export default function SideNavbar() {
           className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-200/80 dark:border-white/10 bg-gray-100/60 dark:bg-white/5 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200/80 dark:hover:bg-white/10 transition-all duration-200"
           aria-label="Open menu"
         >
-          <HiMenu className="w-5 h-5" />
+          <HiMenu className="w-5 h-5" aria-hidden="true" />
         </button>
       </header>
 
@@ -258,7 +258,7 @@ export default function SideNavbar() {
                 className="flex items-center justify-center w-11 h-11 rounded-lg border border-gray-200/80 dark:border-white/10 bg-gray-100/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-white/20 transition-all duration-200"
                 aria-label="Close menu"
               >
-                <HiX className="w-5 h-5" />
+                <HiX className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
@@ -302,7 +302,7 @@ export default function SideNavbar() {
                     className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-1"
                     aria-label={social.name}
                   >
-                    <social.icon className="w-5 h-5" />
+                    <social.icon className="w-5 h-5" aria-hidden="true" />
                   </a>
                 ))}
               </div>
@@ -316,9 +316,9 @@ export default function SideNavbar() {
                 {isDarkMode === null ? (
                   <div className="w-5 h-5" />
                 ) : isDarkMode ? (
-                  <HiSun className="w-5 h-5 text-yellow-400" />
+                  <HiSun className="w-5 h-5 text-yellow-400" aria-hidden="true" />
                 ) : (
-                  <HiMoon className="w-5 h-5 text-slate-700 dark:text-gray-300" />
+                  <HiMoon className="w-5 h-5 text-slate-700 dark:text-gray-300" aria-hidden="true" />
                 )}
               </button>
             </div>

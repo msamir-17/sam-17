@@ -133,7 +133,7 @@ const Hero = () => {
                     onClick={downloadResume}
                     className="group px-7 py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 dark:shadow-blue-500/10 hover:shadow-xl hover:shadow-blue-500/30 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center gap-2.5 justify-center text-sm active:scale-[0.97]"
                   >
-                    <HiDownload className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                    <HiDownload className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" aria-hidden="true" />
                     Download Resume
                   </button>
 
@@ -141,7 +141,7 @@ const Hero = () => {
                     onClick={scrollToContact}
                     className="group px-7 py-3.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl transition-all duration-300 flex items-center gap-2.5 justify-center text-sm hover:border-blue-500 hover:text-blue-600 dark:hover:border-blue-400 dark:hover:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-500/5 active:scale-[0.97]"
                   >
-                    <HiMail className="w-4 h-4" />
+                    <HiMail className="w-4 h-4" aria-hidden="true" />
                     Let&apos;s Connect
                   </button>
                 </div>

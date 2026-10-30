@@ -207,12 +207,12 @@ const Internships = () => {
                       </h3>
                       
                       <div className="flex items-center gap-2 mt-1.5 text-gray-500 dark:text-gray-400 text-xs md:text-sm font-medium">
-                        <HiCalendar className="w-4 h-4 text-gray-400" />
+                        <HiCalendar className="w-4 h-4 text-gray-400" aria-hidden="true" />
                         <span>{internships[activeIndex].duration}</span>
                       </div>
                       
                       <div className="flex items-center gap-2 mt-0.5 text-gray-500 dark:text-gray-400 text-xs md:text-sm font-medium">
-                        <HiLocationMarker className="w-4 h-4 text-gray-400" />
+                        <HiLocationMarker className="w-4 h-4 text-gray-400" aria-hidden="true" />
                         <span>{internships[activeIndex].location || getCompanyLocation(internships[activeIndex].company)}</span>
                       </div>
                     </div>
@@ -232,7 +232,7 @@ const Internships = () => {
                           onClick={() => setSelectedCertificate(internships[activeIndex].certificateUrl!)}
                           className="inline-flex items-center gap-2 px-3.5 py-1.5 border border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white font-semibold transition-all duration-200 text-xs rounded-xl active:scale-[0.98]"
                         >
-                          <HiExternalLink className="w-3.5 h-3.5" />
+                          <HiExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                           View Certificate
                         </button>
                       </div>
@@ -327,8 +327,9 @@ const Internships = () => {
             <button
               onClick={() => setSelectedCertificate(null)}
               className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors"
+              aria-label="Close certificate preview"
             >
-              <HiX className="w-5 h-5" />
+              <HiX className="w-5 h-5" aria-hidden="true" />
             </button>
             <img
               src={getOptimizedImageUrl(selectedCertificate, 1200)}

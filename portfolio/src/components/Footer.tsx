@@ -87,7 +87,7 @@ const Footer = () => {
                 className="p-2.5 bg-gray-100 dark:bg-[var(--color-bg-inset)] hover:bg-gray-200 dark:hover:bg-[var(--color-surface-hover)] rounded-xl transition-colors duration-200 group border border-gray-200/60 dark:border-white/5"
                 aria-label={social.name}
               >
-                <social.icon className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors" />
+                <social.icon className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors" aria-hidden="true" />
               </a>
             ))}
           </motion.div>
@@ -114,7 +114,7 @@ const Footer = () => {
               <span onClick={handleSecretClick} className="cursor-pointer select-none">
                 © {currentYear} Samir. Made with
               </span>
-              <HiHeart className="text-red-500 w-4 h-4" />
+              <HiHeart className="text-red-500 w-4 h-4" aria-hidden="true" />
               <span>using Next.js & Tailwind CSS</span>
             </div>
             
@@ -128,7 +128,7 @@ const Footer = () => {
                 className="p-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg transition-all duration-200 shadow-md active:scale-95"
                 aria-label="Scroll to top"
               >
-                <HiArrowUp className="w-4 h-4" />
+                <HiArrowUp className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
           </motion.div>

@@ -120,7 +120,7 @@ const Contact = () => {
                   onClick={() => setIsModalOpen(true)}
                   className="px-9 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 dark:shadow-blue-500/10 hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 flex items-center justify-center gap-2.5 text-sm active:scale-[0.98] group cursor-pointer"
                 >
-                  <HiMail className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <HiMail className="w-4 h-4 group-hover:scale-110 transition-transform" aria-hidden="true" />
                   Send a Message
                 </button>
               </div>
@@ -156,7 +156,7 @@ const Contact = () => {
               <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-white/5 mb-6">
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl text-white">
-                    <HiMail className="w-5 h-5" />
+                    <HiMail className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white">Send Message</h3>
@@ -169,7 +169,7 @@ const Contact = () => {
                   className="p-2 rounded-xl text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
                   aria-label="Close modal"
                 >
-                  <HiX className="w-5 h-5" />
+                  <HiX className="w-5 h-5" aria-hidden="true" />
                 </button>
               </div>
 
@@ -177,7 +177,7 @@ const Contact = () => {
               {isSubmitted ? (
                 <div className="text-center py-10 space-y-4">
                   <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-lg text-white">
-                    <HiCheckCircle className="w-9 h-9" />
+                    <HiCheckCircle className="w-9 h-9" aria-hidden="true" />
                   </div>
                   <h4 className="text-xl font-bold text-green-600 dark:text-green-400">Message Sent!</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
@@ -191,7 +191,7 @@ const Contact = () => {
                       Your Name *
                     </label>
                     <div className="relative">
-                      <HiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <HiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" aria-hidden="true" />
                       <input
                         type="text"
                         id="modal-name"
@@ -210,7 +210,7 @@ const Contact = () => {
                       Email Address *
                     </label>
                     <div className="relative">
-                      <HiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <HiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" aria-hidden="true" />
                       <input
                         type="email"
                         id="modal-email"
@@ -229,7 +229,7 @@ const Contact = () => {
                       Message *
                     </label>
                     <div className="relative">
-                      <HiChatAlt className="absolute left-3.5 top-3.5 text-gray-400 w-4 h-4" />
+                      <HiChatAlt className="absolute left-3.5 top-3.5 text-gray-400 w-4 h-4" aria-hidden="true" />
                       <textarea
                         id="modal-message"
                         name="message"
@@ -266,7 +266,7 @@ const Contact = () => {
                         </>
                       ) : (
                         <>
-                          <HiMail className="w-4 h-4" />
+                          <HiMail className="w-4 h-4" aria-hidden="true" />
                           Send Message
                         </>
                       )}

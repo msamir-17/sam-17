@@ -316,7 +316,7 @@ const Projects = () => {
                 className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <span>View All Projects on GitHub</span>
-                <HiExternalLink className="w-5 h-5" />
+                <HiExternalLink className="w-5 h-5" aria-hidden="true" />
               </motion.a>
             </motion.div>
           </motion.div>
@@ -346,8 +346,9 @@ const Projects = () => {
               <button
                 onClick={() => setSelectedProject(null)}
                 className="p-2 hover:bg-gray-100 dark:hover:bg-[var(--color-surface-hover)] rounded-xl transition-colors"
+                aria-label="Close project modal"
               >
-                <HiX className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                <HiX className="w-5 h-5 text-gray-600 dark:text-gray-400" aria-hidden="true" />
               </button>
             </div>
 
@@ -396,7 +397,7 @@ const Projects = () => {
                     onClick={() => trackGithubClick(selectedProject._id, selectedProject.title)}
                     className="flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[var(--color-bg-inset)] hover:bg-gray-200 dark:hover:bg-[var(--color-surface-hover)] rounded-xl transition-colors"
                   >
-                    <HiCode className="w-4 h-4" />
+                    <HiCode className="w-4 h-4" aria-hidden="true" />
                     View Code
                   </a>
                 )}
@@ -408,7 +409,7 @@ const Projects = () => {
                     onClick={() => trackLiveLinkClick(selectedProject._id, selectedProject.title)}
                     className="flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
                   >
-                    <HiExternalLink className="w-4 h-4" />
+                    <HiExternalLink className="w-4 h-4" aria-hidden="true" />
                     Live Demo
                   </a>
                 )}

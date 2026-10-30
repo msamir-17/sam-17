@@ -45,7 +45,7 @@ const Skills = () => {
   ]
 
   const getIcon = (iconName: string) => {
-    const iconProps = { className: "w-8 h-8" }
+    const iconProps = { className: "w-8 h-8", "aria-hidden": true }
     switch (iconName) {
       case 'SiPython': return <SiPython {...iconProps} style={{ color: '#3776ab' }} />
       case 'SiJavascript': return <SiJavascript {...iconProps} style={{ color: '#f7df1e' }} />
@@ -111,7 +111,7 @@ const Skills = () => {
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
             <span className="section-badge">
-              <FaBrain className="w-4 h-4" />
+              <FaBrain className="w-4 h-4" aria-hidden="true" />
               Tech Stack
             </span>
             <h2 className="section-title">
