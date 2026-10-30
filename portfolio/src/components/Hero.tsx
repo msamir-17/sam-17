@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { HiDownload, HiMail } from 'react-icons/hi'
@@ -160,10 +161,13 @@ const Hero = () => {
               <div className="absolute inset-0 scale-110 bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-pink-400/20 dark:from-blue-500/10 dark:via-purple-500/10 dark:to-indigo-500/10 rounded-full blur-3xl" />
               <div className="w-full aspect-square relative">
                 <div className="w-full h-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 dark:from-blue-600 dark:via-purple-600 dark:to-indigo-500 rounded-full p-[3px] shadow-2xl shadow-purple-500/15 dark:shadow-purple-500/10">
-                  <div className="w-full h-full bg-white dark:bg-[#050A17] rounded-full overflow-hidden">
-                    <img 
-                      src="/avtar.jpg" 
+                  <div className="w-full h-full bg-white dark:bg-[#050A17] rounded-full overflow-hidden relative">
+                    <Image 
+                      src="/avtar.webp" 
                       alt="Samir - AI/ML Engineer & Full Stack Developer" 
+                      width={400}
+                      height={400}
+                      priority
                       className="w-full h-full rounded-full object-cover" 
                     />
                   </div>
