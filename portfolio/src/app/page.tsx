@@ -1,14 +1,15 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import Hero from '@/components/Hero'
 import Skills from '@/components/Skills'
-import Projects from '@/components/Projects'
-import Internships from '@/components/Internships'
-// import Testimonials from '@/components/Testimonials'
-import Contact from '@/components/Contact'
-import Footer from '@/components/Footer'
-import Certification from '@/components/Certification'
 import { usePageView } from '@/hooks/useAnalytics'
+
+// Below-the-fold components dynamically imported to reduce initial JS execution and main-thread work
+const Projects = dynamic(() => import('@/components/Projects'))
+const Internships = dynamic(() => import('@/components/Internships'))
+const Contact = dynamic(() => import('@/components/Contact'))
+const Footer = dynamic(() => import('@/components/Footer'))
 
 export default function Home() {
   usePageView('/home');
@@ -19,8 +20,6 @@ export default function Home() {
       <Skills />
       <Projects />
       <Internships />
-      {/* <Certification/> */}
-      {/* <Testimonials /> */}
       <Contact />
       <Footer />
     </div>
