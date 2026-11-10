@@ -279,7 +279,7 @@ const Projects = () => {
                               }}
                             >
                               <div className={`flex-shrink-0 ${tech.color} flex items-center justify-center w-5 h-5`}>
-                                <Icon className="w-5 h-5" />
+                                <Icon className="w-5 h-5" aria-hidden={true} />
                               </div>
                               <span
                                 className={`text-xs font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap transition-all duration-300 ${
