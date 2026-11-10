@@ -11,21 +11,18 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const isAdminPage = pathname.startsWith('/admin');
   const { loaded } = useData();
   const [showLoader, setShowLoader] = useState(true);
-  const [minTimePassed, setMinTimePassed] = useState(false);
 
-  // Loader dismiss logic: If data is already cached & loaded, dismiss in 200ms for instant feel
+  // Non-blocking loader: dismiss as soon as data is loaded OR after 1.5s max — whichever comes first.
+  // This ensures Hero/Skills render immediately even if Render backend is cold-starting.
   useEffect(() => {
-    const delay = loaded ? 200 : 500;
-    const timer = setTimeout(() => setMinTimePassed(true), delay);
-    return () => clearTimeout(timer);
-  }, [loaded]);
-
-  // Dismiss loader when both data is loaded AND minimum time has passed
-  useEffect(() => {
-    if (loaded && minTimePassed) {
+    if (loaded) {
       setShowLoader(false);
+      return;
     }
-  }, [loaded, minTimePassed]);
+    // Hard cap: never block UI for more than 1.5 seconds
+    const maxWait = setTimeout(() => setShowLoader(false), 1500);
+    return () => clearTimeout(maxWait);
+  }, [loaded]);
 
   return (
     <>
