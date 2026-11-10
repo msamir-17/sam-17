@@ -151,6 +151,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* Preconnect to Cloudinary CDN to reduce image load latency (~310ms savings per Lighthouse) */}
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        {/* Preconnect to Render backend to reduce API latency on first data fetch */}
+        <link rel="preconnect" href="https://portfolio-backend-sp1w.onrender.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
